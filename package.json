@@ -1,5 +1,23 @@
 {
   "dependencies": {
     "express": "^4.18.1"
-  }
+  },
+  "name": "chatapp",
+  "description": "Basic chat room application. ",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saldanaj97/ChatApp.git"
+  },
+  "author": "Juan Saldana",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/saldanaj97/ChatApp/issues"
+  },
+  "homepage": "https://github.com/saldanaj97/ChatApp#readme"
 }
