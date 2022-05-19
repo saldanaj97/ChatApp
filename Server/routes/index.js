@@ -4,13 +4,16 @@ const app = express()
 const http = require('http')
 const server = http.createServer(app)
 
-/* GET home page. */
-router.get('/', (req, res) => {
-  res.send('<h1>Received a GET request. <h1>');
+// Avoid the cors cross policy error
+router.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*'); // TODO: Change later for security?
+  next();
 });
 
-router.post('/', (req, res) => {
-  res.send('Received a POST request. ');
+// Homepage
+router.get('/', (req, res) => {
+  res.send('Received a GET request.');
 });
+
 
 module.exports = router;
