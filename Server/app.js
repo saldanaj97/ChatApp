@@ -20,6 +20,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
+// Avoid the cors cross policy error
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*'); // TODO: Change later for security?
+});
+
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
   next(createError(404));
