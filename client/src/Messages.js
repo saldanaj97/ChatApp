@@ -11,9 +11,7 @@ class Messages extends Component {
     componentDidMount() {
         fetch('http://localhost:3000/')
             .then(response => response.text())
-            .then(res => {
-                this.resFromServer = res
-            })
+            .then(res => this.resFromServer = res)
             .catch(error => console.log(error))
     }
 
@@ -26,7 +24,7 @@ class Messages extends Component {
         return (
             <div>
                 <h1>Click the button for a response</h1>
-                <button onClick={this.getResponse}>Get response</button>
+                <h2>{this.resFromServer}</h2>
             </div>
         )
     }
