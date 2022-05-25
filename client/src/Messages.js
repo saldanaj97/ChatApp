@@ -23,8 +23,10 @@ class Messages extends Component {
     render() {
         return (
             <div>
-                <h1>Click the button for a response</h1>
-                <h2>{this.resFromServer}</h2>
+                <ul id="messages"></ul>
+                <form id="form" action="">
+                    <input id="input" /><button>Send</button>
+                </form>
             </div>
         )
     }
