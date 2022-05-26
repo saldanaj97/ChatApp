@@ -26,7 +26,7 @@ class Connection {
 
     //  Send the message to all connected sockets
     sendMessage(message) {
-        this.io.socket.emit('message', message)
+        this.io.sockets.emit('message', message)
     }
 
     // Get the messages from the room 
