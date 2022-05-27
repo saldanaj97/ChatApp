@@ -33,15 +33,11 @@ function Messages({ socket }) {
         };
     }, [socket]);
 
-    /* If there are no messages in the room prior to entry, display a message telling the user there have been no messages. 
-    Otherwise, display the messages prior to the users entry in the box */
+    /* If there messages in the room prior to entry, display the messages. 
+    Otherwise, display a message to the user that there have been no messages sent yet in the chatroom. */
     return (
         <div className='message-list'>
-            {[...Object.values(messages)].length === 0 &&
-                <div>
-                    <h2>There are currently no messages in the chat. </h2>
-                </div>
-            } {
+            {[...Object.values(messages)] != 0 ? (
                 [...Object.values(messages)]
                     .sort((a, b) => a.time - b.time)
                     .map((message) => (
@@ -51,8 +47,11 @@ function Messages({ socket }) {
                             <span className="date">{new Date(message.time).toLocaleTimeString()}</span>
                         </div>
                     ))
-            }
-
+            ) : (
+                <div>
+                    <h2>There are currently no messages in the chat. </h2>
+                </div>
+            )}
         </div>
     );
 }
