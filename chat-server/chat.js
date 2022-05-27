@@ -9,7 +9,7 @@ const defaultUser = {
     name: 'Anonymous'
 }
 
-const messageExpirationTimeMS = 5 * 60 * 1000;
+const messageExpirationTimeMS = 1 * 60 * 1000;
 
 // Setup callbacks for events coming from the sockets
 class Connection {

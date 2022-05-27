@@ -1,9 +1,21 @@
+.message-input {
+  text-align: center;
+  margin: 20px;
+}
+
 form {
-    max-width: 500px;
-    width: 100%;
-  }
+  display: flex;
+  max-width: 500px;
+  width: 100%;
+}
   
-  input {
-    width: 100%;
-    padding: 0.5rem;
-  }
+input {
+  width: 100%;
+  padding: 0.5rem;
+}
+
+button {
+  height: 50%;
+  width: 50%;
+  margin: 5px 5px;
+}
