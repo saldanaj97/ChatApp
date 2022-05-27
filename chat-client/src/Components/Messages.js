@@ -37,7 +37,7 @@ function Messages({ socket }) {
     Otherwise, display a message to the user that there have been no messages sent yet in the chatroom. */
     return (
         <div className='message-list'>
-            {[...Object.values(messages)] != 0 ? (
+            {[...Object.values(messages)] !== 0 ? (
                 [...Object.values(messages)]
                     .sort((a, b) => a.time - b.time)
                     .map((message) => (
