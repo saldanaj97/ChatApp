@@ -4,6 +4,8 @@ import './MessageInput.css';
 // Handle the input from the message input box
 const NewMessage = ({ socket }) => {
     const [value, setValue] = useState('');
+
+    // Display the message to the sockets that are listening
     const submitForm = (e) => {
         e.preventDefault()
         socket.emit('message', value);

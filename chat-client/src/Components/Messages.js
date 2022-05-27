@@ -4,6 +4,7 @@ import './Messages.css';
 function Messages({ socket }) {
     const [messages, setMessages] = useState({})
 
+    // Grab all the messages that were present before joining the room
     useEffect(() => {
         const messageListener = (message) => {
             setMessages((prevMessages) => {
@@ -31,6 +32,8 @@ function Messages({ socket }) {
         };
     }, [socket]);
 
+    /* If there are no messages in the room prior to entry, display a message telling the user there have been no messages. 
+        Otherwise, display the messages prior to the users entry in the box */
     return (
         <div className='message-list'>
             {[...Object.values(messages)].length === 0 &&
