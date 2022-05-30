@@ -25,14 +25,14 @@ function Messages({ socket }) {
             });
         };
 
-        // When the socket sees 'message' run the message listener function
+        /* When the socket sees 'message' run the message listener function */
         socket.on('message', messageListener);
 
         /* When the socket sees 'delete message' run the delete message listener function which will 
         delete the message that has surpassed the expiration time */
         socket.on('deleteMessage', deleteMessageListener);
 
-        // Get the messages that have not expired from the chat 
+        /* Get the messages that have not expired from the chat */
         socket.emit('getMessages');
 
         return () => {
