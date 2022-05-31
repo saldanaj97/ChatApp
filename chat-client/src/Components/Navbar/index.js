@@ -1,18 +1,17 @@
 import React from "react";
-import { Nav, Navlink, Bars, NavMenu, NavButton, NavBtnLink } from './NavbarElements';
+import { Nav, NavLink, Bars, NavMenu, NavButton, NavBtnLink } from './NavbarElements';
 
 const Navbar = () => {
     return (
         <Nav>
-            <Bars />
             <NavMenu>
-                <Navlink to='/'>Rooms</Navlink>
+                <NavLink to='/'>Rooms</NavLink>
             </NavMenu>
             <NavMenu>
-                <Navlink to='/signup'>Signup</Navlink>
+                <NavLink to='/signup'>Signup</NavLink>
             </NavMenu>
             <NavMenu>
-                <Navlink to='/login'>Login</Navlink>
+                <NavLink to='/login'>Login</NavLink>
             </NavMenu>
         </Nav>
     )

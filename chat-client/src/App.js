@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import DisplayRooms from './Components/Rooms/DisplayRooms';
-import Navbar from './Components/Navbar/Navbar'
-import Profile from './Components/User/Profile';
+import Navbar from './Components/Navbar';
+import Login from './Components/User/Login';
 import Signup from './Components/User/Signup';
 import './App.css';
 
@@ -11,12 +11,12 @@ function App() {
     <Router>
       <Navbar />
       <Routes>
-        <Route path='/' exact component={DisplayRooms} />
-        <Route path='/profile' exact component={Profile} />
-        <Route path='/signup' exact component={Signup} />
+        <Route path='/' exact element={<DisplayRooms />} />
+        <Route path='/signup' element={<Signup />} />
+        <Route path='/login' element={<Login />} />
       </Routes>
     </Router>
-  )
+  );
 
 }
 
