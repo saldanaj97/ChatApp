@@ -7,3 +7,5 @@ const ChatRoomOne = () => {
         </div>
     )
 }
+
+export default ChatRoomOne;
