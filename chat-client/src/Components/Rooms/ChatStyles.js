@@ -1,3 +1,4 @@
+import { NavLink as Link } from "react-router-dom";
 import styled from 'styled-components';
 
 /* This will be used as the main container for everything 
@@ -26,14 +27,29 @@ export const Rooms = styled.div`
     justify-content: space-around;
     align-items: center;
     margin: 15px;
-    //padding-bottom: 150px;
 `;
 
-export const ChatRoomContainer = styled.div`
+/* Styling for the container that will be used as a link to the rooms */
+export const ChatRoomContainer = styled(Link)`
     height: 45%;
     width: 25%;
     background-color: white;
     margin-bottom: 15%;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 18px;
+    margin-left: 10px;
+    transition: all 0.2s ease-in-out;
+    &:hover {
+        transition: all 0.2s ease-in-out;
+        background: #FA2849;
+        color: #FFFFFF;
+    }
+    &.active {
+        background: #FA2849;
+        color: #FFFFFF;
+    }
 `
 
 /* Styling for the box that will hold the messages from the chat */

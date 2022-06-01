@@ -7,9 +7,9 @@ const DisplayRooms = () => {
         <ChatroomPageContainer>
             <PageHeading>All Chatrooms</PageHeading>
             <Rooms>
-                <ChatRoomContainer>1</ChatRoomContainer>
-                <ChatRoomContainer>2</ChatRoomContainer>
-                <ChatRoomContainer>3</ChatRoomContainer>
+                <ChatRoomContainer to='/roomone'>1</ChatRoomContainer>
+                <ChatRoomContainer to='/roomtwo'>2</ChatRoomContainer>
+                <ChatRoomContainer to='/roomthree'>3</ChatRoomContainer>
             </Rooms>
         </ChatroomPageContainer>
     )
