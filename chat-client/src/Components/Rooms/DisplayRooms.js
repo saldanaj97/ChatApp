@@ -1,13 +1,14 @@
 import React from 'react';
 import './ChatStyles';
-import { ChatBox, PageHeading } from './ChatStyles';
+import { ChatBox, ChatroomPageContainer, PageHeading, RoomsContainer } from './ChatStyles';
 
 const DisplayRooms = () => {
     return (
-        <ChatBox>
+        <ChatroomPageContainer>
             <PageHeading>All Chatrooms</PageHeading>
-        </ChatBox>
+            <RoomsContainer></RoomsContainer>
+        </ChatroomPageContainer>
     )
 }
 
-export default DisplayRooms;
+export default DisplayRooms; 
