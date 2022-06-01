@@ -17,11 +17,24 @@ export const PageHeading = styled.div`
     font-size: xx-large;
 `;
 
-export const RoomsContainer = styled.div`
+/* Styling for the container that will hold the rooms */
+export const Rooms = styled.div`
     height: 75vh;
     width: 75%;
-    background-color: #6453c6;
+    background-color: #6453c6; //change to match the background but use a different color to see the ocntainer
+    display: inline-flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 15px;
+    //padding-bottom: 150px;
 `;
+
+export const ChatRoomContainer = styled.div`
+    height: 45%;
+    width: 25%;
+    background-color: white;
+    margin-bottom: 15%;
+`
 
 /* Styling for the box that will hold the messages from the chat */
 export const ChatBox = styled.div`
