@@ -6,6 +6,7 @@ export const ChatBox = styled.div`
     flex-direction: column;
     align-items: center;
     padding: 16px;
+    color: #6453c6;
 `;
 
 /* Used for the page headings on each chat room */
