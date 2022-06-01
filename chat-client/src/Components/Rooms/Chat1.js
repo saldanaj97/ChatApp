@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
-import io from 'socket.io-client';
+/* import io from 'socket.io-client';
 import Messages from './Components/Messaging/Messages';
-import MessageInput from './Components/Messaging/MessageInput';
+import MessageInput from './Components/Messaging/MessageInput'; */
 
 const ChatRoomOne = () => {
   return (

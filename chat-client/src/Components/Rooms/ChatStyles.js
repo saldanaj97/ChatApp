@@ -31,16 +31,18 @@ export const Rooms = styled.div`
 
 /* Styling for the container that will be used as a link to the rooms */
 export const ChatRoomContainer = styled(Link)`
-    height: 45%;
+    height: 35%;
     width: 25%;
-    background-color: white;
     margin-bottom: 15%;
-    cursor: pointer;
-    text-decoration: none;
-    font-weight: 400;
-    font-size: 18px;
     margin-left: 10px;
+    padding-top: 25px;
+    background-color: white;
+    text-decoration: none;
+    text-align: center;
+    font-weight: 400;
+    font-size: 45px;
     transition: all 0.2s ease-in-out;
+    cursor: pointer;
     &:hover {
         transition: all 0.2s ease-in-out;
         background: #FA2849;
