@@ -1,11 +1,12 @@
 import React from 'react';
-import './chat.css';
+import './ChatStyles';
+import { ChatBox, PageHeading } from './ChatStyles';
 
 const DisplayRooms = () => {
     return (
-        <div className='main-div'>
-            <h1 className='page-title'>All Chatrooms</h1>
-        </div>
+        <ChatBox>
+            <PageHeading>All Chatrooms</PageHeading>
+        </ChatBox>
     )
 }
 
