@@ -4,7 +4,7 @@ import './chat.css';
 const DisplayRooms = () => {
     return (
         <div className='main-div'>
-            <h1>All Chatrooms</h1>
+            <h1 className='page-title'>All Chatrooms</h1>
         </div>
     )
 }
