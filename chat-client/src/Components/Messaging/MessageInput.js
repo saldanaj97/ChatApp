@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './MessageInput.css';
 
 // Handle the input from the message input box
-const NewMessage = ({ socket }) => {
+const MessageInput = ({ socket }) => {
     const [value, setValue] = useState('');
 
     // Display the message to the sockets that are listening
@@ -23,4 +23,4 @@ const NewMessage = ({ socket }) => {
     );
 };
 
-export default NewMessage;
+export default MessageInput;

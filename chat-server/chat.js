@@ -47,7 +47,7 @@ class Connection {
         messages.add(message)
         this.sendMessage(message)
 
-        // Times a message out after a certain amount of time
+        // Deletes a message after the expiration time is up 
         setTimeout(() => {
             messages.delete(message)
             this.io.sockets.emit('deleteMessage', message.id)

@@ -1,0 +1,19 @@
+import React from "react";
+import { Nav, NavLink, NavMenu, NavBtnGroup, NavBtnLink } from './NavbarStyles';
+
+const Navbar = () => {
+    return (
+        <Nav>
+            <NavMenu>
+                <NavLink to='/'>Rooms</NavLink>
+            </NavMenu>
+            <NavBtnGroup>
+                <NavBtnLink to='/signup'>Signup</NavBtnLink>
+                <NavBtnLink to='/login'>Login</NavBtnLink>
+            </NavBtnGroup>
+        </Nav>
+    )
+}
+
+export default Navbar;
+
