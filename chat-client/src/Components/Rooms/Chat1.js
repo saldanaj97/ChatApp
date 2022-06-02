@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 import Messages from '../Messaging/Messages';
 import MessageInput from '../Messaging/MessageInput';
 import './ChatStyles';
-import { ChatroomPageContainer, PageHeading } from './ChatStyles';
+import { ChatBox, ChatroomPageContainer, PageHeading } from './ChatStyles';
 
 const ChatRoomOne = () => {
   // Establish the connection
@@ -19,13 +19,13 @@ const ChatRoomOne = () => {
     <ChatroomPageContainer>
       <PageHeading>Room One</PageHeading>
       {socket ? (
-        <div className='chat-container'>
+        <ChatBox>
           <Messages socket={socket} />
-          <MessageInput socket={socket} />
-        </div>
+        </ChatBox>
       ) : (
         <div>Not Connected To Server</div>
       )}
+      <MessageInput socket={socket} />
     </ChatroomPageContainer>
   )
 }

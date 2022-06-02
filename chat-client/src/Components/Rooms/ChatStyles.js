@@ -56,9 +56,11 @@ export const ChatRoomContainer = styled(Link)`
 
 /* Styling for the box that will hold the messages from the chat */
 export const ChatBox = styled.div`
+    width: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 16px;
-    color: #6453c6;
+    background-color: #282331;
+    color: #FFFFFF
 `;
