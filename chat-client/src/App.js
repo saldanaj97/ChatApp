@@ -14,7 +14,8 @@ import './App.scss'
 const colors = {
   brand: {
     900: '#110F15',
-    800: '#FA2849'
+    800: '#FA2849',
+    700: '#282331'
   }
 }
 
