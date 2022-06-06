@@ -31,14 +31,14 @@ io.on('connection', (socket) => {
   /* Take in a message sent from the client and emit the 'message' event in the room with username and room */
   socket.on('sendMessage', message => {
     const user = getUser(socket.id)
-    io.in(user.room).emit('message', { user: user.name, text: message })
+    io.in(user.room).emit('message', { user: user.name, text: message });
   })
 
   /* Delete the user from the and broadcast a message to everyone in the room that a user has left the room.  */
   socket.on('disconnect', () => {
-    console.log('User disconnected')
     const user = deleteUser(socket.id)
     if (user) {
+      console.log(user.name + 'has disconnected from ' + user.room)
       io.in(user.name).emit('notification', { title: 'Someone has left', description: `${user.name} just left the room. ` })
       io.in(user.room).emit('users', getUsers(user.room))
     }

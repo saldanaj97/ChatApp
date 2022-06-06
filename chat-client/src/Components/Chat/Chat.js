@@ -61,7 +61,7 @@ const Chat = () => {
   const logout = () => {
     setName('');
     setRoom('');
-    navigate('/')
+    navigate(0)
   }
 
   return (
@@ -70,7 +70,7 @@ const Chat = () => {
         <Flex alignItems='center' justifyContent='space-between'>
           <Menu >
             <MenuButton as={IconButton} icon={<FiList />} isRound='true' bg='blue.300' color='white' />
-            <MenuList>
+            {<MenuList>
               {
                 users && users.map(user => {
                   return (
@@ -80,7 +80,7 @@ const Chat = () => {
                   )
                 })
               }
-            </MenuList>
+            </MenuList>}
           </Menu>
           <Flex alignItems='center' flexDirection='column' flex={{ base: "1", sm: "auto" }}>
             <Heading fontSize='lg'> {room.slice(0, 1).toUpperCase() + room.slice(1)}</Heading>
@@ -89,7 +89,6 @@ const Chat = () => {
           <Button color='gray.500' fontSize='sm' onClick={logout}>Logout</Button>
         </Flex>
       </Heading>
-
 
       <ScrollToBottom className='messages' debug={false}>
         {messages.length > 0 ?
