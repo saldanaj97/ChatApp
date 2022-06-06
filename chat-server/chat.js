@@ -17,6 +17,7 @@ class Connection {
         this.socket = socket
         this.io = io
 
+        socket.on()
         socket.on('getMessages', () => this.getMessages())
         socket.on('message', (value) => this.handleMessage(value))
         socket.on('connect_error', (err) => {
