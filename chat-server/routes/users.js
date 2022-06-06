@@ -3,23 +3,23 @@ const users = []
 // Add a user to the room. Assign an id when provided a room and name. 
 const addUser = (id, name, room) => {
   // Check if there already exists a user with the same name or username 
-  const exisitingUser = users.find(user => user.name.trim().toLowerCase() === name.trim.toLowerCase())
+  const exisitingUser = users.find(user => user.name.trim().toLowerCase() === name.trim().toLowerCase())
 
   // Errors
   if (exisitingUser) {
-    return error('Username has already been taken')
+    return { 'error': 'Username has already been taken' }
   }
 
   if (!name && !room) {
-    return error('Username and room required')
+    return { 'error': 'Username and room required' }
   }
 
   if (!name) {
-    return error('Username is required')
+    return { 'error': 'Username is required' }
   }
 
   if (!room) {
-    return error('Room is required')
+    return { 'error': 'Room is required' }
   }
 
   const user = { id, name, room }
