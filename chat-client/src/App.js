@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ChakraProvider, Flex, extendTheme } from "@chakra-ui/react"
 
 import { SocketProvider } from './SocketContext'
 import { MainProvider } from './MainContext'
 import { UsersProvider } from './UsersContext'
-import { ChakraProvider, Flex, extendTheme } from "@chakra-ui/react"
 
 import Login from './Components/Login/Login'
 import Chat from './Components/Chat/Chat.js'
