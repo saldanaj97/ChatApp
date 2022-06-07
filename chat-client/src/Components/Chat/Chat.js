@@ -69,7 +69,7 @@ const Chat = () => {
       <Heading className='heading' as='h4' bg='white' p='1rem 1.5rem' borderRadius='10px 10px 0 0'>
         <Flex alignItems='center' justifyContent='space-between'>
           <Menu >
-            <MenuButton as={IconButton} icon={<FiList />} isRound='true' bg='blue.300' color='white' />
+            <MenuButton as={IconButton} icon={<FiList />} isRound='true' bg='#FA2849' color='white' />
             {<MenuList>
               {
                 users && users.map(user => {
@@ -109,10 +109,9 @@ const Chat = () => {
       </ScrollToBottom>
       <div className='form'>
         <input type="text" placeholder='Enter Message' value={message} onChange={e => setMessage(e.target.value)} />
-        <IconButton colorScheme='green' isRound='true' icon={<RiSendPlaneFill />} onClick={handleSendMessage} disabled={message === '' ? true : false}>Send</IconButton>
+        <IconButton background='#FA2849' isRound='true' icon={<RiSendPlaneFill />} onClick={handleSendMessage} disabled={message === '' ? true : false}>Send</IconButton>
       </div>
     </Flex>
-
   )
 }
 
