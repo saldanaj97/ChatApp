@@ -9,13 +9,13 @@ import Login from './Components/Login/Login'
 import Chat from './Components/Chat/Chat.js'
 import DefaultPage from './Components/DefaultPage'
 
-import './App.scss'
+import './App.css'
 
 const colors = {
   brand: {
-    900: '#110F15',
-    800: '#FA2849',
-    700: '#282331'
+    900: '#110F15', // Background
+    800: '#FA2849', // Lighter background
+    700: '#282331' // Red/Purple
   }
 }
 
