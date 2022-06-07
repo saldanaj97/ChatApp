@@ -1,29 +1,45 @@
-import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import DisplayRooms from './Components/Rooms/DisplayRooms';
-import Navbar from './Components/Navbar/Navbar';
-import Login from './Components/User/Login';
-import Signup from './Components/User/Signup';
-import ChatRoomOne from './Components/Rooms/Chat1';
-import ChatRoomTwo from './Components/Rooms/Chat2';
-import ChatRoomThree from './Components/Rooms/Chat3';
-import './App.css';
+import { ChakraProvider, Flex, extendTheme } from "@chakra-ui/react"
 
+import { SocketProvider } from './SocketContext'
+import { MainProvider } from './MainContext'
+import { UsersProvider } from './UsersContext'
+
+import Login from './Components/Login/Login'
+import Chat from './Components/Chat/Chat.js'
+import DefaultPage from './Components/DefaultPage'
+
+import './App.css'
+
+const colors = {
+  brand: {
+    900: '#110F15', // Background
+    800: '#FA2849', // Lighter background
+    700: '#282331' // Red/Purple
+  }
+}
+
+const theme = extendTheme({ colors })
 function App() {
   return (
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route path='/' exact element={<DisplayRooms />} />
-        <Route path='/signup' element={<Signup />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/roomone' element={<ChatRoomOne />} />
-        <Route path='/roomtwo' element={<ChatRoomTwo />} />
-        <Route path='/roomthree' element={<ChatRoomThree />} />
-      </Routes>
-    </Router>
+    <ChakraProvider theme={theme}>
+      <MainProvider>
+        <UsersProvider>
+          <SocketProvider>
+            <Flex className="App" align='center' justifyContent='center'>
+              <Router>
+                <Routes>
+                  <Route path='/' exact element={<Login />} />
+                  <Route path='/chat' element={<Chat />} />
+                  <Route element={<DefaultPage />} />
+                </Routes>
+              </Router>
+            </Flex>
+          </SocketProvider>
+        </UsersProvider>
+      </MainProvider>
+    </ChakraProvider>
   );
-
 }
 
 export default App;
