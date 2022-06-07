@@ -42,6 +42,7 @@ io.on('connection', (socket) => {
       io.in(user.name).emit('notification', { title: 'Someone has left', description: `${user.name} just left the room. ` })
       io.in(user.room).emit('users', getUsers(user.room))
     }
+    socket.removeAllListeners()
   })
 })
 
