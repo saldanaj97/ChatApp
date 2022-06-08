@@ -4,6 +4,11 @@ Currently, the chatroom only allows the user to type in a username and a chatroo
 
 The frontend code is located in chat-client and the backend code is located in chat-server. 
 
+Screenshots below are from v1.0.0. Expect to see changes as more features are added. 
+![alt text](https://github.com/saldanaj97/ChatApp/blob/master/chat-client/public/Homepage.png)
+![alt text](https://github.com/saldanaj97/ChatApp/blob/master/chat-client/public/Empty-chatroom.png)
+![alt text](https://github.com/saldanaj97/ChatApp/blob/master/chat-client/public/Chatroom-messages.png)
+
 ## Upcoming Additions
 - User account creation with authentication
 - User account info (small bio)
