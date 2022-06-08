@@ -11,18 +11,9 @@ import DefaultPage from './Components/DefaultPage'
 
 import './App.css'
 
-const colors = {
-  brand: {
-    900: '#110F15', // Background
-    800: '#FA2849', // Lighter background
-    700: '#282331' // Red/Purple
-  }
-}
-
-const theme = extendTheme({ colors })
 function App() {
   return (
-    <ChakraProvider theme={theme}>
+    <ChakraProvider>
       <MainProvider>
         <UsersProvider>
           <SocketProvider>
