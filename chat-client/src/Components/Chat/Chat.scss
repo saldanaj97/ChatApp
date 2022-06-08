@@ -17,6 +17,7 @@
             }
         }
         .my-message{
+            flex-direction: row-reverse;
             align-self: flex-end;
             .user{
                 display: none;

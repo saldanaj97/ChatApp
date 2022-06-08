@@ -4,7 +4,7 @@ import { FiList } from 'react-icons/fi'
 import { BiMessageDetail } from 'react-icons/bi'
 import { RiSendPlaneFill } from 'react-icons/ri'
 import { useToast } from "@chakra-ui/react"
-import { Box, Flex, Heading, IconButton, Text, Menu, Button, MenuButton, MenuList, MenuItem } from "@chakra-ui/react"
+import { Avatar, AvatarBadge, AvatarGroup, Box, Flex, Heading, IconButton, Text, Menu, Button, MenuButton, MenuList, MenuItem } from "@chakra-ui/react"
 import ScrollToBottom from 'react-scroll-to-bottom';
 
 import { MainContext } from '../../MainContext'
@@ -93,9 +93,13 @@ const Chat = () => {
       <ScrollToBottom className='messages' debug={false}>
         {messages.length > 0 ?
           messages.map((msg, i) =>
-          (<Box key={i} className={`message ${msg.user === name ? "my-message" : ""}`} m=".2rem 0">
-            <Text fontSize='xs' opacity='.7' ml='5px' className='user'>{msg.user}</Text>
-            <Text fontSize='sm' className='msg' p=".4rem .8rem" bg='white' borderRadius='15px' color='white'>{msg.text}</Text>
+          (<Box display='flex' key={i} className={`message ${msg.user === name ? "my-message" : ""}`} m=".2rem .2rem">
+            <Avatar className='avatar' size='md' ml='3px' mr='3px'>
+            </Avatar>
+            <Box display='flex' flexDirection='column' className='name-msg-block' justifyContent='center'>
+              <Text fontSize='xs' opacity='.7' ml='3px' mr='3px' pt='3px' className='user'>{msg.user}</Text>
+              <Text fontSize='sm' className='msg' p=".4rem .8rem" bg='white' borderRadius='15px' color='white'>{msg.text}</Text>
+            </Box>
           </Box>)
           )
           :
