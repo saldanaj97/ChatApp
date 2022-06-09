@@ -4,7 +4,7 @@ import { FiList } from 'react-icons/fi'
 import { BiMessageDetail } from 'react-icons/bi'
 import { RiSendPlaneFill } from 'react-icons/ri'
 import { useToast } from "@chakra-ui/react"
-import { Avatar, AvatarBadge, AvatarGroup, Box, Flex, Heading, IconButton, Text, Menu, Button, MenuButton, MenuList, MenuItem } from "@chakra-ui/react"
+import { Avatar, Box, Flex, Heading, IconButton, Text, Menu, Button, MenuButton, MenuList, MenuItem } from "@chakra-ui/react"
 import ScrollToBottom from 'react-scroll-to-bottom';
 
 import { MainContext } from '../../MainContext'
