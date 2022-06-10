@@ -65,7 +65,7 @@ const Chat = () => {
   }
 
   return (
-    <Flex className='room' flexDirection='column' width={{ base: "100%", sm: '575px' }} height={{ base: "100%", sm: "auto" }}>
+    <Flex className='room' flexDirection='column' width={{ base: "100%", sm: '600px' }} height={{ base: "100%", sm: "auto" }}>
       <Heading className='heading' as='h4' bg='white' p='1rem 1.5rem' borderRadius='10px 10px 0 0'>
         <Flex alignItems='center' justifyContent='space-between'>
           <Menu >
