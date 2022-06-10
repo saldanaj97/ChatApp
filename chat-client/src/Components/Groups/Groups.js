@@ -1,8 +1,9 @@
 import React from "react";
-import { Avatar, Box, Flex, Heading, IconButton, Text, Button, background } from "@chakra-ui/react"
+import { Box, Flex, Heading, IconButton } from "@chakra-ui/react"
 
 import { BiRightArrowAlt } from 'react-icons/bi'
-import { CgProfile } from 'react-icons/cg'
+
+import GroupMessage from "./GroupMessage";
 
 import './Groups.scss'
 
@@ -17,16 +18,7 @@ const Groups = () => {
           <IconButton className='close-groups-menu' icon={<BiRightArrowAlt />} variant='ghost' isRound='true' fontSize='xl' />
         </Flex>
       </Heading >
-
-      <Flex className='user-group-messages'>
-        <Flex className='group-message' direction='row' width={{ base: "100%" }} height={{ base: "25%", sm: "auto" }}>
-          <Flex className='group-avatar' alignItems='center' m='5px 15px'><CgProfile size='30px' /></Flex>
-          <Flex className='group-msg-info-box' width={{ base: "100%" }} direction='column' m='10px'>
-            <Box className='group-name'>Group Message 1</Box>
-            <Box className='last-sent-message'>Test User: This is the last message that was sent in this group. </Box>
-          </Flex>
-        </Flex>
-      </Flex>
+      <GroupMessage />
     </Flex >
   )
 }
