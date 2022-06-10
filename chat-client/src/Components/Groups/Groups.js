@@ -9,7 +9,6 @@ import GroupMessage from "./GroupMessage";
 import './Groups.scss'
 
 const Groups = () => {
-
   /* Use this to populate the group messages list for UI dev purposes. This will
   later not be used as the data will be filled in dynamically based on a users groups. */
   const testGroups = [
@@ -28,13 +27,12 @@ const Groups = () => {
   ]
 
   return (
-    <Flex className='group-container' flexDirection='column' width={{ base: "33%" }} height={{ base: "100%", sm: "auto" }}>
-      <Heading className='heading' as='h4' bg='white' p='1rem 1.5rem' borderRadius='10px 10px 0 0'>
+    <Flex className='group-container' flexDirection='column' width={{ base: "100%" }} height={{ base: "100%", sm: "auto" }}>
+      <Heading className='heading' as='h4' bg='white' p='1rem 1rem' borderRadius='10px 10px 0 0'>
         <Flex alignItems='center' flexDir='row' justifyContent='space-between'>
           <Flex flex={{ base: "1", sm: "auto" }}>
             <Heading fontSize='lg'> Groups </Heading>
           </Flex>
-          <IconButton className='close-groups-menu' icon={<BiRightArrowAlt />} variant='ghost' isRound='true' fontSize='xl' />
         </Flex>
       </Heading >
 

@@ -1,6 +1,4 @@
 .room{
-    box-shadow: 1px 1px 10px rgba(0,0,0,.1);
-    border-radius: 5px;
     .heading{
         font-family: 'DM Sans';
         color: rgb(70, 70, 70);
@@ -47,7 +45,7 @@
         input{
             width: 100%;
             padding: 1.5rem ;
-            border-radius: 0px 0px 10px 10px;
+            border-radius: 0px 0px 10px 0px;
 
         }
         button{
