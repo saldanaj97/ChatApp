@@ -24,10 +24,34 @@ const Groups = () => {
       groupName: 'Group 3',
       lastMessageReceived: { user: 'Test User 3', contents: 'This was the last message sent in group 3. ' }
     },
+    {
+      groupName: 'Group 4',
+      lastMessageReceived: { user: 'Test User 4', contents: 'This was the last message sent in group 4. ' }
+    },
+    {
+      groupName: 'Group 5',
+      lastMessageReceived: { user: 'Test User 5', contents: 'This was the last message sent in group 5. ' }
+    },
+    {
+      groupName: 'Group 6',
+      lastMessageReceived: { user: 'Test User 6', contents: 'This was the last message sent in group 6. ' }
+    },
+    {
+      groupName: 'Group 7',
+      lastMessageReceived: { user: 'Test User 7', contents: 'This was the last message sent in group 7. ' }
+    },
+    {
+      groupName: 'Group 8',
+      lastMessageReceived: { user: 'Test User 8', contents: 'This was the last message sent in group 8. ' }
+    },
+    {
+      groupName: 'Group 9',
+      lastMessageReceived: { user: 'Test User 9', contents: 'This was the last message sent in group 9. ' }
+    },
   ]
 
   return (
-    <Flex className='group-container' flexDirection='column' width={{ base: "100%" }} height={{ base: "100%", sm: "auto" }}>
+    <Flex className='group-container' flexDirection='column' width={{ base: "100%" }} height={{ base: "100%", sm: "400" }}>
       <Heading className='heading' as='h4' bg='white' p='1rem 1rem' borderRadius='10px 10px 0 0'>
         <Flex alignItems='center' flexDir='row' justifyContent='space-between'>
           <Flex flex={{ base: "1", sm: "auto" }}>

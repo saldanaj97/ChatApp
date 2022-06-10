@@ -70,7 +70,7 @@ const Chat = () => {
     <Flex className='app-container' flexDirection='row' width={{ base: "100%", sm: '900px' }} height={{ base: "100%", sm: "auto" }}>
 
       {/* Groups section */}
-      <Flex className='groups-pane' width={{ base: "100%", sm: '300px' }}>
+      <Flex className='groups-pane' width={{ base: "100%", sm: '300px' }} overflowY='scroll' scrollBehavior='smooth'>
         <Groups />
       </Flex>
 
