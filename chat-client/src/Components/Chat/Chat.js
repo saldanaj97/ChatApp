@@ -68,12 +68,15 @@ const Chat = () => {
 
   return (
     <Flex className='app-container' flexDirection='row' width={{ base: "100%", sm: '900px' }} height={{ base: "100%", sm: "auto" }}>
-      <Flex className='groups-pane' width={{ base: "100%", sm: '300px' }} background='white'>
+
+      {/* Groups section */}
+      <Flex className='groups-pane' width={{ base: "100%", sm: '300px' }}>
         <Groups />
       </Flex>
 
+      {/* Chatroom section*/}
       <Flex className='room' flexDirection='column' width={{ base: "100%", sm: '600px' }} height={{ base: "100%", sm: "auto" }}>
-        <Heading className='heading' as='h4' bg='white' p='1rem 1.5rem' borderRadius='0px 10px 0px 0px'>
+        <Heading className='heading' as='h4' p='1rem 1.5rem' borderRadius='0px 10px 0 0'>
           <Flex alignItems='center' justifyContent='space-between'>
             <Menu >
               <MenuButton as={IconButton} icon={<FiList />} isRound='true' bg='#FA2849' color='white' />
@@ -91,12 +94,16 @@ const Chat = () => {
             </Menu>
             <Flex alignItems='center' flexDirection='column' flex={{ base: "1", sm: "auto" }}>
               <Heading fontSize='lg'> {room.slice(0, 1).toUpperCase() + room.slice(1)}</Heading>
-              <Flex alignItems='center'><Text mr='1' fontWeight='400' fontSize='md' opacity='.7' letterSpacing='0' >{name}</Text><Box h={2} w={2} borderRadius='100px' bg='green.300'></Box></Flex>
+              <Flex alignItems='center'>
+                <Text mr='1' fontWeight='400' fontSize='md' opacity='.7' letterSpacing='0' >{name}</Text>
+                <Box h={2} w={2} borderRadius='100px' bg='green.300'></Box>
+              </Flex>
             </Flex>
             <Button color='gray.500' fontSize='sm' onClick={logout}>Logout</Button>
           </Flex>
         </Heading>
 
+        {/* Message rendering */}
         <ScrollToBottom className='messages' debug={false}>
           {messages.length > 0 ?
             messages.map((msg, i) =>
@@ -118,6 +125,8 @@ const Chat = () => {
             </Flex>
           }
         </ScrollToBottom>
+
+        {/* Message input box */}
         <div className='form'>
           <input type="text" placeholder='Enter Message' value={message} onChange={e => setMessage(e.target.value)} />
           <IconButton background='#FA2849' isRound='true' icon={<RiSendPlaneFill />} onClick={handleSendMessage} disabled={message === '' ? true : false}>Send</IconButton>
