@@ -11,16 +11,18 @@ import { MainContext } from '../../MainContext'
 import { SocketContext } from '../../SocketContext'
 import { UsersContext } from '../../UsersContext'
 
-import Groups from '../Groups/Groups.js'
+import Groups from '../Groups/Groups'
+import Bio from '../Login/Bio'
 
 import './Chat.scss'
 
 const Chat = () => {
   const { name, room, setName, setRoom } = useContext(MainContext)
   const socket = useContext(SocketContext)
+  const { users } = useContext(UsersContext)
   const [message, setMessage] = useState('')
   const [messages, setMessages] = useState([])
-  const { users } = useContext(UsersContext)
+  const [bioShown, setBioShown] = useState(false)
   const navigate = useNavigate()
   const toast = useToast()
 
@@ -52,11 +54,15 @@ const Chat = () => {
     })
   }, [socket, toast])
 
-
   /* Emit the message that was typed into the box when the user hits enter or clicks send*/
   const handleSendMessage = () => {
     socket.emit('sendMessage', message, () => setMessage(''))
     setMessage('')
+  }
+
+  const handleUserBioClick = (show) => {
+    console.log(bioShown)
+    setBioShown(show)
   }
 
   /* Handle navigation for when a user logs out */
@@ -107,12 +113,16 @@ const Chat = () => {
         <ScrollToBottom className='messages' debug={false}>
           {messages.length > 0 ?
             messages.map((msg, i) =>
-            (<Box display='flex' key={i} className={`message ${msg.user === name ? "my-message" : ""}`} m=".2rem .2rem">
-              <Avatar className='avatar' size='md' ml='3px' mr='3px'>
-              </Avatar>
+            (<Box display='flex' key={i} direction='row' className={`message ${msg.user === name ? "my-message" : ""}`} m=".2rem .2rem">
+              <Flex onMouseEnter={() => handleUserBioClick(true)} onMouseLeave={() => handleUserBioClick(false)}>
+                <Avatar className='avatar' size='sm' margin='auto 3px' />
+              </Flex>
+              {
+                bioShown && (<Bio />)
+              }
               <Box display='flex' flexDirection='column' className='name-msg-block' justifyContent='center'>
-                <Text fontSize='xs' opacity='.7' ml='3px' mr='3px' pt='3px' className='user'>{msg.user}</Text>
-                <Text fontSize='sm' className='msg' p=".4rem .8rem" bg='white' borderRadius='15px' color='white'>{msg.text}</Text>
+                {/*<Text fontSize='xs' opacity='.7' pt='3px' pl='.3rem' className='user'>{msg.user}</Text> */}
+                <Text fontSize='sm' className='msg' p=".1rem .7rem" bg='white' borderRadius='10px' color='white'>{msg.text}</Text>
               </Box>
             </Box>)
             )
@@ -132,7 +142,7 @@ const Chat = () => {
           <IconButton background='#FA2849' isRound='true' icon={<RiSendPlaneFill />} onClick={handleSendMessage} disabled={message === '' ? true : false}>Send</IconButton>
         </div>
       </Flex>
-    </Flex>
+    </Flex >
   )
 }
 

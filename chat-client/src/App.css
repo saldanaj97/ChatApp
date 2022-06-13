@@ -3,7 +3,6 @@
 .App{
     font-family: 'DM Sans';
     height: 100vh;
-    background: rgb(17,15,21);
     background: linear-gradient(0deg, rgba(17,15,21,1) 0%, rgba(40,35,49,1) 100%);
 }
 
