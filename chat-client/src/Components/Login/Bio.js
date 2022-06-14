@@ -3,7 +3,7 @@ import { Avatar, Box, Flex, Heading, IconButton, Text, Menu, Button, MenuButton,
 
 const Bio = () => {
     return (
-        <Box width='200px' height='100px' background='white' position='absolute' zIndex='overlay' top='25%' right='5%'>Hey</Box>
+        <Box background='white' zIndex='overlay'>Hey</Box>
     )
 }
 

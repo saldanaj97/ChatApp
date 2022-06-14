@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { FiList } from 'react-icons/fi'
 import { BiMessageDetail } from 'react-icons/bi'
 import { RiSendPlaneFill } from 'react-icons/ri'
-import { useToast } from "@chakra-ui/react"
-import { Avatar, Box, Flex, Heading, IconButton, Text, Menu, Button, MenuButton, MenuList, MenuItem } from "@chakra-ui/react"
+import { GridItem, useToast } from "@chakra-ui/react"
+import { Avatar, Box, Flex, Grid, Heading, IconButton, Text, Menu, Button, MenuButton, MenuList, MenuItem } from "@chakra-ui/react"
 import ScrollToBottom from 'react-scroll-to-bottom';
 
 import { MainContext } from '../../MainContext'
@@ -75,7 +75,7 @@ const Chat = () => {
     <Flex className='app-container' flexDirection='row' width={{ base: "100%", sm: '900px' }} height={{ base: "100%", sm: "auto" }}>
 
       {/* Groups section */}
-      <Flex className='groups-pane' width={{ base: "100%", sm: '300px' }} overflowY='scroll' scrollBehavior='smooth'>
+      <Flex className='groups-pane' width={{ base: "100%", sm: '300px' }} overflowY='auto' scrollBehavior='smooth'>
         <Groups />
       </Flex>
 
@@ -114,17 +114,24 @@ const Chat = () => {
         <ScrollToBottom className='messages' debug={false}>
           {messages.length > 0 ?
             messages.map((msg, i) =>
-            (<Box display='flex' key={i} direction='row' className={`message ${msg.user === name ? "my-message" : ""}`} m=".2rem .2rem">
-              <Flex onMouseEnter={() => handleUserBioClick(true)} onMouseLeave={() => handleUserBioClick(false)}>
-                <Avatar className='avatar' size='sm' margin='auto 3px' />
-                {bioShown && (<Bio />)}
-              </Flex>
-              <Box display='flex' flexDirection='column' className='name-msg-block' justifyContent='center'>
-                {/*<Text fontSize='xs' opacity='.7' pt='3px' pl='.3rem' className='user'>{msg.user}</Text> */}
-                <Text fontSize='sm' className='msg' p=".1rem .7rem" bg='white' borderRadius='10px' color='white'>{msg.text}</Text>
-              </Box>
-            </Box>)
-            )
+            (
+
+
+              <Grid bg='blue' h='35%' w='35%' templateRows='repeat(2, 1fr)' templateColumns='repeat(5, 1fr)' className={`message ${msg.user === name ? "my-message" : ""}`} m=".2rem .2rem">
+                <GridItem colSpan={1}>
+                  <Flex onMouseEnter={() => handleUserBioClick(true)} onMouseLeave={() => handleUserBioClick(false)}>
+                    <Avatar className='avatar' size='sm' margin='auto 3px' />
+                  </Flex>
+                </GridItem>
+
+                <GridItem colSpan={5} rowSpan={1} rowStart={2}>{bioShown && (<Bio />)}</GridItem>
+                <Flex flexDirection='column' className='name-msg-block'>
+                  <Text fontSize='sm' className='msg' p=".1rem .7rem" bg='white' borderRadius='10px' color='white'>{msg.text}</Text>
+                </Flex>
+              </Grid>
+
+
+            ))
             :
             <Flex alignItems='center' justifyContent='center' mt='.5rem' bg='#EAEAEA' opacity='.2' w='100%'>
               <Box mr='2'>-----</Box>
