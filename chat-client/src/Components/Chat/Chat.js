@@ -61,7 +61,6 @@ const Chat = () => {
   }
 
   const handleUserBioClick = (show) => {
-    console.log(bioShown)
     setBioShown(show)
   }
 
@@ -84,6 +83,7 @@ const Chat = () => {
       <Flex className='room' flexDirection='column' width={{ base: "100%", sm: '600px' }} height={{ base: "100%", sm: "auto" }}>
         <Heading className='heading' as='h4' p='1rem 1.5rem' borderRadius='0px 10px 0 0'>
           <Flex alignItems='center' justifyContent='space-between'>
+            {/* Menu Button */}
             <Menu >
               <MenuButton as={IconButton} icon={<FiList />} isRound='true' bg='#FA2849' color='white' />
               {<MenuList>
@@ -98,6 +98,7 @@ const Chat = () => {
                 }
               </MenuList>}
             </Menu>
+            {/* Logout Button */}
             <Flex alignItems='center' flexDirection='column' flex={{ base: "1", sm: "auto" }}>
               <Heading fontSize='lg'> {room.slice(0, 1).toUpperCase() + room.slice(1)}</Heading>
               <Flex alignItems='center'>
@@ -116,10 +117,8 @@ const Chat = () => {
             (<Box display='flex' key={i} direction='row' className={`message ${msg.user === name ? "my-message" : ""}`} m=".2rem .2rem">
               <Flex onMouseEnter={() => handleUserBioClick(true)} onMouseLeave={() => handleUserBioClick(false)}>
                 <Avatar className='avatar' size='sm' margin='auto 3px' />
+                {bioShown && (<Bio />)}
               </Flex>
-              {
-                bioShown && (<Bio />)
-              }
               <Box display='flex' flexDirection='column' className='name-msg-block' justifyContent='center'>
                 {/*<Text fontSize='xs' opacity='.7' pt='3px' pl='.3rem' className='user'>{msg.user}</Text> */}
                 <Text fontSize='sm' className='msg' p=".1rem .7rem" bg='white' borderRadius='10px' color='white'>{msg.text}</Text>
