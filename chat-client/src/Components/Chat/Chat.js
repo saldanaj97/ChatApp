@@ -114,23 +114,10 @@ const Chat = () => {
         <ScrollToBottom className='messages' debug={false}>
           {messages.length > 0 ?
             messages.map((msg, i) =>
-            (
-
-
-              <Grid h='55%' w='35%' templateRows='repeat(4, 1fr)' templateColumns='repeat(5, 1fr)' className={`message ${msg.user === name ? "my-message" : ""}`} m=".2rem .2rem">
-                <GridItem colSpan={1} m='auto 3px'>
-                  <Flex onMouseEnter={() => handleUserBioClick(true)} onMouseLeave={() => handleUserBioClick(false)} alignItems='center'>
-                    <Avatar className='avatar' size='sm' />
-                  </Flex>
-                </GridItem>
-                <GridItem colSpan={5} rowSpan={4} rowStart={2}>{bioShown && (<Bio />)}</GridItem>
-                <Flex flexDirection='column' className='name-msg-block' justifyContent='center'>
-                  <Text fontSize='sm' className='msg' p=".1rem .7rem" bg='white' borderRadius='10px' color='white'>{msg.text}</Text>
-                </Flex>
-              </Grid>
-
-
-            ))
+            (<Box key={i} className={`message ${msg.user === name ? "my-message" : ""}`} m=".2rem 0">
+              <Text fontSize='xs' opacity='.7' ml='5px' className='user'>{msg.user}</Text>
+              <Text fontSize='sm' className='msg' p=".4rem .8rem" bg='white' borderRadius='15px' color='white'>{msg.text}</Text>
+            </Box>))
             :
             <Flex alignItems='center' justifyContent='center' mt='.5rem' bg='#EAEAEA' opacity='.2' w='100%'>
               <Box mr='2'>-----</Box>
