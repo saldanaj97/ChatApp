@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { FiList } from 'react-icons/fi'
 import { BiMessageDetail } from 'react-icons/bi'
 import { RiSendPlaneFill } from 'react-icons/ri'
-import { GridItem, useToast } from "@chakra-ui/react"
-import { Avatar, Box, Flex, Grid, Heading, IconButton, Text, Menu, Button, MenuButton, MenuList, MenuItem } from "@chakra-ui/react"
+import { useToast } from "@chakra-ui/react"
+import { Avatar, Box, Flex, Heading, IconButton, Text, Menu, Button, MenuButton, MenuList, MenuItem } from "@chakra-ui/react"
 import ScrollToBottom from 'react-scroll-to-bottom';
 
 import { MainContext } from '../../MainContext'
@@ -114,10 +114,19 @@ const Chat = () => {
         <ScrollToBottom className='messages' debug={false}>
           {messages.length > 0 ?
             messages.map((msg, i) =>
-            (<Box key={i} className={`message ${msg.user === name ? "my-message" : ""}`} m=".2rem 0">
-              <Text fontSize='xs' opacity='.7' ml='5px' className='user'>{msg.user}</Text>
-              <Text fontSize='sm' className='msg' p=".4rem .8rem" bg='white' borderRadius='15px' color='white'>{msg.text}</Text>
-            </Box>))
+            (
+
+              <Box display='flex' key={i} className={`message ${msg.user === name ? "my-message" : ""}`} m=".2rem .2rem">
+                {console.log(msg.user)}
+                <Flex>{msg.user !== name && <Avatar size='sm' ml='3px' mr='3px' />}</Flex>
+                <Box display='flex' flexDirection='column' className='name-msg-block' justifyContent='center'>
+                  <Text fontSize='sm' className='msg' p=".4rem .8rem" bg='white' borderRadius='15px' color='white'>{msg.text}</Text>
+                </Box>
+                {/*<Flex onMouseEnter={() => handleUserBioClick(true)} onMouseLeave={() => handleUserBioClick(false)} alignItems='center'>
+                    <Flex{bioShown && (<Bio />)}</Flex>*/}
+              </Box>
+
+            ))
             :
             <Flex alignItems='center' justifyContent='center' mt='.5rem' bg='#EAEAEA' opacity='.2' w='100%'>
               <Box mr='2'>-----</Box>
