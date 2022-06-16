@@ -117,7 +117,6 @@ const Chat = () => {
             (
 
               <Box display='flex' key={i} className={`message ${msg.user === name ? "my-message" : ""}`} m=".2rem .2rem">
-                {console.log(msg.user)}
                 <Flex>{msg.user !== name && <Avatar size='sm' ml='3px' mr='3px' />}</Flex>
                 <Box display='flex' flexDirection='column' className='name-msg-block' justifyContent='center'>
                   <Text fontSize='sm' className='msg' p=".4rem .8rem" bg='white' borderRadius='15px' color='white'>{msg.text}</Text>
