@@ -13,7 +13,7 @@ const Signup = () => {
                 <Flex className='description-container' width='80%' margin='auto auto'>
                     <Text className='reg-info-description'>
                         An account is needed to add friends, be included in groups, and participate in chatrooms.
-                        Don’t worry, your email will not be shared with anyone. They will only be used for account creation.
+                        Don’t worry, your email will not be shared with anyone, it will only be used for account creation.
                     </Text>
                 </Flex>
             </Flex>
