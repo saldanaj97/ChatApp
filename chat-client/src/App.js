@@ -7,8 +7,8 @@ import { UsersProvider } from './UsersContext'
 
 import Login from './Components/Login/Login'
 import Chat from './Components/Chat/Chat.js'
-import Groups from './Components/Groups/Groups'
 import DefaultPage from './Components/DefaultPage'
+import Signup from './Components/Login/Signup';
 
 import './App.css'
 
@@ -29,7 +29,7 @@ function App() {
             <Flex className="App" align='center' justifyContent='center'>
               <Router>
                 <Routes>
-                  <Route path='/' exact element={<Login />} />
+                  <Route path='/' exact element={<Signup />} />
                   <Route path='/chat' element={<Chat />} />
                   <Route element={<DefaultPage />} />
                 </Routes>
