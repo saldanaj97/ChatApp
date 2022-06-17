@@ -60,8 +60,8 @@ const Chat = () => {
     setMessage('')
   }
 
-  const handleUserBioClick = (show) => {
-    setBioShown(show)
+  const handleUserBioClick = (value) => {
+    setBioShown(value)
   }
 
   /* Handle navigation for when a user logs out */
@@ -117,12 +117,13 @@ const Chat = () => {
             (
 
               <Box display='flex' key={i} className={`message ${msg.user === name ? "my-message" : ""}`} m=".2rem .2rem">
-                <Flex>{msg.user !== name && <Avatar size='sm' ml='3px' mr='3px' />}</Flex>
+                <button onClick={() => handleUserBioClick(true)} onMouseLeave={() => handleUserBioClick(false)}>
+                  {msg.user !== name && <Avatar size='sm' ml='3px' mr='3px' />}
+                </button>
                 <Box display='flex' flexDirection='column' className='name-msg-block' justifyContent='center'>
                   <Text fontSize='sm' className='msg' p=".4rem .8rem" bg='white' borderRadius='15px' color='white'>{msg.text}</Text>
                 </Box>
-                {/*<Flex onMouseEnter={() => handleUserBioClick(true)} onMouseLeave={() => handleUserBioClick(false)} alignItems='center'>
-                    <Flex{bioShown && (<Bio />)}</Flex>*/}
+                {bioShown.hover != null && <Bio />}
               </Box>
 
             ))
