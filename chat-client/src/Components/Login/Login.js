@@ -6,6 +6,8 @@ import { MainContext } from '../../MainContext'
 import { SocketContext } from '../../SocketContext'
 import { UsersContext } from '../../UsersContext'
 
+import './Login.scss'
+
 
 const Login = () => {
   const socket = useContext(SocketContext)
@@ -32,21 +34,19 @@ const Login = () => {
     <Flex direction='column'>
 
       {/* Container that will hold the forms and buttons  */}
-      <Flex className='login-container' direction='column' width={{ base: '100%', sm: '450px' }} height={{ base: '100%', sm: '350px' }} p='15px' bg='#282331' justifyContent='center' >
+      <Flex className='login-container' direction='column' width={{ base: '100%', sm: '450px' }} height={{ base: '100%', sm: '350px' }} justifyContent='space-evenly'>
 
         {/* Login Message */}
-        <Flex className='login-message' flexDirection='column'>
-          <Box m='auto auto'><Text color='white' fontSize='25px' mb='5'>Log in to chatroom.io</Text></Box>
+        <Box className='login-message'><Text color='white'>Log in to chatroom.io</Text></Box>
 
-          {/* Forms and sign up/login buttons */}
-          <Flex className='form' gap='1rem' height='100%' flexDirection='column' align='center'>
-            <Input variant='flushed' width='90%' borderColor='#FA2849' color='#FA2849' focusBorderColor=' #FA2849' type="text" placeholder='Username' value={name} onChange={e => setName(e.target.value)} />
-            <Input variant='flushed' width='90%' borderColor='#FA2849' color='#FA2849' focusBorderColor=' #FA2849' type='password' placeholder='Password' value={room} onChange={e => console.log(e.target.value)} />
-            <Flex className='buttons' flexDirection='row' width='100%' m='30px 0px 0px 0px' justifyContent='center'>
-              <Button backgroundColor='#FA2849' isRound='true' width='25%' m='0px 10px' onClick={handleClick}>Sign up</Button>
-              <Button backgroundColor='#FA2849' isRound='true' width='25%' m='0px 10px' onClick={handleClick}>Login</Button>
-            </Flex>
-          </Flex>
+        {/* Forms and sign up/login buttons */}
+        <Flex className='form' gap='1rem' flexDirection='column' align='center'>
+          <Input variant='flushed' width='85%' borderColor='#FA2849' color='#FA2849' focusBorderColor=' #FA2849' type="text" placeholder='Username' value={name} onChange={e => setName(e.target.value)} />
+          <Input variant='flushed' width='85%' borderColor='#FA2849' color='#FA2849' focusBorderColor=' #FA2849' type='password' placeholder='Password' value={room} onChange={e => console.log(e.target.value)} />
+          <Box className='buttons' width='100%' m='30px 0px 0px 0px' align='center'>
+            <Button backgroundColor='#FA2849' isRound='true' width='25%' m='0px 10px' onClick={handleClick}>Sign up</Button>
+            <Button backgroundColor='#FA2849' isRound='true' width='25%' m='0px 10px' onClick={handleClick}>Login</Button>
+          </Box>
         </Flex>
       </Flex>
     </Flex>

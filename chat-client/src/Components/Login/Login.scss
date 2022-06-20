@@ -1,0 +1,10 @@
+.login-container {
+    background-color: #282331;
+    padding: 10px;
+    filter: drop-shadow(16px 16px 10px black);
+    .login-message {
+        font-size: 25px;
+        text-align: center;
+        margin: 0 0 5px 0;
+    }
+}
