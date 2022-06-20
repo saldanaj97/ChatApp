@@ -5,6 +5,7 @@ import './Signup.scss'
 const Signup = () => {
     return (
         <Flex className='signup-container' direction='row' width={{ base: '100%', sm: '950px' }} height={{ base: '100%', sm: '450px' }}>
+
             {/* Small bio about what the user is registering for */}
             <Flex className='registration-info'>
                 <Flex className='title-container' margin='auto auto'>

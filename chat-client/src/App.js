@@ -29,7 +29,7 @@ function App() {
             <Flex className="App" align='center' justifyContent='center'>
               <Router>
                 <Routes>
-                  <Route path='/' exact element={<Signup />} />
+                  <Route path='/' exact element={<Login />} />
                   <Route path='/chat' element={<Chat />} />
                   <Route element={<DefaultPage />} />
                 </Routes>
