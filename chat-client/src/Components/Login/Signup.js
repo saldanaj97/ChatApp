@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Button, Divider, Flex, FormControl, FormLabel, FormHelperText, Input, Text } from "@chakra-ui/react"
+import { Box, Button, Divider, Flex, FormControl, Input, Text } from "@chakra-ui/react"
 import './Signup.scss'
 
 const Signup = () => {
