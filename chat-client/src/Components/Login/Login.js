@@ -1,15 +1,17 @@
 import React, { useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { Box, Button, Flex, Heading, Input, Text } from "@chakra-ui/react"
+
 import { MainContext } from '../../MainContext'
 import { SocketContext } from '../../SocketContext'
-import { Box, Button, Flex, Heading, IconButton, Input, Text } from "@chakra-ui/react"
 import { UsersContext } from '../../UsersContext'
+
 
 const Login = () => {
   const socket = useContext(SocketContext)
   const { name, setName, room, setRoom } = useContext(MainContext)
   const navigate = useNavigate()
-  const { setUsers } = useContext(UsersContext)
+  const { setUsers, loggedIn, setLoggedIn } = useContext(UsersContext)
 
   //Checks to see if there's a user already present
 
@@ -28,9 +30,6 @@ const Login = () => {
 
   return (
     <Flex direction='column'>
-
-      {/* Title */}
-      <Heading as="h1" size="4xl" textAlign='center' mb='20px' fontFamily='DM Sans' fontWeight='600' letterSpacing='-2px' color='#FA2849'>Chatroom.io</Heading>
 
       {/* Container that will hold the forms and buttons  */}
       <Flex className='login-container' direction='column' width={{ base: '100%', sm: '450px' }} height={{ base: '100%', sm: '350px' }} p='15px' bg='#282331' justifyContent='center' >

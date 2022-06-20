@@ -5,10 +5,9 @@ import { SocketProvider } from './SocketContext'
 import { MainProvider } from './MainContext'
 import { UsersProvider } from './UsersContext'
 
-import Login from './Components/Login/Login'
+import Home from './Components/Login/Home'
 import Chat from './Components/Chat/Chat.js'
 import DefaultPage from './Components/DefaultPage'
-import Signup from './Components/Login/Signup';
 
 import './App.css'
 
@@ -29,7 +28,7 @@ function App() {
             <Flex className="App" align='center' justifyContent='center'>
               <Router>
                 <Routes>
-                  <Route path='/' exact element={<Login />} />
+                  <Route path='/' exact element={<Home />} />
                   <Route path='/chat' element={<Chat />} />
                   <Route element={<DefaultPage />} />
                 </Routes>
