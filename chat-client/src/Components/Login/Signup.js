@@ -15,6 +15,8 @@ const Signup = () => {
 
     return (
         <Flex className='signup-container' direction='column' width={{ base: '100%', sm: '450px' }} height={{ base: '100%', sm: '500px' }} >
+
+            {/* Heading and description */}
             <Flex className='reg-title-and-desc' direction='column' m='15px'>
                 <Box className='title-container' textAlign='center'>
                     <Text className='reg-info-title'>Create an account</Text>
