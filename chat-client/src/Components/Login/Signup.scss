@@ -2,31 +2,23 @@
 
 .signup-container{
     font-family: 'DM Sans';
-    height: 100vh;
     background-color: #282331;
     filter: drop-shadow(16px 16px 10px black);
-    .registration-info {
-        flex-direction: column;
-        margin: auto auto;
-        width: 50% ;
-        height: 40%;
-        .reg-info-title {
-            font-weight: Bold;
-            font-size: 24px;
-            color: #FA2849;
-        }
-        .reg-info-description {
-            font-weight: 100;
-            font-size: 15px;
-            text-align: center;
-            color: white;
-        }
-        .existing-user-title {
-            font-size: 15px;
-            color: #FA2849;
-        }
+    .reg-info-title {
+        font-weight: Bold;
+        font-size: 24px;
+        color: #FA2849;
     }
-
+    .reg-info-description {
+        font-weight: 100;
+        font-size: 15px;
+        text-align: center;
+        color: white;
+    }
+    .existing-user-title {
+        font-size: 15px;
+        color: #FA2849;
+    }
     .signup-forms {
         flex-direction: column;
         width: 70%;
