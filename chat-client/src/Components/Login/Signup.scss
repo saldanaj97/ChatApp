@@ -19,6 +19,11 @@
             font-weight: 100;
             font-size: 15px;
             text-align: center;
+            color: white;
+        }
+        .existing-user-title {
+            font-size: 15px;
+            color: #FA2849;
         }
     }
 
@@ -30,12 +35,13 @@
             font-weight: 600;
             font-size: 24px;
             margin-bottom: 0;
+            color: #FA2849;
         }
     }
 
     Input {
         margin-bottom: 15px;
         border-color: #FA2849;
-        color: #FA2849;
+        color: white;
     }
 }

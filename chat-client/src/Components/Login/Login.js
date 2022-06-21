@@ -32,7 +32,7 @@ const Login = () => {
   }
 
   const handleSignUpClick = () => {
-    setShowSignUp(!showSignUp);
+    setShowSignUp(true);
   }
 
   return (
