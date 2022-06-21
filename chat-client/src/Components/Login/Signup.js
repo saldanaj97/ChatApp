@@ -40,7 +40,7 @@ const Signup = () => {
             </Flex>
 
             {/* Divider */}
-            <Flex margin='auto' width='100%'><Divider borderColor='#FA2849' orientation='horizontal' /></Flex>
+            <Flex margin='auto' width='95%'><Divider borderColor='#FA2849' orientation='horizontal' /></Flex>
 
             {/* Login option for existing users */}
             <Flex className='existing-user' direction='column' m='10px'>

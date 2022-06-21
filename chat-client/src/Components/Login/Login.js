@@ -42,7 +42,7 @@ const Login = () => {
       <Flex className='login-container' direction='column' width={{ base: '100%', sm: '450px' }} height={{ base: '100%', sm: '350px' }} justifyContent='space-evenly'>
 
         {/* Login Message */}
-        <Box className='login-message'><Text color='white'>Log in to chatroom.io</Text></Box>
+        <Box className='login-message'><Text color='#FA2849'>Log in</Text></Box>
 
         {/* Forms and sign up/login buttons */}
         <Flex className='form' gap='1rem' flexDirection='column' align='center'>
