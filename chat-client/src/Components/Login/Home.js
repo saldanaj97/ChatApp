@@ -15,7 +15,7 @@ const Home = () => {
     <Flex direction='column'>
       {/* Title */}
       <Heading as="h1" size="3xl" textAlign='center' mb='20px' fontFamily='DM Sans' fontWeight='600' letterSpacing='-2px' color='#FA2849'>Chatroom.io</Heading>
-      <Collapse startingHeight={400} in={showSignUp}>
+      <Collapse startingHeight={450} in={showSignUp}>
         {showSignUp ? <Signup /> : <Login />}
       </Collapse>
     </Flex >
