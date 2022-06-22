@@ -39,10 +39,13 @@ const Login = () => {
     <Flex direction='column'>
 
       {/* Container that will hold the forms and buttons  */}
-      <Flex className='login-container' direction='column' width={{ base: '100%', sm: '450px' }} height={{ base: '100%', sm: '350px' }} justifyContent='space-evenly'>
+      <Flex className='login-container' direction='column' width={{ base: '100%', sm: '450px' }} height={{ base: '100%', sm: '375px' }} justifyContent='space-evenly'>
 
         {/* Login Message */}
-        <Box className='login-message'><Text color='#FA2849'>Log in</Text></Box>
+        <Flex direction='column'>
+          <Box className='login-message'><Text color='#FA2849'>Log in</Text></Box>
+          <Text align='center' color='white' m='5px 20px'>If you already have an existing account, go ahead and log in. Otherwise, you can sign up by clicking below. </Text>
+        </Flex>
 
         {/* Forms and sign up/login buttons */}
         <Flex className='form' gap='1rem' flexDirection='column' align='center'>
