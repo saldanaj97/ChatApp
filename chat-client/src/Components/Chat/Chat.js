@@ -117,9 +117,9 @@ const Chat = () => {
             (
 
               <Box display='flex' key={i} className={`message ${msg.user === name ? "my-message" : ""}`} m=".2rem .2rem">
-                <button onClick={() => handleUserBioClick(true)} onMouseLeave={() => handleUserBioClick(false)}>
+                {/*                 <button onClick={() => handleUserBioClick(true)} onMouseLeave={() => handleUserBioClick(false)}>
                   {msg.user !== name && <Avatar size='sm' ml='3px' mr='3px' />}
-                </button>
+                </button> */}
                 <Box display='flex' flexDirection='column' className='name-msg-block' justifyContent='center'>
                   <Text fontSize='sm' className='msg' p=".4rem .8rem" bg='white' borderRadius='15px' color='white'>{msg.text}</Text>
                 </Box>
