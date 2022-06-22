@@ -1,0 +1,11 @@
+    /* Styling for the users group messages list */
+.group-message {
+    background: white;
+    .group-name{
+        font-size: small;
+        font-weight: 600;
+    }
+    .last-sent-message {
+        font-size: small;
+    }
+}
