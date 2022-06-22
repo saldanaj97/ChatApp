@@ -21,7 +21,7 @@ const Signup = () => {
                 <Box className='title-container' textAlign='center'>
                     <Text className='reg-info-title'>Create an account</Text>
                 </Box>
-                <Center className='description-container' m='5px 20px' textAlign='center'>
+                <Center className='description-container' m='0px 20px' textAlign='center'>
                     <Text className='reg-info-description'>
                         An account is required to add friends, be included in groups, and participate in chatrooms.
                     </Text>
@@ -29,7 +29,7 @@ const Signup = () => {
             </Flex>
 
             {/* Sign up forms */}
-            <Flex className='signup-forms' m='15px auto'>
+            <Flex className='signup-forms' m='0px auto 15px auto'>
                 <Text className='signup-title' textAlign='left'>Sign up</Text>
                 <Box width='100%' margin='0px auto'>
                     <FormControl>
@@ -38,14 +38,14 @@ const Signup = () => {
                         <Input variant='flushed' id='confirm-pass' focusBorderColor=' #FA2849' type='password' placeholder='Confirm Password' />
                     </FormControl>
                 </Box>
-                <Flex width='100%' justifyContent='center' m='5px auto'><Button bg='#FA2849'>Sign up</Button></Flex>
+                <Flex width='100%' justifyContent='center' m='10px auto'><Button bg='#FA2849'>Sign up</Button></Flex>
             </Flex>
 
             {/* Divider */}
             <Flex margin='auto' width='95%'><Divider borderColor='#FA2849' orientation='horizontal' /></Flex>
 
             {/* Login option for existing users */}
-            <Flex className='existing-user' direction='column' m='10px'>
+            <Flex className='existing-user' direction='column' m='15px'>
                 <Box className='title-container' textAlign='center'>
                     <Text className='existing-user-title'>Already have an account?</Text>
                 </Box>
