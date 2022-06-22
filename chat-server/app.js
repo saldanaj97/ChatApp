@@ -16,7 +16,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 // Routes
-const { addUser, getUser, deleteUser, getUsers } = require('./routes/users')
+const { addUser, getUser, deleteUser, getUsers } = require('./routes/user')
 
 /* Catch a 404 and forward to error handlerr */
 app.use('*', (req, res) => {
