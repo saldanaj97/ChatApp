@@ -1,7 +1,7 @@
 const express = require('express')
 const http = require('http')
 const cors = require('cors')
-const { addUser, getUser, deleteUser, getUsers } = require('./routes/users')
+const logger = require('morgan')
 
 // App will listen on port 3000 unless otherwise specified in the .env file
 const PORT = process.env.PORT || 3000
@@ -12,6 +12,20 @@ var server = http.createServer(app)
 var io = require('socket.io')(server)
 
 app.use(cors())
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
+
+// Routes
+const { addUser, getUser, deleteUser, getUsers } = require('./routes/users')
+
+/* Catch a 404 and forward to error handlerr */
+app.use('*', (req, res) => {
+  return res.status(404).json({
+    success: false,
+    message: 'API endpoint does not exist'
+  })
+})
+
 
 
 io.on('connection', (socket) => {
@@ -50,6 +64,7 @@ app.get('/', (req, res) => {
   res.send('Server is up and running. ')
 })
 
+/* Event listener for HTTP server 'listening' event */
 server.listen(PORT, () => {
   console.log(`Listening to ${PORT}`)
 })

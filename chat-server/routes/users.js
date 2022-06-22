@@ -1,45 +1,14 @@
-const users = []
+import express from 'express'
 
-// Add a user to the room. Assign an id when provided a room and name. 
-const addUser = (id, name, room) => {
-  // Check if there already exists a user with the same name or username 
-  const exisitingUser = users.find(user => user.name.trim().toLowerCase() === name.trim().toLowerCase())
+/* Controllers */
+import user from '../controllers/user.js'
 
-  // Errors
-  if (exisitingUser) {
-    return { 'error': 'Username has already been taken' }
-  }
+const router = express.Router()
 
-  if (!name && !room) {
-    return { 'error': 'Username and room required' }
-  }
+router
+  .get('/', user.onGetAllUsers)
+  .post('/', user.onCreateUser)
+  .get('/:id', user.onGetUserById)
+  .delete('/:id', user.onDeleteUserById)
 
-  if (!name) {
-    return { 'error': 'Username is required' }
-  }
-
-  if (!room) {
-    return { 'error': 'Room is required' }
-  }
-
-  const user = { id, name, room }
-  users.push(user)
-  return { user }
-}
-
-// Get a specific user based on id
-const getUser = id => {
-  let user = users.find(user => user.id == id)
-  return user
-}
-
-// Delete a specific user based on id
-const deleteUser = (id) => {
-  const index = users.findIndex((user) => user.id === id)
-  if (index !== -1) return users.splice(index, 1)[0]
-}
-
-// Get all users in the room 
-const getUsers = (room) => users.filter(user => user.room === room)
-
-module.exports = { addUser, getUsers, deleteUser, getUser }
+export default router
