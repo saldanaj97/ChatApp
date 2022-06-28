@@ -1,5 +1,5 @@
-import validationTypes from "./ValidationHelper/validationTypes.js";
-import validate from "./ValidationHelper/validate.js";
+import validationTypes from "./validationTypes.js";
+import validate from "./validate.js";
 
 export default function validateUserReqBody(cb) {
   const result = cb(validationTypes);
