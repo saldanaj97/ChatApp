@@ -1,6 +1,6 @@
 import isString from "./DataChecks/isString.js";
 import isArray from "./DataChecks/isArray.js";
-import isEnum from "./DataChecks/isEnum.js.js";
+import isEnum from "./DataChecks/isEnum.js";
 import getError from "./getError.js";
 import validationTypes from "./validationTypes.js";
 
