@@ -1,10 +1,10 @@
-import mongoose from "mongoose"
-import { v4 as uuidv4 } from 'uuid'
+import mongoose from "mongoose";
+import { v4 as uuidv4 } from "uuid";
 
 export const USER_TYPES = {
-  CONSUMER: 'consumer',
-  SUPPORT: 'support',
-}
+  CONSUMER: "consumer",
+  SUPPORT: "support",
+};
 
 /* Table schema for a user. 
     - id: randomly get a string from uuidv4
@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-    collection: 'users',
+    collection: "users",
   }
 );
 
@@ -33,6 +33,33 @@ userSchema.statics.createUser = async function (firstName, lastName, type) {
   } catch (error) {
     throw error;
   }
-}
+};
 
-export default mongoose.model('User', userSchema)
+userSchema.statics.getUserById = async function (id) {
+  try {
+    const userFoundById = await this.findOne({ _id: id });
+    return userFoundById;
+  } catch (error) {
+    throw error;
+  }
+};
+
+userSchema.statics.getAllUsers = async function () {
+  try {
+    const allUsers = await this.find();
+    return allUsers;
+  } catch (error) {
+    throw error;
+  }
+};
+
+userSchema.statics.deleteUserById = async function (id) {
+  try {
+    const successfullyDeletedUser = await this.deleteOne({ _id: id });
+    return successfullyDeletedUser;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export default mongoose.model("User", userSchema);
