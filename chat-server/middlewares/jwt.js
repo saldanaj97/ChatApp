@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import UserModel from "../models/User";
+import UserModel from "../models/User.js";
 
 const SECRET_KEY = "test key";
 
@@ -7,18 +7,20 @@ const SECRET_KEY = "test key";
   an authentication token */
 export const encode = async (req, res, next) => {
   try {
-    const { userID } = req.params;
-    const user = await UserModel.getUserById(userID);
+    const { userid } = req.params;
+    const user = await UserModel.getUserById(userid);
     const payload = {
-      userID: user._id,
+      userid: user._id,
       userType: user.userType,
     };
     const authToken = jwt.sign(payload, SECRET_KEY);
-    console.log("Auth", authToken);
     req.authToken = authToken;
     next();
   } catch (error) {
-    return res.status(400).json({ success: false, message: error.error });
+    return res.status(400).json({
+      success: false,
+      message: "Could not encode authorization token",
+    });
   }
 };
 
@@ -37,6 +39,9 @@ export const decode = (req, res, next) => {
     req.userType = decoded.userType;
     return next();
   } catch (error) {
-    return res.status(401).json({ success: false, error: error.message });
+    return res.status(401).json({
+      success: false,
+      message: "Could not decode authorization token",
+    });
   }
 };
