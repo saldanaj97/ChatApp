@@ -2,11 +2,7 @@
 import UserModel, { USER_TYPES } from "../models/User.js";
 import validateUserReqBody from "./ValidationHelper/index.js";
 
-/* Helper function that will check to see if the data is as follows:
-    - firstName, lastName, email: String
-    - type: Array
-*/
-
+/* Function to get all the users */
 const onGetAllUsers = async (req, res) => {
   try {
     const allUsers = await UserModel.getAllUsers();
@@ -35,6 +31,8 @@ const onCreateUser = async (req, res) => {
       checks: {
         firstName: { type: types.string },
         lastName: { type: types.string },
+        username: { type: types.string },
+        password: { type: types.string },
         type: { type: types.enum, options: { enum: USER_TYPES } },
       },
     }));
@@ -43,14 +41,21 @@ const onCreateUser = async (req, res) => {
     if (!validated.success) return res.status(400).json({ validated });
 
     //Otherwise, add the data to the req body and send off the req to create a new user
-    const { firstName, lastName, type } = req.body;
-    const user = await UserModel.createUser(firstName, lastName, type);
+    const { firstName, lastName, username, password, type } = req.body;
+    const user = await UserModel.createUser(
+      firstName,
+      lastName,
+      username,
+      password,
+      type
+    );
     return res.status(200).json({ sucess: true, user });
   } catch (error) {
-    return res.status(500).json({ success: false, error });
+    return res.status(500).json({ success: false, error: error });
   }
 };
 
+/* Function to delete a user account by their ID */
 const onDeleteUserById = async (req, res) => {
   try {
     const successfullyDeletedUser = await UserModel.deleteUserById(

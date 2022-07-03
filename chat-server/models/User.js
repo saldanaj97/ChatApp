@@ -18,6 +18,8 @@ const userSchema = new mongoose.Schema(
     },
     firstName: String,
     lastName: String,
+    username: String,
+    password: String,
     type: String,
   },
   {
@@ -26,9 +28,15 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-userSchema.statics.createUser = async function (firstName, lastName, type) {
+userSchema.statics.createUser = async function (firstName, lastName, username, password, type) {
   try {
-    const user = await this.create({ firstName, lastName, type });
+    const user = await this.create({
+      firstName,
+      lastName,
+      username,
+      password,
+      type,
+    });
     return user;
   } catch (error) {
     throw error;
