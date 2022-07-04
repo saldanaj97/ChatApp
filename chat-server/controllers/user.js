@@ -1,3 +1,5 @@
+import bcrypt from "bcrypt";
+
 /* Models */
 import UserModel, { USER_TYPES } from "../models/User.js";
 import validateUserReqBody from "./ValidationHelper/index.js";
@@ -22,6 +24,12 @@ const onGetUserById = async (req, res) => {
   }
 };
 
+/* Helper function that will be used in hashing the passwords using salt */
+const hashPassword = async (unhashedPassword) => {
+  const hash = await bcrypt.hash(unhashedPassword, 10);
+  return hash;
+};
+
 /* Function that will be used to handle the req and res of a newly created user */
 const onCreateUser = async (req, res) => {
   try {
@@ -42,11 +50,16 @@ const onCreateUser = async (req, res) => {
 
     //Otherwise, add the data to the req body and send off the req to create a new user
     const { firstName, lastName, username, password, type } = req.body;
+
+    // Hash the password using salt before saving to the DB
+    const hashedPassword = await hashPassword(password);
+
+    // Send the new user data to the db
     const user = await UserModel.createUser(
       firstName,
       lastName,
       username,
-      password,
+      hashedPassword,
       type
     );
     return res.status(200).json({ sucess: true, user });
