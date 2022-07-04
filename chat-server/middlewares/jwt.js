@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import UserModel from "../models/User.js";
+import User from "../controllers/user.js";
 
 const SECRET_KEY = "test key";
 
@@ -7,15 +8,17 @@ const SECRET_KEY = "test key";
   an authentication token */
 export const encode = async (req, res, next) => {
   try {
-    const { userid } = req.params;
-    const user = await UserModel.getUserById(userid);
+    const { username, password } = req.params;
+    const currentUser = await UserModel.getUserByUsername(username);
+    let verifyLogin = await User.onUserLogin(req, res);
+    //const verifyLogin = await User.onUserLogin();
+    if (!verifyLogin) throw error;
     const payload = {
-      userid: user._id,
-      userType: user.userType,
+      userid: currentUser._id,
+      userType: currentUser.userType,
     };
     const authToken = jwt.sign(payload, SECRET_KEY);
     req.authToken = authToken;
-    next();
   } catch (error) {
     return res.status(400).json({
       success: false,
