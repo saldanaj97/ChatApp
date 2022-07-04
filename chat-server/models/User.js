@@ -58,6 +58,15 @@ userSchema.statics.getUserById = async function (id) {
   }
 };
 
+userSchema.statics.getUserByUsername = async function (_username) {
+  try {
+    const userFound = await this.findOne({ username: _username });
+    return userFound;
+  } catch (error) {
+    throw error;
+  }
+};
+
 userSchema.statics.getAllUsers = async function () {
   try {
     const allUsers = await this.find();

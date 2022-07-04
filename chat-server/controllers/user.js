@@ -24,6 +24,26 @@ const onGetUserById = async (req, res) => {
   }
 };
 
+/* Helper function to verify that a user has entered the correct password for the provided username */
+const isPasswordCorrect = async (providedPass, hashedPass) => {
+  const result = await bcrypt.compare(providedPass, hashedPass);
+  return result;
+};
+
+/* Function that will be used to verify a users login information */
+const onUserLogin = async (req, res) => {
+  try {
+    const user = await UserModel.getUserByUsername(req.params.username);
+    const loginAccepted = await isPasswordCorrect(req.params.password, user.password);
+    if (!loginAccepted) {
+      return res.status(400).json({ success: false, error: "Wrong password or username" });
+    }
+    return res.status(200).json({ success: true });
+  } catch (error) {
+    return res.status(500).json({ success: false, error: "Wrong password or username" });
+  }
+};
+
 /* Helper function that will be used in hashing the passwords using salt */
 const hashPassword = async (unhashedPassword) => {
   const hash = await bcrypt.hash(unhashedPassword, 10);
@@ -55,13 +75,7 @@ const onCreateUser = async (req, res) => {
     const hashedPassword = await hashPassword(password);
 
     // Send the new user data to the db
-    const user = await UserModel.createUser(
-      firstName,
-      lastName,
-      username,
-      hashedPassword,
-      type
-    );
+    const user = await UserModel.createUser(firstName, lastName, username, hashedPassword, type);
     return res.status(200).json({ sucess: true, user });
   } catch (error) {
     return res.status(500).json({ success: false, error: error });
@@ -71,9 +85,7 @@ const onCreateUser = async (req, res) => {
 /* Function to delete a user account by their ID */
 const onDeleteUserById = async (req, res) => {
   try {
-    const successfullyDeletedUser = await UserModel.deleteUserById(
-      req.params.id
-    );
+    const successfullyDeletedUser = await UserModel.deleteUserById(req.params.id);
     return res.status(200).json({
       success: true,
       message: `Deleted ${successfullyDeletedUser.deletedCount} account(s) matching the provided ID. `,
@@ -83,4 +95,10 @@ const onDeleteUserById = async (req, res) => {
   }
 };
 
-export default { onGetAllUsers, onGetUserById, onCreateUser, onDeleteUserById };
+export default {
+  onGetAllUsers,
+  onGetUserById,
+  onUserLogin,
+  onCreateUser,
+  onDeleteUserById,
+};
