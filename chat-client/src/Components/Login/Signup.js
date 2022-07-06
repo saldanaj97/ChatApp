@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import axios from "axios";
 
 import { Box, Button, Center, Divider, Flex, FormControl, Input, Text } from "@chakra-ui/react";
 
@@ -7,7 +8,7 @@ import { SignupContext } from "./SignupContext";
 import "./Signup.scss";
 
 const Signup = () => {
-  const { showSignUp, setShowSignUp } = useContext(SignupContext);
+  const { setShowSignUp } = useContext(SignupContext);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
@@ -18,7 +19,22 @@ const Signup = () => {
   };
 
   const handleSignUpClick = () => {
-    console.log(firstName, lastName, username, password);
+    // This will turn all the user entered data into a json to make the post request
+    const newUserInfo = JSON.stringify({
+      firstName: firstName,
+      lastName: lastName,
+      username: username,
+      password: password,
+      type: "consumer",
+    });
+
+    axios
+      .post(`http://localhost:3000/users/`, newUserInfo, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => console.log(response));
   };
 
   return (
