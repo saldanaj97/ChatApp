@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 
 import { Box, Button, Center, Divider, Flex, FormControl, Input, Text } from "@chakra-ui/react";
 
@@ -8,13 +8,21 @@ import "./Signup.scss";
 
 const Signup = () => {
   const { showSignUp, setShowSignUp } = useContext(SignupContext);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleLoginClick = () => {
     setShowSignUp(false);
   };
 
+  const handleSignUpClick = () => {
+    console.log(firstName, lastName, username, password);
+  };
+
   return (
-    <Flex className='signup-container' direction='column' width={{ base: "100%", sm: "450px" }} height={{ base: "100%", sm: "500px" }}>
+    <Flex className='signup-container' direction='column' width={{ base: "100%", sm: "450px" }} height={{ base: "100%", sm: "600px" }}>
       {/* Heading and description */}
       <Flex className='reg-title-and-desc' direction='column' m='15px'>
         <Box className='title-container' textAlign='center'>
@@ -32,13 +40,17 @@ const Signup = () => {
         </Text>
         <Box width='100%' margin='0px auto'>
           <FormControl>
-            <Input variant='flushed' id='username' focusBorderColor=' #FA2849' placeholder='Username' />
-            <Input variant='flushed' id='password' focusBorderColor=' #FA2849' type='password' placeholder='Password' />
+            <Input variant='flushed' id='firstname' focusBorderColor=' #FA2849' placeholder='First Name' value={firstName || ""} onChange={(e) => setFirstName(e.target.value)} />
+            <Input variant='flushed' id='lastname' focusBorderColor=' #FA2849' placeholder='Last Name' value={lastName || ""} onChange={(e) => setLastName(e.target.value)} />
+            <Input variant='flushed' id='username' focusBorderColor=' #FA2849' placeholder='Username' value={username || ""} onChange={(e) => setUsername(e.target.value)} />
+            <Input variant='flushed' id='password' focusBorderColor=' #FA2849' type='password' placeholder='Password' value={password || ""} onChange={(e) => setPassword(e.target.value)} />
             <Input variant='flushed' id='confirm-pass' focusBorderColor=' #FA2849' type='password' placeholder='Confirm Password' />
           </FormControl>
         </Box>
         <Flex width='100%' justifyContent='center' m='10px auto'>
-          <Button bg='#FA2849'>Sign up</Button>
+          <Button bg='#FA2849' onClick={handleSignUpClick}>
+            Sign up
+          </Button>
         </Flex>
       </Flex>
 
@@ -53,7 +65,7 @@ const Signup = () => {
           <Text className='existing-user-title'>Already have an account?</Text>
         </Box>
         <Flex className='existing-user-button' justify='center' m='10px 0 10px 0'>
-          <Button backgroundColor='#FA2849' isRound='true' width='25%' onClick={handleLoginClick}>
+          <Button backgroundColor='#FA2849' width='25%' onClick={handleLoginClick}>
             Login
           </Button>
         </Flex>

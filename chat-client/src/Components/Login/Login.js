@@ -57,10 +57,10 @@ const Login = () => {
           <Input variant='flushed' width='85%' borderColor='#FA2849' color='#FA2849' focusBorderColor=' #FA2849' type='text' placeholder='Username' value={name} onChange={(e) => setName(e.target.value)} />
           <Input variant='flushed' width='85%' borderColor='#FA2849' color='#FA2849' focusBorderColor=' #FA2849' type='password' placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} />
           <Box className='buttons' width='100%' m='30px 0px 0px 0px' align='center'>
-            <Button backgroundColor='#FA2849' isRound='true' width='25%' m='0px 10px' onClick={handleSignUpClick}>
+            <Button backgroundColor='#FA2849' width='25%' m='0px 10px' onClick={handleSignUpClick}>
               Sign up
             </Button>
-            <Button backgroundColor='#FA2849' isRound='true' width='25%' m='0px 10px' onClick={handleLoginClick}>
+            <Button backgroundColor='#FA2849' width='25%' m='0px 10px' onClick={handleLoginClick}>
               Login
             </Button>
           </Box>
