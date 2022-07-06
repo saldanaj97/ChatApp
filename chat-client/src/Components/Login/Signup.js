@@ -28,13 +28,11 @@ const Signup = () => {
       type: "consumer",
     });
 
-    axios
-      .post(`http://localhost:3000/users/`, newUserInfo, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then((response) => console.log(response));
+    axios.post(`http://localhost:3000/users/`, newUserInfo, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   };
 
   return (

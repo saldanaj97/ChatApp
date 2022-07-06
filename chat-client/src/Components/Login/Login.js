@@ -31,7 +31,7 @@ const Login = () => {
     /*     socket.emit('login', { name, room }, () => {
       navigate('/chat')
     }) */
-    axios.post(`http://localhost:3000/login/${name}/${password}`).then((response) => console.log(response.data));
+    axios.post(`http://localhost:3000/login/${name}/${password}`);
   };
 
   const handleSignUpClick = () => {
