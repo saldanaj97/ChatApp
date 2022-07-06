@@ -13,10 +13,10 @@ import "./Login.scss";
 const Login = () => {
   const socket = useContext(SocketContext);
   const { name, setName, room, setRoom } = useContext(MainContext);
-  const [password, setPassword] = useState("");
-  const navigate = useNavigate();
   const { setUsers, loggedIn, setLoggedIn } = useContext(UsersContext);
   const { showSignUp, setShowSignUp } = useContext(SignupContext);
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   //Checks to see if there's a user already present
 
