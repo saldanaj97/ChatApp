@@ -27,7 +27,7 @@ const isArray = ({ value: array, options = defaultOptions }) => {
   }
 
   if (!options.empty && array.length === 0) {
-    return checkResponse(false, "Values of array must be string only");
+    return checkResponse(false, 'Array cannot be empty');
   }
   return checkResponse(true);
 };

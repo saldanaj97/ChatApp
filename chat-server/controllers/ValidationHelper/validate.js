@@ -2,11 +2,15 @@ import isString from "./DataChecks/isString.js";
 import isArray from "./DataChecks/isArray.js";
 import isEnum from "./DataChecks/isEnum.js";
 import getError from "./getError.js";
-import validationTypes from "./validationTypes.js";
 
 /* Method that will validate the req.body with checks provided to the function */
 const validate = ({ payload, checks }) => {
   const errors = {};
+  const validationTypes = {
+    string: "string",
+    enum: "enum",
+    array: "array",
+  };
 
   // Make sure the user provded both payload and checks
   if (!payload) {
@@ -15,7 +19,6 @@ const validate = ({ payload, checks }) => {
   if (!checks) {
     return getError({ message: "checks required in validateUserReqBody()" });
   }
-
   Object.keys(checks).forEach((checkKey) => {
     const { type, options = {} } = checks[checkKey];
     const value = payload[checkKey];
@@ -43,7 +46,7 @@ const validate = ({ payload, checks }) => {
         break;
       }
       default: {
-        errors[checkKey] = `Unknown type passed in type: ${type} `;
+        errors[checkKey] = `Unknown type passed in: ${type} `;
       }
     }
   });

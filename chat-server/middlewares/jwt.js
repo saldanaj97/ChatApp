@@ -14,7 +14,7 @@ export const encode = async (req, res, next) => {
     if (!verifyLogin) throw error;
     const payload = {
       userid: currentUser._id,
-      userType: currentUser.userType,
+      userType: currentUser.type,
     };
     const authToken = jwt.sign(payload, SECRET_KEY);
     req.authToken = authToken;
@@ -35,7 +35,7 @@ export const decode = (req, res, next) => {
   const accessToken = req.headers["authorization"].split(" ")[1];
   try {
     const decoded = jwt.verify(accessToken, SECRET_KEY);
-    req.userId = decoded.userId;
+    req.userId = decoded.userid;
     req.userType = decoded.userType;
     return next();
   } catch (error) {
