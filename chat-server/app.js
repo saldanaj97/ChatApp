@@ -22,8 +22,8 @@ const app = express();
 const server = http.createServer(app);
 const socketio = new Server(server);
 
-// Create socket connectioncl
-global.io = socketio.listen(server);
+// Create socket connectionc
+global.io = server.listen(PORT);
 global.io.on("connection", WebSockets.connection);
 
 app.use(cors());
