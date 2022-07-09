@@ -105,4 +105,36 @@ ChatMessageSchema.statics.createPostInChatRoom = async function (chatRoomId, mes
   }
 };
 
+ChatMessageSchema.statics.getConversationByRoomId = async function (chatRoomId, options = {}) {
+  try {
+    return this.aggregate([
+      // Find the chatroom matching the ID passed in
+      { $match: { chatRoomId } },
+
+      // Sort the messages in reverse order due to messages being displayed that way in a convo thread
+      { $sort: { createdAt: -1 } },
+
+      // Find each user object for each sent message and then unwind the user object to an array
+      {
+        $lookup: {
+          from: "users",
+          localField: "postedByUser",
+          foreignField: "_id",
+          as: "postedByUser",
+        },
+      },
+      { $unwind: "$postedByUser" },
+
+      // Limit the amount of messages we are getting on load
+      { $skip: options.page * options.limit },
+      { $limit: options.limit },
+
+      // Display the messages in the order they were sent
+      { $sort: { createdAt: 1 } },
+    ]);
+  } catch (error) {
+    throw error;
+  }
+};
+
 export default mongoose.model("ChatMessage", ChatMessageSchema);

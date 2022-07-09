@@ -28,13 +28,7 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-userSchema.statics.createUser = async function (
-  firstName,
-  lastName,
-  username,
-  password,
-  type
-) {
+userSchema.statics.createUser = async function (firstName, lastName, username, password, type) {
   try {
     const user = await this.create({
       firstName,
@@ -80,6 +74,15 @@ userSchema.statics.deleteUserById = async function (id) {
   try {
     const successfullyDeletedUser = await this.deleteOne({ _id: id });
     return successfullyDeletedUser;
+  } catch (error) {
+    throw error;
+  }
+};
+
+userSchema.statics.getUserByIds = async function (ids) {
+  try {
+    const users = await this.find({ _id: { $in: ids } });
+    return users;
   } catch (error) {
     throw error;
   }

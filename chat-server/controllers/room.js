@@ -1,6 +1,7 @@
 import validateUserReqBody from "./ValidationHelper/index.js";
 import ChatRoomModel, { CHAT_ROOM_TYPES } from "../models/ChatRoom.js";
 import ChatMessageModel from "../models/ChatMessage.js";
+import UserModel from "../models/User.js";
 
 /* Function to initaite a chatroom */
 const initiate = async (req, res) => {
@@ -60,7 +61,6 @@ const postMessage = async (req, res) => {
 
     // Broadcast the message to the room ID
     const post = await ChatMessageModel.createPostInChatRoom(roomId, messagePayload, currentLoggedUser);
-    console.log(post);
     global.io.sockets.in(roomId).emit("new message", { message: post });
     return res.status(200).json({ success: true, post });
   } catch (error) {
@@ -69,7 +69,42 @@ const postMessage = async (req, res) => {
 };
 
 const getRecentConversation = async (req, res) => {};
-const getConversationByRoomId = async (req, res) => {};
+
+/* Function that will get all messages from a particular room ID*/
+const getConversationByRoomId = async (req, res) => {
+  try {
+    // Check if the room that we are trying to reach exists, if not return a message notifying of non existent room
+    const { roomId } = req.params;
+    const room = await ChatRoomModel.getChatRoomById(roomId);
+    if (!room) return res.status(400).json({ success: false, message: "No room exists with the provided ID" });
+
+    // Get all the users in the room
+    const users = await UserModel.getUserByIds(room.userIds);
+    ChatRoomModel.getChatRoomById = async function (roomId) {
+      try {
+        const room = await this.findOne({ _id: roomId });
+        return room;
+      } catch (error) {
+        throw error;
+      }
+    };
+    const options = {
+      page: parseInt(req.query.page) || 1,
+      limit: parseInt(req.query.limit) || 10,
+    };
+
+    // Get the conversation now that the room has been confirmed to exist
+    const conversation = await ChatMessageModel.getConversationByRoomId(roomId, options);
+    return res.status(200).json({
+      success: true,
+      conversation,
+      users,
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, error: error });
+  }
+};
+
 const markConversationReadByRoomId = async (req, res) => {};
 
 export default {
