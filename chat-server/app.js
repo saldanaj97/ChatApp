@@ -17,25 +17,21 @@ import { decode } from "./middlewares/jwt.js";
 // App will listen on port 3000 unless otherwise specified in the .env file
 const PORT = process.env.PORT || 3000;
 
-// Initialize the express app and create http server
+// Initialize express app
 const app = express();
-const server = http.createServer(app);
-const socketio = new Server(server);
-
-// Create socket connectionc
-global.io = server.listen(PORT);
-global.io.on("connection", WebSockets.connection);
+app.set("port", PORT);
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// Routes
 app.use("/", indexRouter);
 app.use("/users", userRouter);
 app.use("/room", decode, chatRoomRouter);
 app.use("/delete", deleteRouter);
 
-/* Catch a 404 and forward to error handlerr */
+// Catch a 404 and forward to error handler
 app.use("*", (req, res) => {
   return res.status(404).json({
     success: false,
@@ -43,6 +39,21 @@ app.use("*", (req, res) => {
   });
 });
 
+// Message to notify of the server status
 app.get("/", (req, res) => {
   res.send("Server is up and running. ");
+});
+
+// Create http server
+const server = http.createServer(app);
+const socketio = new Server(server);
+
+// Create socket connection
+global.io = socketio.listen(server);
+global.io.on("connection", WebSockets.connection);
+server.listen(PORT);
+
+// Message to display which port  we are listening on
+server.on("listening", () => {
+  console.log(`Listening on port::${PORT}`);
 });

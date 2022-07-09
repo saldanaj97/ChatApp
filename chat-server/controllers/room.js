@@ -1,5 +1,6 @@
 import validateUserReqBody from "./ValidationHelper/index.js";
 import ChatRoomModel, { CHAT_ROOM_TYPES } from "../models/ChatRoom.js";
+import ChatMessageModel from "../models/ChatMessage.js";
 
 /* Function to initaite a chatroom */
 const initiate = async (req, res) => {
@@ -33,7 +34,40 @@ const initiate = async (req, res) => {
     return res.status(500).json({ success: false, error: error });
   }
 };
-const postMessage = async (req, res) => {};
+
+/* Function for when a user decides to send a message to a room */
+const postMessage = async (req, res) => {
+  try {
+    // Get the room ID the message will be sent to
+    const { roomId } = req.params;
+
+    // Validate the req
+    const validation = validateUserReqBody((types) => ({
+      payload: req.body,
+      checks: {
+        messageText: { type: types.string },
+      },
+    }));
+    if (!validation.success) return res.status(200).json({ validation });
+
+    // Once the req has been validated we grab the message text from the req
+    const messagePayload = {
+      messageText: req.body.messageText,
+    };
+
+    // Get the id of the user logged in
+    const currentLoggedUser = req.userId;
+
+    // Broadcast the message to the room ID
+    const post = await ChatMessageModel.createPostInChatRoom(roomId, messagePayload, currentLoggedUser);
+    console.log(post);
+    global.io.sockets.in(roomId).emit("new message", { message: post });
+    return res.status(200).json({ success: true, post });
+  } catch (error) {
+    return res.status(500).json({ success: false, error: error });
+  }
+};
+
 const getRecentConversation = async (req, res) => {};
 const getConversationByRoomId = async (req, res) => {};
 const markConversationReadByRoomId = async (req, res) => {};
