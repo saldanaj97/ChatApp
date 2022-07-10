@@ -62,4 +62,13 @@ chatRoomSchema.statics.getChatRoomById = async function (roomId) {
   }
 };
 
+chatRoomSchema.statics.getChatRoomsByUserId = async function (userId) {
+  try {
+    const rooms = await this.find({ userIds: { $all: [userId] } });
+    return rooms;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export default mongoose.model("ChatRoom", chatRoomSchema);
