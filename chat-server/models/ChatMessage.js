@@ -137,4 +137,114 @@ ChatMessageSchema.statics.getConversationByRoomId = async function (chatRoomId, 
   }
 };
 
+ChatMessageSchema.statics.getRecentConversation = async function (chatRoomIds, options) {
+  try {
+    return this.aggregate([
+      { $match: { chatRoomId: { $in: chatRoomIds } } },
+      {
+        $group: {
+          _id: "$chatRoomId",
+          messageId: { $last: "$_id" },
+          chatRoomId: { $last: "$chatRoomId" },
+          message: { $last: "$message" },
+          type: { $last: "$type" },
+          postedByUser: { $last: "$postedByUser" },
+          createdAt: { $last: "$createdAt" },
+          readByRecipients: { $last: "$readByRecipients" },
+        },
+      },
+      { $sort: { createdAt: -1 } },
+
+      // Do a join on the users table and return the user who made the post
+      {
+        $lookup: {
+          from: "users",
+          localField: "postedByUser",
+          foreignField: "_id",
+          as: "postedByUser",
+        },
+      },
+      { $unwind: "$postedByUser" },
+
+      // Do a join on the chatrooms table and return the room matching the ID
+      {
+        $lookup: {
+          from: "chatrooms",
+          localField: "_id",
+          foreignField: "_id",
+          as: "roomInfo",
+        },
+      },
+      { $unwind: "$roomInfo" },
+      { $unwind: "$roomInfo.userIds" },
+
+      // Join the users table
+      {
+        $lookup: {
+          from: "users",
+          localField: "roomInfo.userIds",
+          foreignField: "_id",
+          as: "roomInfo.userProfile",
+        },
+      },
+      { $unwind: "$readByRecipients" },
+
+      // Join the users table
+      {
+        $lookup: {
+          from: "users",
+          localField: "readByRecipients.readByUserId",
+          foreignField: "_id",
+          as: "readByRecipients.readByUser",
+        },
+      },
+
+      // Group the data together
+      {
+        $group: {
+          _id: "$roomInfo._id",
+          messageId: { $last: "$messageId" },
+          chatRoomId: { $last: "$chatRoomId" },
+          message: { $last: "$message" },
+          type: { $last: "$type" },
+          postedByUser: { $last: "$postedByUser" },
+          readByRecipients: { $addToSet: "$readByRecipients" },
+          roomInfo: { $addToSet: "$roomInfo.userProfile" },
+          createdAt: { $last: "$createdAt" },
+        },
+      },
+      // Pagination
+      { $skip: options.page * options.limit },
+      { $limit: options.limit },
+    ]);
+  } catch (error) {
+    throw error;
+  }
+};
+
+ChatMessageSchema.statics.markMessageRead = async function (chatRoomId, currentUserOnlineId) {
+  try {
+    // Use the update many function because it could be possible user has not seen multiple messages
+    return this.updateMany(
+      // Find all chat messages in the room matching the ID where the userID is not in the readby recipients arr
+      {
+        chatRoomId,
+        "readByRecipients.readByUserId": { $ne: currentUserOnlineId },
+      },
+
+      // Update and add the current user to the readByRecipients array
+      {
+        $addToSet: {
+          readByRecipients: { readByUserId: currentUserOnlineId },
+        },
+      },
+
+      // Update all of the matching records
+      { multi: true }
+    );
+  } catch (error) {
+    throw error;
+  }
+};
+
 export default mongoose.model("ChatMessage", ChatMessageSchema);
