@@ -29,9 +29,8 @@ const initiate = async (req, res) => {
     // Add the initiator to the group of all users in a room
     const allUserIds = [...userIds, chatInitiator];
 
-    // Get the ID for the new room (if provided )
+    // Get the ID for the new room (if provided ) other wise a default value will be provided
     const { _id } = req.body;
-    console.log("id: ", _id);
 
     // Initiate the chatroom
     const chatRoom = await ChatRoomModel.initiateChat(_id, allUserIds, type, chatInitiator);
