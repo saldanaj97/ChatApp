@@ -6,7 +6,9 @@ class WebSocket {
   connection(client) {
     // Event for a disconnect
     client.on("disconnect", () => {
-      this.users = this.users.filter((user) => user.socketId !== client.id);
+      if (typeof users !== "undefined") {
+        this.users = this.users.filter((user) => user.socketId !== client.id);
+      }
     });
 
     // Event for attaching a user to a socket id when logged in
