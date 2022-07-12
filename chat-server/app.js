@@ -46,7 +46,7 @@ app.get("/", (req, res) => {
 
 // Create http server
 const server = http.createServer(app);
-const socketio = new Server(server);
+const socketio = new Server({ noServer: true });
 
 // Create socket connection
 global.io = socketio.listen(server);
