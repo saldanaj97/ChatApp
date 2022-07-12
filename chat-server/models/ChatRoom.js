@@ -22,9 +22,10 @@ const chatRoomSchema = new mongoose.Schema(
   }
 );
 
-chatRoomSchema.statics.initiateChat = async function (userIds, type, chatInitiator) {
+chatRoomSchema.statics.initiateChat = async function (_id, userIds, type, chatInitiator) {
   try {
     const availableRoom = await this.findOne({
+      _id,
       userIds: {
         $size: userIds.length,
         $all: [...userIds],
@@ -40,7 +41,7 @@ chatRoomSchema.statics.initiateChat = async function (userIds, type, chatInitiat
       };
     }
 
-    const newRoom = await this.create({ userIds, type, chatInitiator });
+    const newRoom = await this.create({ _id, userIds, type, chatInitiator });
     return {
       isNew: true,
       message: "Creating new room",
