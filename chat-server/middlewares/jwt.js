@@ -6,13 +6,13 @@ const SECRET_KEY = "test key";
 
 /* Function that will check to see if a user is in the DB and if they are, will then assign them a 
   an authentication token */
-export const encode = async (req, res) => {
+export const encode = async (req, res, next) => {
   try {
     const { username, password } = req.params;
     const currentUser = await UserModel.getUserByUsername(username);
     const verifyLogin = await User.onUserLogin(req, res);
     if (verifyLogin.statusCode === 400) {
-      return res;
+      return;
     }
     const payload = {
       userid: currentUser._id,
@@ -20,7 +20,6 @@ export const encode = async (req, res) => {
     };
     const authToken = jwt.sign(payload, SECRET_KEY);
     req.authToken = authToken;
-    console.log(req.authToken);
   } catch (error) {
     return res.status(400).json({
       success: false,
