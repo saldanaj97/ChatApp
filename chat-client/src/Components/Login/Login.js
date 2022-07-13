@@ -30,8 +30,11 @@ const Login = () => {
   const handleLoginClick = () => {
     /*     socket.emit("identity", { name, room }, () => {
     }); */
-    axios.post(`http://localhost:3000/login/${name}/${password}`).then((response) => console.log(response.data));
-    navigate("/chat");
+    axios.post(`http://localhost:3000/login/${name}/${password}`).then((response) => {
+      if (response.data.success !== false) {
+        navigate("/chat");
+      }
+    });
   };
 
   const handleSignUpClick = () => {
