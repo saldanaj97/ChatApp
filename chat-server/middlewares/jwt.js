@@ -11,7 +11,9 @@ export const encode = async (req, res) => {
     const { username, password } = req.params;
     const currentUser = await UserModel.getUserByUsername(username);
     const verifyLogin = await User.onUserLogin(req, res);
-    if (verifyLogin.statusCode === 400) throw error;
+    if (verifyLogin.statusCode === 400) {
+      return res;
+    }
     const payload = {
       userid: currentUser._id,
       userType: currentUser.type,
