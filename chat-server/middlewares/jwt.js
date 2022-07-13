@@ -6,12 +6,12 @@ const SECRET_KEY = "test key";
 
 /* Function that will check to see if a user is in the DB and if they are, will then assign them a 
   an authentication token */
-export const encode = async (req, res, next) => {
+export const encode = async (req, res) => {
   try {
     const { username, password } = req.params;
     const currentUser = await UserModel.getUserByUsername(username);
     const verifyLogin = await User.onUserLogin(req, res);
-    if (!verifyLogin) throw error;
+    if (verifyLogin.statusCode === 400) throw error;
     const payload = {
       userid: currentUser._id,
       userType: currentUser.type,
