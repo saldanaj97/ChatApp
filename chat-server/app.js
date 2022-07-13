@@ -2,7 +2,7 @@ import express from "express";
 import http from "http";
 import cors from "cors";
 import { Server } from "socket.io";
-import WebSockets from "./utils/WebSockets.js";
+import WebSocket from "./utils/WebSockets.js";
 import "./config/mongo.js";
 
 /* Routes */
@@ -50,7 +50,7 @@ const socketio = new Server({ noServer: true });
 
 // Create socket connection
 global.io = socketio.listen(server);
-global.io.on("connection", WebSockets.connection);
+global.io.on("connection", WebSocket.connection);
 server.listen(PORT);
 
 // Message to display which port  we are listening on

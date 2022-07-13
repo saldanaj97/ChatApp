@@ -1,22 +1,23 @@
-class WebSocket {
-  // This will hold all the users using the app
-  users = [];
+// This will hold all the users using the app
+let users = [];
 
+class WebSocket {
   // Events for a connection from client(server instance)
   connection(client) {
     // Event for a disconnect
     client.on("disconnect", () => {
       if (typeof users !== "undefined") {
-        this.users = this.users.filter((user) => user.socketId !== client.id);
+        users = users.filter((user) => user.socketId !== client.id);
       }
     });
 
     // Event for attaching a user to a socket id when logged in
-    client.on("identity", (userId) => {
-      this.users.push({
+    client.on("identity", (user) => {
+      users.push({
         socketId: client.id,
-        userId: userId,
+        userId: user.userId,
       });
+      console.log(users);
     });
 
     // Event for user joining a chatroom

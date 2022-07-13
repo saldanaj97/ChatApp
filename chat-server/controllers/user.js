@@ -38,6 +38,7 @@ const onUserLogin = async (req, res) => {
     if (!loginAccepted) {
       return res.status(400).json({ success: false, error: "Wrong password or username" });
     }
+    global.io.sockets.emit("identity", { user }, () => {});
     return res.status(200).json({ success: true });
   } catch (error) {
     return res.status(500).json({ success: false, error: "Wrong password or username" });

@@ -10,7 +10,7 @@ export const encode = async (req, res, next) => {
   try {
     const { username, password } = req.params;
     const currentUser = await UserModel.getUserByUsername(username);
-    let verifyLogin = await User.onUserLogin(req, res);
+    const verifyLogin = await User.onUserLogin(req, res);
     if (!verifyLogin) throw error;
     const payload = {
       userid: currentUser._id,
