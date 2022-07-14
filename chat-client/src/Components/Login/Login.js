@@ -28,8 +28,6 @@ const Login = () => {
 
   //Emits the login event and if successful redirects to chat and saves user data
   const handleLoginClick = () => {
-    /*     socket.emit("identity", { name, room }, () => {
-    }); */
     axios.post(`http://localhost:3000/login/${name}/${password}`).then((response) => {
       if (response.data.success !== false) {
         navigate("/chat");

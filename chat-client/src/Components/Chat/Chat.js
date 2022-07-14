@@ -4,7 +4,7 @@ import { FiList } from "react-icons/fi";
 import { BiMessageDetail } from "react-icons/bi";
 import { RiSendPlaneFill } from "react-icons/ri";
 import { useToast } from "@chakra-ui/react";
-import { Avatar, Box, Flex, Heading, IconButton, Text, Menu, Button, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
+import { Box, Flex, Heading, IconButton, Text, Menu, Button, MenuButton, MenuList, MenuItem, Modal, ModalBody, ModalContent, ModalCloseButton, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react";
 import ScrollToBottom from "react-scroll-to-bottom";
 
 import { MainContext } from "../../MainContext";
@@ -13,6 +13,7 @@ import { UsersContext } from "../../UsersContext";
 
 import Groups from "../Groups/Groups";
 import Bio from "../Login/Bio";
+import NewGroupPopup from "../Groups/NewGroupPopup.js";
 
 import "./Chat.scss";
 
@@ -20,11 +21,16 @@ const Chat = () => {
   const { name, room, setName, setRoom } = useContext(MainContext);
   const socket = useContext(SocketContext);
   const { users } = useContext(UsersContext);
+
+  const [groupName, setGroupName] = useState("");
+  const [usersToAddToGroup, setUsersToAddToGroup] = useState("");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  const [bioShown, setBioShown] = useState(false);
+  const [isNewGroupBoxOpen, setIsNewGroupBoxOpen] = useState(false);
   const navigate = useNavigate();
   const toast = useToast();
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   window.onpopstate = (e) => logout();
 
@@ -60,9 +66,10 @@ const Chat = () => {
     setMessage("");
   };
 
-  const handleUserBioClick = (value) => {
-    setBioShown(value);
-  };
+  /* Function to change the state of */
+  /*   const handleNewGroupClick = () => {
+    setIsNewGroupBoxOpen(!isNewGroupBoxOpen);
+  }; */
 
   /* Handle navigation for when a user logs out */
   const logout = () => {
@@ -75,8 +82,11 @@ const Chat = () => {
     <Flex className='app-container' flexDirection='row' width={{ base: "100%", sm: "900px" }} height={{ base: "100%", sm: "auto" }}>
       {/* Groups section */}
       <Flex className='groups-pane' width={{ base: "100%", sm: "300px" }} overflowY='auto' scrollBehavior='smooth'>
-        <Groups />
+        <Groups onOpen={onOpen} />
       </Flex>
+
+      {/* New Group popup box*/}
+      {isOpen && <NewGroupPopup isOpen={isOpen} onClose={onClose} />}
 
       {/* Chatroom section*/}
       <Flex className='room' flexDirection='column' width={{ base: "100%", sm: "600px" }} height={{ base: "100%", sm: "auto" }}>
@@ -127,7 +137,6 @@ const Chat = () => {
                     {msg.text}
                   </Text>
                 </Box>
-                {bioShown.hover != null && <Bio />}
               </Box>
             ))
           ) : (
