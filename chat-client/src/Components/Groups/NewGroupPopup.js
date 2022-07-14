@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { Input, Text, Button, Modal, ModalBody, ModalContent, ModalCloseButton, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react";
 
 const NewGroupPopup = (props) => {
@@ -6,25 +7,28 @@ const NewGroupPopup = (props) => {
 
   //Post request to make a new room
   const handleNewGroup = () => {
-    /*     const config = {
-        headers: {
-          Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiJiZjYwNDdhYjM0MzY0MjI3YTQ0MzJiNmFiMzk1YjcwMyIsInVzZXJUeXBlIjoiY29uc3VtZXIiLCJpYXQiOjE2NTc2NTc4MjB9.LRbKYlZmsIJjLz573EyGd9YLBuJbeNUqJyJs-3aOC7Y",
+    const config = {
+      headers: {
+        Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiJiZjYwNDdhYjM0MzY0MjI3YTQ0MzJiNmFiMzk1YjcwMyIsInVzZXJUeXBlIjoiY29uc3VtZXIiLCJpYXQiOjE2NTc2NTc4MjB9.LRbKYlZmsIJjLz573EyGd9YLBuJbeNUqJyJs-3aOC7Y",
+      },
+    };
+    axios
+      .post(
+        `http://localhost:3000/room/initiate`,
+        {
+          _id: groupName,
+          userIds: ["fe61d6f03e454e7798f954808390b8f9"],
+          type: "consumer_to_consumer",
         },
-      };
-      axios
-        .post(
-          `http://localhost:3000/room/initiate`,
-          {
-            _id: "Test room 3",
-            userIds: ["fe61d6f03e454e7798f954808390b8f9"],
-            type: "consumer_to_consumer",
-          },
-          config
-        )
-        .then((response) => console.log(response), console.log("here"))
-        .catch((error) => {
-          console.log(error);
-        }); */
+        config
+      )
+      .then((response) => {
+        console.log(response);
+        props.onClose();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   return (
     <Modal isCentered onClose={props.onClose} isOpen={props.isOpen} motionPreset='scale'>
