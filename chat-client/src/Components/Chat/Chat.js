@@ -66,11 +66,6 @@ const Chat = () => {
     setMessage("");
   };
 
-  /* Function to change the state of */
-  /*   const handleNewGroupClick = () => {
-    setIsNewGroupBoxOpen(!isNewGroupBoxOpen);
-  }; */
-
   /* Handle navigation for when a user logs out */
   const logout = () => {
     setName("");
