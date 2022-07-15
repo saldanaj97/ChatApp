@@ -1,8 +1,9 @@
-import express from "express"
-import http from 'http'
-import cors from 'cors'
-import logger from 'morgan'
-import './config/mongo.js'
+import express from "express";
+import http from "http";
+import cors from "cors";
+import { Server } from "socket.io";
+import WebSocket from "./utils/WebSockets.js";
+import "./config/mongo.js";
 
 /* Routes */
 import indexRouter from "./routes/index.js";
@@ -11,38 +12,48 @@ import chatRoomRouter from "./routes/room.js";
 import deleteRouter from "./routes/delete.js";
 
 /* Middlewares */
-import { decode } from './middlewares/jwt.js'
+import { decode } from "./middlewares/jwt.js";
 
 // App will listen on port 3000 unless otherwise specified in the .env file
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 3000;
 
-// Initialize the express app
-var app = express()
-var server = http.createServer(app)
-//var io = require('socket.io')(server)
+// Initialize express app
+const app = express();
+app.set("port", PORT);
 
-app.use(cors())
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
+// Routes
 app.use("/", indexRouter);
 app.use("/users", userRouter);
 app.use("/room", decode, chatRoomRouter);
 app.use("/delete", deleteRouter);
 
-/* Catch a 404 and forward to error handlerr */
-app.use('*', (req, res) => {
+// Catch a 404 and forward to error handler
+app.use("*", (req, res) => {
   return res.status(404).json({
     success: false,
-    message: 'API endpoint does not exist'
-  })
-})
+    message: "API endpoint does not exist",
+  });
+});
 
-app.get('/', (req, res) => {
-  res.send('Server is up and running. ')
-})
+// Message to notify of the server status
+app.get("/", (req, res) => {
+  res.send("Server is up and running. ");
+});
 
-/* Event listener for HTTP server 'listening' event */
-server.listen(PORT, () => {
-  console.log(`Listening to ${PORT}`)
-})
+// Create http server
+const server = http.createServer(app);
+const socketio = new Server({ noServer: true });
+
+// Create socket connection
+global.io = socketio.listen(server);
+global.io.on("connection", WebSocket.connection);
+server.listen(PORT);
+
+// Message to display which port  we are listening on
+server.on("listening", () => {
+  console.log(`Listening on port::${PORT}`);
+});

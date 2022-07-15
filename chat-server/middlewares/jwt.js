@@ -10,11 +10,13 @@ export const encode = async (req, res, next) => {
   try {
     const { username, password } = req.params;
     const currentUser = await UserModel.getUserByUsername(username);
-    let verifyLogin = await User.onUserLogin(req, res);
-    if (!verifyLogin) throw error;
+    const verifyLogin = await User.onUserLogin(req, res);
+    if (verifyLogin.statusCode === 400) {
+      return;
+    }
     const payload = {
       userid: currentUser._id,
-      userType: currentUser.userType,
+      userType: currentUser.type,
     };
     const authToken = jwt.sign(payload, SECRET_KEY);
     req.authToken = authToken;
@@ -35,7 +37,7 @@ export const decode = (req, res, next) => {
   const accessToken = req.headers["authorization"].split(" ")[1];
   try {
     const decoded = jwt.verify(accessToken, SECRET_KEY);
-    req.userId = decoded.userId;
+    req.userId = decoded.userid;
     req.userType = decoded.userType;
     return next();
   } catch (error) {

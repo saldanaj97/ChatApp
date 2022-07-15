@@ -1,10 +1,6 @@
 /* Error method */
-const getError = ({
-    success = false,
-    message = success ? '' : 'Please fix the error(s)',
-    errors = {},
-}) => {
-    return { success, message, errors };
-}
+const getError = ({ success = false, message = success ? "" : "Please fix the error(s)", errors = {} }) => {
+  return { success, message, errors };
+};
 
-export default getError
+export default getError;
