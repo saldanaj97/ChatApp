@@ -9,17 +9,17 @@ const SECRET_KEY = "test key";
 export const encode = async (req, res, next) => {
   try {
     const { username, password } = req.params;
-    const currentUser = await UserModel.getUserByUsername(username);
-    const verifyLogin = await User.onUserLogin(req, res);
-    if (verifyLogin.statusCode === 400) {
+    const verifiedLogin = await User.onUserLogin(username, password);
+    if (verifiedLogin.statusCode === 400) {
       return;
     }
     const payload = {
-      userid: currentUser._id,
-      userType: currentUser.type,
+      userid: verifiedLogin.user._id,
+      userType: verifiedLogin.user.type,
     };
     const authToken = jwt.sign(payload, SECRET_KEY);
     req.authToken = authToken;
+    return res.status(200).json({ success: true, authToken });
   } catch (error) {
     return res.status(400).json({
       success: false,
