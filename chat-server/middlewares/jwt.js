@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import UserModel from "../models/User.js";
 import User from "../controllers/user.js";
 
 const SECRET_KEY = "test key";
