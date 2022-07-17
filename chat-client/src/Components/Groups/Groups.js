@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Box, Button, Flex, Heading, IconButton } from "@chakra-ui/react";
 
@@ -6,35 +6,28 @@ import { BiRightArrowAlt, BiMessageAdd } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
 
 import GroupMessage from "./GroupMessage";
-import NewGroupPopup from "./NewGroupPopup";
 
 import "./Groups.scss";
 
 const Groups = (props) => {
-  /* Use this to populate the group messages list for UI dev purposes. This will
-  later not be used as the data will be filled in dynamically based on a users groups. */
-  const testGroups = [
-    {
-      groupName: "Group 1",
-      lastMessageReceived: { user: "Test User 1", contents: "This was the last message sent in group 1. " },
-    },
-    {
-      groupName: "Group 2",
-      lastMessageReceived: { user: "Test User 2", contents: "This was the last message sent in group 2. " },
-    },
-    {
-      groupName: "Group 3",
-      lastMessageReceived: { user: "Test User 3", contents: "This was the last message sent in group 3. " },
-    },
-    {
-      groupName: "Group 4",
-      lastMessageReceived: { user: "Test User 4", contents: "This was the last message sent in group 4. " },
-    },
-    {
-      groupName: "Group 5",
-      lastMessageReceived: { user: "Test User 5", contents: "This was the last message sent in group 5. " },
-    },
-  ];
+  const [userChatrooms, setUserChatrooms] = useState([]);
+  var usersRooms = [];
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/room/user-messages/", { withCredentials: true })
+      .then((response) => {
+        response.data.roomIds.map((room) => {
+          let newRoom = { groupName: room, lastMessageReceived: { user: "", contents: "" } };
+          usersRooms = [newRoom, ...usersRooms];
+          setUserChatrooms(usersRooms);
+        });
+      })
+      .catch((error) => {
+        console.log("auth error in groups", error);
+      });
+    console.log("in axios", userChatrooms);
+  }, [userChatrooms.groupName]);
 
   return (
     <Flex className='group-container' flexDirection='column' width={{ base: "100%" }} height={{ base: "100%", sm: "400" }}>
@@ -50,8 +43,8 @@ const Groups = (props) => {
       </Heading>
 
       <Flex direction='column' className='user-group-messages'>
-        {testGroups.map((group) => {
-          return <GroupMessage group={group} />;
+        {userChatrooms.map((group) => {
+          return <GroupMessage key={group.groupName} group={group} />;
         })}
       </Flex>
     </Flex>
