@@ -1,8 +1,11 @@
 import express from "express";
 import http from "http";
 import cors from "cors";
-import { Server } from "socket.io";
 import WebSocket from "./utils/WebSockets.js";
+import cookieParser from "cookie-parser";
+import expressJwt, { expressjwt } from "express-jwt";
+import { Server } from "socket.io";
+
 import "./config/mongo.js";
 
 /* Routes */
@@ -21,9 +24,17 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 app.set("port", PORT);
 
-app.use(cors());
+// Cors
+const corsOptions = {
+  origin: ["http://localhost:8080"],
+  credentials: true,
+  exposedHeaders: ["Authorization"],
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 
 // Routes
 app.use("/", indexRouter);

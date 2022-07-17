@@ -16,13 +16,14 @@ export const encode = async (req, res, next) => {
       userid: verifiedLogin.user._id,
       userType: verifiedLogin.user.type,
     };
-    const authToken = jwt.sign(payload, SECRET_KEY);
-    req.authToken = authToken;
-    return res.status(200).json({ success: true, authToken });
+    const token = jwt.sign(payload, SECRET_KEY);
+    res.cookie("Authorization", token, { httpOnly: true });
+    console.log("enocde", req.cookies);
+    return res.status(200).json({ success: true });
   } catch (error) {
     return res.status(400).json({
       success: false,
-      message: "Could not encode authorization token",
+      message: "Problem while trying to authenticate ",
     });
   }
 };
@@ -30,10 +31,11 @@ export const encode = async (req, res, next) => {
 /* Function that will decode the userId and type from the auth token IF PROVIDED, 
  otherwise an error will be returned */
 export const decode = (req, res, next) => {
-  if (!req.headers["authorization"]) {
+  if (req.cookies === "") {
     return res.status(400).json({ success: false, error: "No access token provided " });
   }
-  const accessToken = req.headers["authorization"].split(" ")[1];
+  console.log("decode", req.signedCookies["Authorization"]);
+  const accessToken = req.cookies["Authorization"];
   try {
     const decoded = jwt.verify(accessToken, SECRET_KEY);
     req.userId = decoded.userid;

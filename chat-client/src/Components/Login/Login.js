@@ -13,7 +13,7 @@ import "./Login.scss";
 const Login = () => {
   const socket = useContext(SocketContext);
   const { name, setName, room, setRoom } = useContext(MainContext);
-  const { setUsers, loggedIn, setLoggedIn } = useContext(UsersContext);
+  const { setUsers } = useContext(UsersContext);
   const { showSignUp, setShowSignUp } = useContext(SignupContext);
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -26,13 +26,10 @@ const Login = () => {
     });
   });
 
-  //Emits the login event and if successful redirects to chat and saves user data
-  const handleLoginClick = () => {
-    axios.post(`http://localhost:3000/login/${name}/${password}`).then((response) => {
-      if (response.data.success !== false) {
-        navigate("/chat");
-      }
-    });
+  //Send a login request which returns a jsonwebtoken for authentication
+  const handleLoginClick = async () => {
+    const { data } = await axios.post(`/login/${name}/${password}`);
+    if (data.success === true) navigate("/chat");
   };
 
   const handleSignUpClick = () => {
