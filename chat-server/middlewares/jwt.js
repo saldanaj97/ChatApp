@@ -18,7 +18,6 @@ export const encode = async (req, res, next) => {
     };
     const token = jwt.sign(payload, SECRET_KEY);
     res.cookie("Authorization", token, { httpOnly: true });
-    console.log("enocde", req.cookies);
     return res.status(200).json({ success: true });
   } catch (error) {
     return res.status(400).json({
@@ -34,7 +33,6 @@ export const decode = (req, res, next) => {
   if (req.cookies === "") {
     return res.status(400).json({ success: false, error: "No access token provided " });
   }
-  console.log("decode", req.signedCookies["Authorization"]);
   const accessToken = req.cookies["Authorization"];
   try {
     const decoded = jwt.verify(accessToken, SECRET_KEY);
