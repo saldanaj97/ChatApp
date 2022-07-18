@@ -24,7 +24,7 @@ const Groups = (props) => {
         });
       })
       .catch((error) => {
-        console.log("auth error in groups", error);
+        console.log("Auth error when retreiving users groups", error);
       });
   }, [userChatrooms]);
 
