@@ -26,8 +26,7 @@ const Groups = (props) => {
       .catch((error) => {
         console.log("auth error in groups", error);
       });
-    console.log("in axios", userChatrooms);
-  }, [userChatrooms.groupName]);
+  }, [userChatrooms]);
 
   return (
     <Flex className='group-container' flexDirection='column' width={{ base: "100%" }} height={{ base: "100%", sm: "400" }}>
