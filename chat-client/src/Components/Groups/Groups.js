@@ -29,19 +29,17 @@ const Groups = (props) => {
   }, [userChatrooms]);
 
   return (
-    <Flex className='group-container' flexDirection='column' width={{ base: "100%" }} height={{ base: "100%", sm: "400" }}>
-      <Heading className='heading' as='h4' bg='white' p='1rem 1rem' borderRadius='10px 10px 0 0'>
-        <Flex alignItems='center' flexDir='row' justifyContent='space-between'>
-          <Flex flex={{ base: "1", sm: "auto" }}>
-            <Box fontSize='lg'> Groups </Box>
-          </Flex>
-          <Flex>
-            <IconButton backgroundColor='#FA2849' isRound='true' color='white' icon={<BiMessageAdd />} fontSize='25px' onClick={props.onOpen}></IconButton>
-          </Flex>
+    <Flex className='group-container' flexDirection='column' height={{ base: "100%", sm: "400" }}>
+      <Flex width={{ base: "100%", sm: "235px" }} height='72px' bg='#FFF' alignItems='center' flexDir='row' justifyContent='space-between' position='fixed' borderRadius='15px 0px 0px 0px'>
+        <Heading className='groups-heading' as='h4' size='md' p='15px'>
+          Groups
+        </Heading>
+        <Flex padding='0 15px'>
+          <IconButton backgroundColor='#FA2849' isRound='true' color='white' icon={<BiMessageAdd />} fontSize='25px' onClick={props.onOpen}></IconButton>
         </Flex>
-      </Heading>
+      </Flex>
 
-      <Flex direction='column' className='user-group-messages'>
+      <Flex direction='column' className='user-group-messages' m='70px 0px 20px'>
         {userChatrooms.map((group) => {
           return <GroupMessage key={group.groupName} group={group} />;
         })}

@@ -76,7 +76,7 @@ const Chat = () => {
   return (
     <Flex className='app-container' flexDirection='row' width={{ base: "100%", sm: "900px" }} height={{ base: "100%", sm: "auto" }}>
       {/* Groups section */}
-      <Flex className='groups-pane' width={{ base: "100%", sm: "300px" }} overflowY='auto' scrollBehavior='smooth'>
+      <Flex className='groups-pane' width={{ base: "100%", sm: "250px" }} overflowY='auto' scrollBehavior='smooth'>
         <Groups onOpen={onOpen} />
       </Flex>
 
