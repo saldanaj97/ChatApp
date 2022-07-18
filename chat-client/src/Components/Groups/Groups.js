@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Box, Button, Flex, Heading, IconButton } from "@chakra-ui/react";
+import { Flex, Heading, IconButton } from "@chakra-ui/react";
 
-import { BiRightArrowAlt, BiMessageAdd } from "react-icons/bi";
-import { CgProfile } from "react-icons/cg";
+import { BiMessageAdd } from "react-icons/bi";
 
 import GroupMessage from "./GroupMessage";
 
@@ -11,16 +10,15 @@ import "./Groups.scss";
 
 const Groups = (props) => {
   const [userChatrooms, setUserChatrooms] = useState([]);
-  var usersRooms = [];
-
+  let roomsFromResponse = [];
   useEffect(() => {
     axios
       .get("http://localhost:3000/room/user-messages/", { withCredentials: true })
       .then((response) => {
         response.data.roomIds.map((room) => {
           let newRoom = { groupName: room, lastMessageReceived: { user: "", contents: "" } };
-          usersRooms = [newRoom, ...usersRooms];
-          setUserChatrooms(usersRooms);
+          roomsFromResponse = [newRoom, ...roomsFromResponse];
+          setUserChatrooms([newRoom, ...roomsFromResponse]);
         });
       })
       .catch((error) => {
