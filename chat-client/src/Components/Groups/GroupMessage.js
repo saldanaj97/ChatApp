@@ -13,7 +13,7 @@ const GroupMessage = ({ group }) => {
       <Flex className='group-msg-info-box' direction='column' m='10px'>
         <Box className='group-name'>{group.groupName}</Box>
         <Box className='last-sent-message'>
-          {group.lastMessageReceived.user}: {group.lastMessageReceived.contents}
+          {group.lastMessageReceived.user} {group.lastMessageReceived.contents}
         </Box>
       </Flex>
     </Flex>
