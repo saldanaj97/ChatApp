@@ -4,7 +4,7 @@ import { FiList } from "react-icons/fi";
 import { BiMessageDetail } from "react-icons/bi";
 import { RiSendPlaneFill } from "react-icons/ri";
 import { useToast } from "@chakra-ui/react";
-import { Box, Flex, Heading, IconButton, Text, Menu, Button, MenuButton, MenuList, MenuItem, Modal, ModalBody, ModalContent, ModalCloseButton, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react";
+import { Box, Flex, Heading, IconButton, Text, Menu, Button, MenuButton, MenuList, MenuItem, useDisclosure } from "@chakra-ui/react";
 import ScrollToBottom from "react-scroll-to-bottom";
 
 import { MainContext } from "../../MainContext";
@@ -12,7 +12,6 @@ import { SocketContext } from "../../SocketContext";
 import { UsersContext } from "../../UsersContext";
 
 import Groups from "../Groups/Groups";
-import Bio from "../Login/Bio";
 import NewGroupPopup from "../Groups/NewGroupPopup.js";
 
 import "./Chat.scss";
@@ -62,7 +61,7 @@ const Chat = () => {
 
   /* Emit the message that was typed into the box when the user hits enter or clicks send*/
   const handleSendMessage = () => {
-    socket.emit("sendMessage", message, () => setMessage(""));
+    //socket.emit("sendMessage", message, () => setMessage(""));
     setMessage("");
   };
 
