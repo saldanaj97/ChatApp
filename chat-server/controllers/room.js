@@ -10,7 +10,7 @@ const initiate = async (req, res) => {
     const validation = validateUserReqBody((types) => ({
       payload: req.body,
       checks: {
-        _id: { type: types.string },
+        groupName: { type: types.string },
         userIds: {
           type: types.array,
           options: { unique: true, empty: false, stringOnly: true },
@@ -31,9 +31,10 @@ const initiate = async (req, res) => {
 
     // Get the ID for the new room (if provided ) other wise a default value will be provided
     const { _id } = req.body;
+    const { groupName } = req.body;
 
     // Initiate the chatroom
-    const chatRoom = await ChatRoomModel.initiateChat(_id, allUserIds, type, chatInitiator);
+    const chatRoom = await ChatRoomModel.initiateChat(_id, groupName, allUserIds, type, chatInitiator);
     return res.status(200).json({ success: true, chatRoom });
   } catch (error) {
     return res.status(500).json({ success: false, error: error });
