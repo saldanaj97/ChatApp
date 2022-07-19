@@ -3,10 +3,13 @@ import http from "http";
 import cors from "cors";
 import WebSocket from "./utils/WebSockets.js";
 import cookieParser from "cookie-parser";
-import expressJwt, { expressjwt } from "express-jwt";
 import { Server } from "socket.io";
-
+import dotenv from "dotenv";
 import "./config/mongo.js";
+
+// Export the vars we need from the .env file
+dotenv.config({ path: ".env" });
+export const SECRET_KEY = process.env.SECRET_KEY;
 
 /* Routes */
 import indexRouter from "./routes/index.js";

@@ -1,7 +1,6 @@
 import jwt from "jsonwebtoken";
 import User from "../controllers/user.js";
-
-const SECRET_KEY = process.env.SECRET_KEY;
+import { SECRET_KEY } from "../app.js";
 
 /* Function that will check to see if a user is in the DB and if they are, will then assign them a 
   an authentication token */
@@ -16,6 +15,7 @@ export const encode = async (req, res, next) => {
       userid: verifiedLogin.user._id,
       userType: verifiedLogin.user.type,
     };
+    console.log(SECRET_KEY);
     const token = jwt.sign(payload, SECRET_KEY);
     res.cookie("Authorization", token, { httpOnly: true });
     return res.status(200).json({ success: true });
