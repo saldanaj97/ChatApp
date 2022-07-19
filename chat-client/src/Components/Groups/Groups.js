@@ -16,9 +16,9 @@ const Groups = (props) => {
       .get("http://localhost:3000/room/user-messages/", { withCredentials: true })
       .then((response) => {
         response.data.roomIds.map((room) => {
-          let newRoom = { groupName: room, lastMessageReceived: { user: "", contents: "" } };
+          const newRoom = { groupName: room, lastMessageReceived: { user: "", contents: "" } };
           roomsFromResponse = [newRoom, ...roomsFromResponse];
-          setUserChatrooms([newRoom, ...roomsFromResponse]);
+          setUserChatrooms(roomsFromResponse);
         });
       })
       .catch((error) => {
