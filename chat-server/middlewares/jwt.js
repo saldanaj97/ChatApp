@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import User from "../controllers/user.js";
 
-const SECRET_KEY = "test key";
+const SECRET_KEY = process.env.SECRET_KEY;
 
 /* Function that will check to see if a user is in the DB and if they are, will then assign them a 
   an authentication token */
