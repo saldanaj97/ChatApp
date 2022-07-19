@@ -6,6 +6,7 @@ import { RiSendPlaneFill } from "react-icons/ri";
 import { useToast } from "@chakra-ui/react";
 import { Box, Flex, Heading, IconButton, Text, Menu, Button, MenuButton, MenuList, MenuItem, useDisclosure } from "@chakra-ui/react";
 import ScrollToBottom from "react-scroll-to-bottom";
+import axios from "axios";
 
 import { MainContext } from "../../MainContext";
 import { SocketContext } from "../../SocketContext";
@@ -16,16 +17,14 @@ import NewGroupPopup from "../Groups/NewGroupPopup.js";
 
 import "./Chat.scss";
 
-const Chat = () => {
+const Chat = (props) => {
   const { name, room, setName, setRoom } = useContext(MainContext);
   const socket = useContext(SocketContext);
   const { users } = useContext(UsersContext);
 
   const [groupName, setGroupName] = useState("");
-  const [usersToAddToGroup, setUsersToAddToGroup] = useState("");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  const [isNewGroupBoxOpen, setIsNewGroupBoxOpen] = useState(false);
   const navigate = useNavigate();
   const toast = useToast();
 
@@ -40,14 +39,14 @@ const Chat = () => {
     }
   }, [navigate, name]);
 
-  useEffect(() => {
-    /* When the socket gets 'message' we add the new message to the current messages */
-    socket.on("message", (msg) => {
+  //useEffect(() => {
+  /* When the socket gets 'message' we add the new message to the current messages */
+  /*     socket.on("message", (msg) => {
       setMessages((messages) => [...messages, msg]);
-    });
+    }); */
 
-    /* When the socket gets 'notification' display a notification at the top of the page based on the notification received */
-    socket.on("notification", (notif) => {
+  /* When the socket gets 'notification' display a notification at the top of the page based on the notification received */
+  /*     socket.on("notification", (notif) => {
       toast({
         position: "top",
         title: notif?.title,
@@ -57,11 +56,25 @@ const Chat = () => {
         isClosable: true,
       });
     });
-  }, [socket, toast]);
+  }, [socket, toast]); */
+  //}
 
   /* Emit the message that was typed into the box when the user hits enter or clicks send*/
   const handleSendMessage = () => {
+    console.log();
     //socket.emit("sendMessage", message, () => setMessage(""));
+    const config = {
+      withCredentials: true,
+    };
+    axios
+      .post(
+        "http://localhost:3000/room/164c7893a00c4246bd33db147c8beac2/message",
+        {
+          messageText: message,
+        },
+        config
+      )
+      .then((response) => console.log(response));
     setMessage("");
   };
 
