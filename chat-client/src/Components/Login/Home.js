@@ -2,7 +2,6 @@ import React, { useState, useContext } from "react";
 
 import { Box, Collapse, Flex, Heading } from "@chakra-ui/react";
 
-import { UsersContext } from "../../UsersContext";
 import { SignupContext, SignupProvider } from "./SignupContext";
 
 import Login from "./Login";

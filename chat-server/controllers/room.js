@@ -72,6 +72,7 @@ const postMessage = async (req, res) => {
   }
 };
 
+/* Function that retrieves a users most recent conversaion */
 const getRecentConversation = async (req, res) => {
   try {
     const currentLoggedUser = req.userId;
@@ -80,12 +81,11 @@ const getRecentConversation = async (req, res) => {
       limit: parseInt(req.query.limit) || 10,
     };
     const rooms = await ChatRoomModel.getChatRoomsByUserId(currentLoggedUser);
-    console.log();
     const roomIds = rooms.map((room) => room._id);
     const recentConversation = await ChatMessageModel.getRecentConversation(roomIds, options, currentLoggedUser);
     return res.status(200).json({ success: true, conversation: recentConversation });
   } catch (error) {
-    return res.status(500).json({ success: true, error: error });
+    return res.status(500).json({ success: false, error: error });
   }
 };
 
@@ -124,6 +124,18 @@ const getConversationByRoomId = async (req, res) => {
   }
 };
 
+/* Function that will get all of a users messages */
+const getUsersConversations = async (req, res) => {
+  try {
+    const currentLoggedUser = req.userId;
+    const rooms = await ChatRoomModel.getChatRoomsByUserId(currentLoggedUser);
+    const roomIds = rooms.map((room) => room._id);
+    return res.status(200).json({ success: true, roomIds });
+  } catch (error) {
+    return res.status(500).json({ success: false, error: error });
+  }
+};
+
 /* Function to mark a conversation as read once a user views a room */
 const markConversationReadByRoomId = async (req, res) => {
   try {
@@ -150,5 +162,6 @@ export default {
   postMessage,
   getRecentConversation,
   getConversationByRoomId,
+  getUsersConversations,
   markConversationReadByRoomId,
 };

@@ -8,9 +8,7 @@ const NewGroupPopup = (props) => {
   //Post request to make a new room
   const handleNewGroup = () => {
     const config = {
-      headers: {
-        Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiJiZjYwNDdhYjM0MzY0MjI3YTQ0MzJiNmFiMzk1YjcwMyIsInVzZXJUeXBlIjoiY29uc3VtZXIiLCJpYXQiOjE2NTc2NTc4MjB9.LRbKYlZmsIJjLz573EyGd9YLBuJbeNUqJyJs-3aOC7Y",
-      },
+       withCredentials: true 
     };
     axios
       .post(

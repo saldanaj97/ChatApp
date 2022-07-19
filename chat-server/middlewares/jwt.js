@@ -1,29 +1,28 @@
 import jwt from "jsonwebtoken";
-import UserModel from "../models/User.js";
 import User from "../controllers/user.js";
-
-const SECRET_KEY = "test key";
+import { SECRET_KEY } from "../app.js";
 
 /* Function that will check to see if a user is in the DB and if they are, will then assign them a 
   an authentication token */
 export const encode = async (req, res, next) => {
   try {
     const { username, password } = req.params;
-    const currentUser = await UserModel.getUserByUsername(username);
-    const verifyLogin = await User.onUserLogin(req, res);
-    if (verifyLogin.statusCode === 400) {
+    const verifiedLogin = await User.onUserLogin(username, password);
+    if (verifiedLogin.statusCode === 400) {
       return;
     }
     const payload = {
-      userid: currentUser._id,
-      userType: currentUser.type,
+      userid: verifiedLogin.user._id,
+      userType: verifiedLogin.user.type,
     };
-    const authToken = jwt.sign(payload, SECRET_KEY);
-    req.authToken = authToken;
+    console.log(SECRET_KEY);
+    const token = jwt.sign(payload, SECRET_KEY);
+    res.cookie("Authorization", token, { httpOnly: true });
+    return res.status(200).json({ success: true });
   } catch (error) {
     return res.status(400).json({
       success: false,
-      message: "Could not encode authorization token",
+      message: "Problem while trying to authenticate ",
     });
   }
 };
@@ -31,10 +30,10 @@ export const encode = async (req, res, next) => {
 /* Function that will decode the userId and type from the auth token IF PROVIDED, 
  otherwise an error will be returned */
 export const decode = (req, res, next) => {
-  if (!req.headers["authorization"]) {
+  if (req.cookies === "") {
     return res.status(400).json({ success: false, error: "No access token provided " });
   }
-  const accessToken = req.headers["authorization"].split(" ")[1];
+  const accessToken = req.cookies["Authorization"];
   try {
     const decoded = jwt.verify(accessToken, SECRET_KEY);
     req.userId = decoded.userid;
