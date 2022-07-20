@@ -68,7 +68,7 @@ const Chat = (props) => {
     };
     axios
       .post(
-        "http://localhost:3000/room/164c7893a00c4246bd33db147c8beac2/message",
+        `http://localhost:3000/room/${room}/message`,
         {
           messageText: message,
         },

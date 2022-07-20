@@ -12,9 +12,9 @@ import "./Login.scss";
 
 const Login = () => {
   const socket = useContext(SocketContext);
-  const { name, setName, room, setRoom } = useContext(MainContext);
+  const { name, setName, setRoom } = useContext(MainContext);
   const { setUsers } = useContext(UsersContext);
-  const { showSignUp, setShowSignUp } = useContext(SignupContext);
+  const { setShowSignUp } = useContext(SignupContext);
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
@@ -28,8 +28,24 @@ const Login = () => {
 
   //Send a login request which returns a jsonwebtoken for authentication
   const handleLoginClick = async () => {
-    const { data } = await axios.post(`/login/${name}/${password}`);
-    if (data.success === true) navigate("/chat");
+    var success = "";
+    var userId = "";
+    var recentConversationId = "";
+
+    // Post request for logging in
+    await axios.post(`/login/${name}/${password}`).then((response) => {
+      success = response.data.success;
+      userId = response.data.userId;
+    });
+
+    // Request to get the the id of the users most recent message thread and also set the room to the id
+    await axios.get("/room").then((response) => {
+      recentConversationId = response.data.conversation[0]._id;
+      setRoom(recentConversationId);
+    });
+
+    // Navigate to the users most recent chat if the user logged in successfully
+    if (success === true) navigate(`/chat/${recentConversationId}`);
   };
 
   const handleSignUpClick = () => {
