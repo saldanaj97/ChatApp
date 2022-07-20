@@ -18,7 +18,7 @@ import NewGroupPopup from "../Groups/NewGroupPopup.js";
 import "./Chat.scss";
 
 const Chat = (props) => {
-  const { name, room, setName, setRoom } = useContext(MainContext);
+  const { name, room, roomId, setName, setRoom, setRoomId } = useContext(MainContext);
   const socket = useContext(SocketContext);
   const { users } = useContext(UsersContext);
 
@@ -27,6 +27,7 @@ const Chat = (props) => {
   const [messages, setMessages] = useState([]);
   const navigate = useNavigate();
   const toast = useToast();
+  let messagesInConvo = [];
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -59,22 +60,26 @@ const Chat = (props) => {
   }, [socket, toast]); */
   //}
 
+  useEffect(() => {
+    const config = {
+      withCredentials: true,
+    };
+
+    axios.get(`/room/${roomId}`, config).then((response) => {
+      response.data.conversation.map((convo) => {
+        messagesInConvo = [...messagesInConvo, convo.message.messageText];
+        setMessages(messagesInConvo);
+      });
+    });
+  }, [setMessages]);
+
   /* Emit the message that was typed into the box when the user hits enter or clicks send*/
   const handleSendMessage = () => {
-    console.log();
     //socket.emit("sendMessage", message, () => setMessage(""));
     const config = {
       withCredentials: true,
     };
-    axios
-      .post(
-        `http://localhost:3000/room/${room}/message`,
-        {
-          messageText: message,
-        },
-        config
-      )
-      .then((response) => console.log(response));
+    axios.post(`http://localhost:3000/room/${roomId}/message`, { messageText: message }, config).then((response) => console.log(response));
     setMessage("");
   };
 
@@ -82,6 +87,7 @@ const Chat = (props) => {
   const logout = () => {
     setName("");
     setRoom("");
+    setRoomId("");
     navigate(0);
   };
 
@@ -141,7 +147,7 @@ const Chat = (props) => {
                 </button> */}
                 <Box display='flex' flexDirection='column' className='name-msg-block' justifyContent='center'>
                   <Text fontSize='sm' className='msg' p='.4rem .8rem' bg='white' borderRadius='15px' color='white'>
-                    {msg.text}
+                    {msg}
                   </Text>
                 </Box>
               </Box>
