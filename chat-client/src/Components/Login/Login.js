@@ -13,7 +13,7 @@ import "./Login.scss";
 const Login = () => {
   const socket = useContext(SocketContext);
   const { name, roomId, setName, setRoom, setRoomId } = useContext(MainContext);
-  const { setUsers } = useContext(UsersContext);
+  const { users, setUsers } = useContext(UsersContext);
   const { setShowSignUp } = useContext(SignupContext);
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -46,7 +46,10 @@ const Login = () => {
     });
 
     // Navigate to the users most recent chat if the user logged in successfully
-    if (success === true) navigate(`/chat/${recentConversationId}`);
+    if (success === true) {
+      socket.emit("subscribe", recentConversationId);
+      navigate(`/chat/${recentConversationId}`);
+    }
   };
 
   const handleSignUpClick = () => {

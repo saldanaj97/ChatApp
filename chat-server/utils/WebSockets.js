@@ -1,19 +1,18 @@
-// This will hold all the users using the app
-let users = [];
-
 class WebSocket {
+  // This will hold all the users using the app
+  users = [];
   // Events for a connection from client(server instance)
   connection(client) {
     // Event for a disconnect
     client.on("disconnect", () => {
       if (typeof users !== "undefined") {
-        users = users.filter((user) => user.socketId !== client.id);
+        this.users = users.filter((user) => user.socketId !== client.id);
       }
     });
 
     // Event for attaching a user to a socket id when logged in
     client.on("identity", (user) => {
-      users.push({
+      this.users.push({
         socketId: client.id,
         userId: user.userId,
       });
@@ -22,13 +21,16 @@ class WebSocket {
 
     // Event for user joining a chatroom
     client.on("subscribe", (room, otherUserId = "") => {
-      this.subscribeOtherUser(room, otherUserId);
       client.join(room);
     });
 
     // Event for when a user leaves or mutes room
     client.on("unsubscribe", (room) => {
       client.leave(room);
+    });
+
+    client.on("sendMessage", (room, message) => {
+      global.io.in(room).emit("message", { text: message });
     });
   }
 
