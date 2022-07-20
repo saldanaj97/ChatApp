@@ -12,8 +12,13 @@ const Groups = (props) => {
   const [userChatrooms, setUserChatrooms] = useState([]);
   let roomsFromResponse = [];
   useEffect(() => {
+    const config = {
+      withCredentials: true,
+    };
+
+    // Request to get the groups the user is part of for the groups panel
     axios
-      .get("http://localhost:3000/room/user-messages/", { withCredentials: true })
+      .get("http://localhost:3000/room/user-messages/", config)
       .then((response) => {
         response.data.roomIds.map((room) => {
           const newRoom = { groupName: room, lastMessageReceived: { user: "", contents: "" } };
