@@ -130,7 +130,7 @@ const getUsersConversations = async (req, res) => {
   try {
     const currentLoggedUser = req.userId;
     const rooms = await ChatRoomModel.getChatRoomsByUserId(currentLoggedUser);
-    const roomIds = rooms.map((room) => room.groupName);
+    const roomIds = rooms.map((room) => room);
     return res.status(200).json({ success: true, roomIds });
   } catch (error) {
     return res.status(500).json({ success: false, error: error });

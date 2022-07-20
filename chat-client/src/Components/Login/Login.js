@@ -12,7 +12,7 @@ import "./Login.scss";
 
 const Login = () => {
   const socket = useContext(SocketContext);
-  const { name, setName, setRoom } = useContext(MainContext);
+  const { name, roomId, setName, setRoom, setRoomId } = useContext(MainContext);
   const { setUsers } = useContext(UsersContext);
   const { setShowSignUp } = useContext(SignupContext);
   const [password, setPassword] = useState("");
@@ -31,6 +31,7 @@ const Login = () => {
     var success = "";
     var userId = "";
     var recentConversationId = "";
+    var recentConversationName = "";
 
     // Post request for logging in
     await axios.post(`/login/${name}/${password}`).then((response) => {
@@ -41,7 +42,7 @@ const Login = () => {
     // Request to get the the id of the users most recent message thread and also set the room to the id
     await axios.get("/room").then((response) => {
       recentConversationId = response.data.conversation[0]._id;
-      setRoom(recentConversationId);
+      setRoomId(recentConversationId);
     });
 
     // Navigate to the users most recent chat if the user logged in successfully
