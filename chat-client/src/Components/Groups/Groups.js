@@ -35,13 +35,13 @@ const Groups = (props) => {
 
   useEffect(() => {
     // Function that will set the current group name
-    const getCurrrentChatroomName = () => {
+    const getCurrentChatroomName = () => {
       userChatrooms.find((rooms) => {
         if (rooms.id === roomId) return rooms.groupName;
       });
       return "No room name";
     };
-    setRoom(getCurrrentChatroomName());
+    setRoom(getCurrentChatroomName());
   }, [roomId, userChatrooms, setRoom]);
 
   return (
