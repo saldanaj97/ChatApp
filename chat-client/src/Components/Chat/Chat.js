@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiList } from "react-icons/fi";
 import { BiMessageDetail } from "react-icons/bi";
@@ -27,7 +27,7 @@ const Chat = (props) => {
   const [messages, setMessages] = useState([]);
   const navigate = useNavigate();
   const toast = useToast();
-  let messagesInConvo = [];
+  const messagesInConvo = useRef([]);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -47,16 +47,17 @@ const Chat = (props) => {
 
     axios.get(`/room/${roomId}`, config).then((response) => {
       response.data.conversation.map((convo) => {
-        messagesInConvo = [...messagesInConvo, convo.message.messageText];
-        setMessages(messagesInConvo);
+        messagesInConvo.current = [...messagesInConvo.current, convo.message.messageText];
       });
+      setMessages(messagesInConvo.current);
     });
 
     /* When the socket gets 'message' we add the new message to the current messages */
     socket.on("message", (msg) => {
-      setMessages([...messages, msg.text]);
+      messagesInConvo.current = [...messagesInConvo.current, msg.text];
+      setMessages(messagesInConvo.current);
     });
-  }, [setMessages, socket]);
+  }, [setMessages]);
 
   /* Emit the message that was typed into the box when the user hits enter or clicks send*/
   const handleSendMessage = () => {
@@ -64,7 +65,7 @@ const Chat = (props) => {
     const config = {
       withCredentials: true,
     };
-    axios.post(`http://localhost:3000/room/${roomId}/message`, { messageText: message }, config).then((response) => console.log(response));
+    axios.post(`http://localhost:3000/room/${roomId}/message`, { messageText: message }, config);
     setMessage("");
   };
 
