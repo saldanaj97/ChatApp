@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { FiList } from "react-icons/fi";
 import { BiMessageDetail } from "react-icons/bi";
 import { RiSendPlaneFill } from "react-icons/ri";
-import { useToast } from "@chakra-ui/react";
 import { Box, Flex, Heading, IconButton, Text, Menu, Button, MenuButton, MenuList, MenuItem, useDisclosure } from "@chakra-ui/react";
 import ScrollToBottom from "react-scroll-to-bottom";
 import axios from "axios";
@@ -26,7 +25,6 @@ const Chat = (props) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const navigate = useNavigate();
-  const toast = useToast();
   const messagesInConvo = useRef([]);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
