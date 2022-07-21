@@ -1,20 +1,22 @@
 import React, { useContext } from "react";
 import { Box, Flex } from "@chakra-ui/react";
 import { CgProfile } from "react-icons/cg";
-
 import { MainContext } from "../../MainContext";
-import "./GroupMessage.scss";
+import { SocketContext } from "../../SocketContext";
 import { useNavigate } from "react-router-dom";
+import "./GroupMessage.scss";
 
 const GroupMessage = ({ group }) => {
   const { room, roomId, setRoom, setRoomId } = useContext(MainContext);
+  const socket = useContext(SocketContext);
   const navigate = useNavigate();
 
   // Function to set the new room and room id and navigate to that room
   const handleGroupClick = () => {
     setRoomId(group.id);
     setRoom(group.groupName);
-    navigate(`/chat/${roomId}`);
+    socket.emit("changeRoom", roomId);
+    return navigate(`/chat/${roomId}`);
   };
 
   return (

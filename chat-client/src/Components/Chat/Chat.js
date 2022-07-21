@@ -55,6 +55,12 @@ const Chat = (props) => {
       messagesInConvo.current = [...messagesInConvo.current, { messageText: msg.text, authorInfo: msg.author }];
       setMessages(messagesInConvo.current);
     });
+
+    /* When the socket gets 'mvoeroom' we clear the messages convo ref since we do not want to get the messages from the last room */
+    socket.on("moveRoom", () => {
+      messagesInConvo.current = [];
+      setMessages([]);
+    });
   }, [setMessages, roomId, socket]);
 
   /* Emit the message that was typed into the box when the user hits enter or clicks send*/

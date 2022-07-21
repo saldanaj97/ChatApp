@@ -29,8 +29,14 @@ class WebSocket {
       client.leave(room);
     });
 
+    // Event for when a user is trying to send a message to the room
     client.on("sendMessage", (room, message, userId) => {
       global.io.in(room).emit("message", { text: message, author: userId });
+    });
+
+    // Event for when a user switches rooms
+    client.on("changeRoom", (room) => {
+      global.io.in(room).emit("moveRoom");
     });
   }
 
