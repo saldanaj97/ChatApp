@@ -57,7 +57,7 @@ const Chat = (props) => {
       messagesInConvo.current = [...messagesInConvo.current, msg.text];
       setMessages(messagesInConvo.current);
     });
-  }, [setMessages]);
+  }, [setMessages, roomId, socket]);
 
   /* Emit the message that was typed into the box when the user hits enter or clicks send*/
   const handleSendMessage = () => {
