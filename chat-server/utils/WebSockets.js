@@ -29,8 +29,8 @@ class WebSocket {
       client.leave(room);
     });
 
-    client.on("sendMessage", (room, message) => {
-      global.io.in(room).emit("message", { text: message });
+    client.on("sendMessage", (room, message, userId) => {
+      global.io.in(room).emit("message", { text: message, author: userId });
     });
   }
 

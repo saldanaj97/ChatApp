@@ -45,21 +45,21 @@ const Chat = (props) => {
 
     axios.get(`/room/${roomId}`, config).then((response) => {
       response.data.conversation.map((convo) => {
-        messagesInConvo.current = [...messagesInConvo.current, convo.message.messageText];
+        messagesInConvo.current = [...messagesInConvo.current, { messageText: convo.message.messageText, authorInfo: convo.postedByUser.username }];
       });
       setMessages(messagesInConvo.current);
     });
 
     /* When the socket gets 'message' we add the new message to the current messages */
     socket.on("message", (msg) => {
-      messagesInConvo.current = [...messagesInConvo.current, msg.text];
+      messagesInConvo.current = [...messagesInConvo.current, { messageText: msg.text, authorInfo: msg.author }];
       setMessages(messagesInConvo.current);
     });
   }, [setMessages, roomId, socket]);
 
   /* Emit the message that was typed into the box when the user hits enter or clicks send*/
   const handleSendMessage = () => {
-    socket.emit("sendMessage", roomId, message, () => setMessage(""));
+    socket.emit("sendMessage", roomId, message, name, () => setMessage(""));
     const config = {
       withCredentials: true,
     };
@@ -125,14 +125,16 @@ const Chat = (props) => {
         <ScrollToBottom className='messages' debug={false}>
           {messages.length > 0 ? (
             messages.map((msg, i) => (
-              <Box display='flex' key={i} m='.2rem .2rem'>
-                {/*                 <button onClick={() => handleUserBioClick(true)} onMouseLeave={() => handleUserBioClick(false)}>
+              <Box display='flex' key={i} className={`message ${msg.authorInfo === name ? "my-message" : ""}`} m='.2rem .2rem'>
+                <Box display='flex' key={i} m='.2rem .2rem'>
+                  {/*                 <button onClick={() => handleUserBioClick(true)} onMouseLeave={() => handleUserBioClick(false)}>
                   {msg.user !== name && <Avatar size='sm' ml='3px' mr='3px' />}
                 </button> */}
-                <Box display='flex' flexDirection='column' className='name-msg-block' justifyContent='center'>
-                  <Text fontSize='sm' className='msg' p='.4rem .8rem' bg='white' borderRadius='15px' color='black'>
-                    {msg}
-                  </Text>
+                  <Box display='flex' flexDirection='column' className='name-msg-block' justifyContent='center'>
+                    <Text fontSize='sm' className='msg' p='.4rem .8rem' bg='white' borderRadius='15px' color='black'>
+                      {msg.messageText}
+                    </Text>
+                  </Box>
                 </Box>
               </Box>
             ))
