@@ -33,17 +33,6 @@ const Groups = (props) => {
       });
   }, [setUserChatrooms]);
 
-  useEffect(() => {
-    // Function that will set the current group name
-    const getCurrentChatroomName = () => {
-      userChatrooms.find((rooms) => {
-        if (rooms.id === roomId) return rooms.groupName;
-      });
-      return "No room name";
-    };
-    setRoom(getCurrentChatroomName());
-  }, [roomId, userChatrooms, setRoom]);
-
   return (
     <Flex className='group-container' flexDirection='column' height={{ base: "100%", sm: "400" }}>
       <Flex width={{ base: "100%", sm: "235px" }} height='72px' bg='#FFF' alignItems='center' flexDir='row' justifyContent='space-between' position='fixed' borderRadius='15px 0px 0px 0px'>
