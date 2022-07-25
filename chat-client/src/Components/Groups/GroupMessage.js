@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Box, Flex } from "@chakra-ui/react";
 import { CgProfile } from "react-icons/cg";
 import { MainContext } from "../../MainContext";
@@ -13,10 +13,21 @@ const GroupMessage = ({ group }) => {
 
   // Function to set the new room and room id and navigate to that room
   const handleGroupClick = () => {
+    const newRoom = group.id;
+    // Send the change room event
+    socket.emit("changeRoom", roomId, newRoom);
+
+    // First leave the room we are currently listening to
+    socket.emit("unsubscribe", roomId);
+
+    // Set the global variables to the new room we are going to
     setRoomId(group.id);
     setRoom(group.groupName);
-    socket.emit("changeRoom", roomId);
-    return navigate(`/chat/${roomId}`);
+
+    // Join the new room we will be listening to
+    socket.emit("subscribe", group.id);
+
+    return navigate(`/chat/${group.id}`);
   };
 
   return (

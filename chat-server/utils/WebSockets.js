@@ -35,8 +35,8 @@ class WebSocket {
     });
 
     // Event for when a user switches rooms
-    client.on("changeRoom", (room) => {
-      global.io.in(room).emit("moveRoom");
+    client.on("changeRoom", (oldRoom, newRoom) => {
+      global.io.in(oldRoom).emit("moveRoom", newRoom);
     });
   }
 

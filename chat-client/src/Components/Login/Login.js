@@ -41,8 +41,10 @@ const Login = () => {
 
     // Request to get the the id of the users most recent message thread and also set the room to the id
     await axios.get("/room").then((response) => {
-      recentConversationId = response.data.conversation[0]._id;
-      setRoomId(recentConversationId);
+      if (response.data.conversation.length > 0) {
+        recentConversationId = response.data.conversation[0]._id;
+        setRoomId(recentConversationId);
+      }
     });
 
     // Navigate to the users most recent chat if the user logged in successfully

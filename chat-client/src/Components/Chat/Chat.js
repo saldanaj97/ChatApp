@@ -44,12 +44,11 @@ const Chat = (props) => {
     /* When the socket gets 'message' we add the new message to the current messages */
     socket.on("message", (msg) => {
       messagesInConvo = [...messagesInConvo, { messageText: msg.text, authorInfo: msg.author }];
-      //setMessages(messagesInConvo);
+      setMessages(messagesInConvo);
     });
 
     /* When the socket gets 'mvoeroom' we clear the messages convo ref since we do not want to get the messages from the last room */
     socket.on("moveRoom", (newRoomId) => {
-      console.log("new room id", newRoomId);
       setRoomId(newRoomId);
       messagesInConvo = [];
       getMessagesInGroup(newRoomId);
@@ -75,7 +74,6 @@ const Chat = (props) => {
       response.data.conversation.map((convo) => {
         messagesInConvo = [...messagesInConvo, { messageText: convo.message.messageText, authorInfo: convo.postedByUser.username }];
       });
-      console.log("Messages in ", newRoomId, messagesInConvo);
       setMessages(messagesInConvo);
     });
   };
