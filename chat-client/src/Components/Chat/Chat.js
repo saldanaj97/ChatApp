@@ -1,34 +1,31 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiList } from "react-icons/fi";
 import { BiMessageDetail } from "react-icons/bi";
 import { RiSendPlaneFill } from "react-icons/ri";
-import { useToast } from "@chakra-ui/react";
-import { Box, Flex, Heading, IconButton, Text, Menu, Button, MenuButton, MenuList, MenuItem, Modal, ModalBody, ModalContent, ModalCloseButton, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react";
+import { Box, Flex, Heading, IconButton, Text, Menu, Button, MenuButton, MenuList, MenuItem, useDisclosure } from "@chakra-ui/react";
 import ScrollToBottom from "react-scroll-to-bottom";
+import axios from "axios";
 
 import { MainContext } from "../../MainContext";
 import { SocketContext } from "../../SocketContext";
 import { UsersContext } from "../../UsersContext";
 
 import Groups from "../Groups/Groups";
-import Bio from "../Login/Bio";
 import NewGroupPopup from "../Groups/NewGroupPopup.js";
 
 import "./Chat.scss";
 
-const Chat = () => {
-  const { name, room, setName, setRoom } = useContext(MainContext);
+const Chat = (props) => {
+  const { name, room, roomId, setName, setRoom, setRoomId } = useContext(MainContext);
   const socket = useContext(SocketContext);
   const { users } = useContext(UsersContext);
 
   const [groupName, setGroupName] = useState("");
-  const [usersToAddToGroup, setUsersToAddToGroup] = useState("");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  const [isNewGroupBoxOpen, setIsNewGroupBoxOpen] = useState(false);
   const navigate = useNavigate();
-  const toast = useToast();
+  let messagesInConvo = [];
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -42,34 +39,50 @@ const Chat = () => {
   }, [navigate, name]);
 
   useEffect(() => {
+    getMessagesInGroup(roomId);
+
     /* When the socket gets 'message' we add the new message to the current messages */
     socket.on("message", (msg) => {
-      setMessages((messages) => [...messages, msg]);
+      messagesInConvo = [...messagesInConvo, { messageText: msg.text, authorInfo: msg.author }];
+      setMessages(messagesInConvo);
     });
 
-    /* When the socket gets 'notification' display a notification at the top of the page based on the notification received */
-    socket.on("notification", (notif) => {
-      toast({
-        position: "top",
-        title: notif?.title,
-        description: notif?.description,
-        status: "success",
-        duration: 5000,
-        isClosable: true,
-      });
+    /* When the socket gets 'mvoeroom' we clear the messages convo ref since we do not want to get the messages from the last room */
+    socket.on("moveRoom", (newRoomId) => {
+      setRoomId(newRoomId);
+      messagesInConvo = [];
+      getMessagesInGroup(newRoomId);
     });
-  }, [socket, toast]);
+    setMessages(messagesInConvo);
+  }, [setMessages, setRoomId, setRoom]);
 
   /* Emit the message that was typed into the box when the user hits enter or clicks send*/
   const handleSendMessage = () => {
-    socket.emit("sendMessage", message, () => setMessage(""));
+    socket.emit("sendMessage", roomId, message, name, () => setMessage(""));
+    const config = {
+      withCredentials: true,
+    };
+    axios.post(`http://localhost:3000/room/${roomId}/message`, { messageText: message }, config);
     setMessage("");
+  };
+
+  const getMessagesInGroup = (newRoomId) => {
+    const config = {
+      withCredentials: true,
+    };
+    axios.get(`/room/${newRoomId}`, config).then((response) => {
+      response.data.conversation.map((convo) => {
+        messagesInConvo = [...messagesInConvo, { messageText: convo.message.messageText, authorInfo: convo.postedByUser.username }];
+      });
+      setMessages(messagesInConvo);
+    });
   };
 
   /* Handle navigation for when a user logs out */
   const logout = () => {
     setName("");
     setRoom("");
+    setRoomId("");
     navigate(0);
   };
 
@@ -123,14 +136,16 @@ const Chat = () => {
         <ScrollToBottom className='messages' debug={false}>
           {messages.length > 0 ? (
             messages.map((msg, i) => (
-              <Box display='flex' key={i} className={`message ${msg.user === name ? "my-message" : ""}`} m='.2rem .2rem'>
-                {/*                 <button onClick={() => handleUserBioClick(true)} onMouseLeave={() => handleUserBioClick(false)}>
+              <Box display='flex' key={i} className={`message ${msg.authorInfo === name ? "my-message" : ""}`} m='.2rem .2rem'>
+                <Box display='flex' key={i} m='.2rem .2rem'>
+                  {/*                 <button onClick={() => handleUserBioClick(true)} onMouseLeave={() => handleUserBioClick(false)}>
                   {msg.user !== name && <Avatar size='sm' ml='3px' mr='3px' />}
                 </button> */}
-                <Box display='flex' flexDirection='column' className='name-msg-block' justifyContent='center'>
-                  <Text fontSize='sm' className='msg' p='.4rem .8rem' bg='white' borderRadius='15px' color='white'>
-                    {msg.text}
-                  </Text>
+                  <Box display='flex' flexDirection='column' className='name-msg-block' justifyContent='center'>
+                    <Text fontSize='sm' className='msg' p='.4rem .8rem' bg='white' borderRadius='15px' color='black'>
+                      {msg.messageText}
+                    </Text>
+                  </Box>
                 </Box>
               </Box>
             ))

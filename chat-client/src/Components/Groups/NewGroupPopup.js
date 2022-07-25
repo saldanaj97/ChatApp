@@ -8,13 +8,13 @@ const NewGroupPopup = (props) => {
   //Post request to make a new room
   const handleNewGroup = () => {
     const config = {
-       withCredentials: true 
+      withCredentials: true,
     };
     axios
       .post(
         `http://localhost:3000/room/initiate`,
         {
-          _id: groupName,
+          groupName: groupName,
           userIds: ["fe61d6f03e454e7798f954808390b8f9"],
           type: "consumer_to_consumer",
         },

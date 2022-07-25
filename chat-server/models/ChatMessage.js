@@ -126,8 +126,8 @@ ChatMessageSchema.statics.getConversationByRoomId = async function (chatRoomId, 
       { $unwind: "$postedByUser" },
 
       // Limit the amount of messages we are getting on load
-      { $skip: options.page * options.limit },
-      { $limit: options.limit },
+      /*       { $skip: options.page * options.limit },
+      { $limit: options.limit }, */
 
       // Display the messages in the order they were sent
       { $sort: { createdAt: 1 } },

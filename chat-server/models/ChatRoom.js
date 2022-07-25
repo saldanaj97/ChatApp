@@ -12,6 +12,7 @@ const chatRoomSchema = new mongoose.Schema(
       type: String,
       default: () => uuidv4().replace(/\-/g, ""),
     },
+    groupName: String,
     userIds: Array,
     type: String,
     chatInitiator: String,
@@ -22,7 +23,7 @@ const chatRoomSchema = new mongoose.Schema(
   }
 );
 
-chatRoomSchema.statics.initiateChat = async function (_id, userIds, type, chatInitiator) {
+chatRoomSchema.statics.initiateChat = async function (_id, groupName, userIds, type, chatInitiator) {
   try {
     const availableRoom = await this.findOne({
       _id,
@@ -41,10 +42,10 @@ chatRoomSchema.statics.initiateChat = async function (_id, userIds, type, chatIn
       };
     }
 
-    const newRoom = await this.create({ _id, userIds, type, chatInitiator });
+    const newRoom = await this.create({ _id, groupName, userIds, type, chatInitiator });
     return {
       isNew: true,
-      message: "Creating new room",
+      message: "Creating new room named " + groupName,
       chatRoomId: newRoom._doc._id,
       type: newRoom._doc.type,
     };
