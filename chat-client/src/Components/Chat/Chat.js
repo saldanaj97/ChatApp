@@ -25,7 +25,7 @@ const Chat = (props) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const navigate = useNavigate();
-  const messagesInConvo = useRef([]);
+  let messagesInConvo = [];
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -39,29 +39,23 @@ const Chat = (props) => {
   }, [navigate, name]);
 
   useEffect(() => {
-    const config = {
-      withCredentials: true,
-    };
-
-    axios.get(`/room/${roomId}`, config).then((response) => {
-      response.data.conversation.map((convo) => {
-        messagesInConvo.current = [...messagesInConvo.current, { messageText: convo.message.messageText, authorInfo: convo.postedByUser.username }];
-      });
-      setMessages(messagesInConvo.current);
-    });
+    getMessagesInGroup(roomId);
 
     /* When the socket gets 'message' we add the new message to the current messages */
     socket.on("message", (msg) => {
-      messagesInConvo.current = [...messagesInConvo.current, { messageText: msg.text, authorInfo: msg.author }];
-      setMessages(messagesInConvo.current);
+      messagesInConvo = [...messagesInConvo, { messageText: msg.text, authorInfo: msg.author }];
+      //setMessages(messagesInConvo);
     });
 
     /* When the socket gets 'mvoeroom' we clear the messages convo ref since we do not want to get the messages from the last room */
-    socket.on("moveRoom", () => {
-      messagesInConvo.current = [];
-      setMessages([]);
+    socket.on("moveRoom", (newRoomId) => {
+      console.log("new room id", newRoomId);
+      setRoomId(newRoomId);
+      messagesInConvo = [];
+      getMessagesInGroup(newRoomId);
     });
-  }, [setMessages, roomId, socket]);
+    setMessages(messagesInConvo);
+  }, [setMessages, setRoomId, setRoom]);
 
   /* Emit the message that was typed into the box when the user hits enter or clicks send*/
   const handleSendMessage = () => {
@@ -71,6 +65,19 @@ const Chat = (props) => {
     };
     axios.post(`http://localhost:3000/room/${roomId}/message`, { messageText: message }, config);
     setMessage("");
+  };
+
+  const getMessagesInGroup = (newRoomId) => {
+    const config = {
+      withCredentials: true,
+    };
+    axios.get(`/room/${newRoomId}`, config).then((response) => {
+      response.data.conversation.map((convo) => {
+        messagesInConvo = [...messagesInConvo, { messageText: convo.message.messageText, authorInfo: convo.postedByUser.username }];
+      });
+      console.log("Messages in ", newRoomId, messagesInConvo);
+      setMessages(messagesInConvo);
+    });
   };
 
   /* Handle navigation for when a user logs out */
