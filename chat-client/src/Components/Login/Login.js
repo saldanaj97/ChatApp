@@ -12,7 +12,7 @@ import "./Login.scss";
 
 const Login = () => {
   const socket = useContext(SocketContext);
-  const { name, roomId, setName, setRoom, setRoomId } = useContext(MainContext);
+  const { name, userId, setName, setUserId, setRoom, setRoomId } = useContext(MainContext);
   const { users, setUsers } = useContext(UsersContext);
   const { setShowSignUp } = useContext(SignupContext);
   const [password, setPassword] = useState("");
@@ -29,14 +29,15 @@ const Login = () => {
   //Send a login request which returns a jsonwebtoken for authentication
   const handleLoginClick = async () => {
     var success = "";
-    var userId = "";
+    var resUserId = "";
     var recentConversationId = "";
     var recentConversationName = "";
 
     // Post request for logging in
     await axios.post(`/login/${name}/${password}`).then((response) => {
       success = response.data.success;
-      userId = response.data.userId;
+      resUserId = response.data.userId;
+      setUserId(resUserId);
     });
 
     // Request to get the the id of the users most recent message thread and also set the room to the id

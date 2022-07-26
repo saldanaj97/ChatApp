@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 import { Input, Text, Button, Modal, ModalBody, ModalContent, ModalCloseButton, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react";
+import { MainContext } from "../../MainContext";
 
 const NewGroupPopup = (props) => {
   const [groupName, setGroupName] = useState("");
+  const { userId } = useContext(MainContext);
 
   //Post request to make a new room
   const handleNewGroup = () => {
+    console.log(userId);
     const config = {
       withCredentials: true,
     };
@@ -15,7 +18,7 @@ const NewGroupPopup = (props) => {
         `http://localhost:3000/room/initiate`,
         {
           groupName: groupName,
-          userIds: ["fe61d6f03e454e7798f954808390b8f9"],
+          userIds: [userId],
           type: "consumer_to_consumer",
         },
         config
@@ -28,6 +31,7 @@ const NewGroupPopup = (props) => {
         console.log(error);
       });
   };
+
   return (
     <Modal isCentered onClose={props.onClose} isOpen={props.isOpen} motionPreset='scale'>
       <ModalOverlay />
