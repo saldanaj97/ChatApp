@@ -13,7 +13,9 @@ const GroupMessage = ({ group }) => {
 
   // Function to set the new room and room id and navigate to that room
   const handleGroupClick = () => {
+    // Set new room to the id that was passed in props
     const newRoom = group.id;
+    
     // Send the change room event
     socket.emit("changeRoom", roomId, newRoom);
 
@@ -27,6 +29,7 @@ const GroupMessage = ({ group }) => {
     // Join the new room we will be listening to
     socket.emit("subscribe", group.id);
 
+    // Navigate to the group that was clicked
     return navigate(`/chat/${group.id}`);
   };
 

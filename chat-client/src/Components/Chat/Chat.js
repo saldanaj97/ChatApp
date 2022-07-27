@@ -66,6 +66,7 @@ const Chat = (props) => {
     setMessage("");
   };
 
+  /* Function to get all the messages from a particular chatroom/group */
   const getMessagesInGroup = (newRoomId) => {
     const config = {
       withCredentials: true,
