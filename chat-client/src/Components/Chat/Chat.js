@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState, useRef } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiList } from "react-icons/fi";
 import { BiMessageDetail } from "react-icons/bi";
 import { RiSendPlaneFill } from "react-icons/ri";
-import { Box, Flex, Heading, IconButton, Text, Menu, Button, MenuButton, MenuList, MenuItem, useDisclosure } from "@chakra-ui/react";
+import { Box, Flex, Heading, IconButton, Text, Menu, Button, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
 import ScrollToBottom from "react-scroll-to-bottom";
 import axios from "axios";
 
@@ -12,11 +12,9 @@ import { SocketContext } from "../../SocketContext";
 import { UsersContext } from "../../UsersContext";
 
 import Groups from "../Groups/Groups";
-import NewGroupPopup from "../Groups/NewGroupPopup.js";
-
 import "./Chat.scss";
 
-const Chat = (props) => {
+const Chat = () => {
   const { name, room, roomId, setName, setRoom, setRoomId } = useContext(MainContext);
   const socket = useContext(SocketContext);
   const { users } = useContext(UsersContext);
@@ -26,8 +24,6 @@ const Chat = (props) => {
   const [messages, setMessages] = useState([]);
   const navigate = useNavigate();
   let messagesInConvo = [];
-
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   window.onpopstate = (e) => logout();
 
@@ -91,11 +87,8 @@ const Chat = (props) => {
     <Flex className='app-container' flexDirection='row' width={{ base: "100%", sm: "900px" }} height={{ base: "100%", sm: "auto" }}>
       {/* Groups section */}
       <Flex className='groups-pane' width={{ base: "100%", sm: "250px" }} overflowY='auto' scrollBehavior='smooth'>
-        <Groups onOpen={onOpen} />
+        <Groups />
       </Flex>
-
-      {/* New Group popup box*/}
-      {isOpen && <NewGroupPopup isOpen={isOpen} onClose={onClose} />}
 
       {/* Chatroom section*/}
       <Flex className='room' flexDirection='column' width={{ base: "100%", sm: "600px" }} height={{ base: "100%", sm: "auto" }}>
@@ -139,9 +132,6 @@ const Chat = (props) => {
             messages.map((msg, i) => (
               <Box display='flex' key={i} className={`message ${msg.authorInfo === name ? "my-message" : ""}`} m='.2rem .2rem'>
                 <Box display='flex' key={i} m='.2rem .2rem'>
-                  {/*                 <button onClick={() => handleUserBioClick(true)} onMouseLeave={() => handleUserBioClick(false)}>
-                  {msg.user !== name && <Avatar size='sm' ml='3px' mr='3px' />}
-                </button> */}
                   <Box display='flex' flexDirection='column' className='name-msg-block' justifyContent='center'>
                     <Text fontSize='sm' className='msg' p='.4rem .8rem' bg='white' borderRadius='15px' color='black'>
                       {msg.messageText}
