@@ -1,19 +1,19 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { Flex, Heading, IconButton } from "@chakra-ui/react";
+import { Flex, Heading, IconButton, useDisclosure } from "@chakra-ui/react";
 import { BiMessageAdd } from "react-icons/bi";
 
 import { MainContext } from "../../MainContext";
 import GroupMessage from "./GroupMessage";
+import NewGroupPopup from "../Groups/NewGroupPopup.js";
 import "./Groups.scss";
 
 const Groups = (props) => {
   const [userChatrooms, setUserChatrooms] = useState([]);
-  const { name, room, roomId, setName, setRoom } = useContext(MainContext);
+  const { isOpen, onOpen, onClose } = useDisclosure();
   let roomsFromResponse = [];
 
   useEffect(() => {
-    // Settings for axios
     const config = {
       withCredentials: true,
     };
@@ -40,9 +40,12 @@ const Groups = (props) => {
           Groups
         </Heading>
         <Flex padding='0 15px'>
-          <IconButton backgroundColor='#FA2849' isRound='true' color='white' icon={<BiMessageAdd />} fontSize='25px' onClick={props.onOpen}></IconButton>
+          <IconButton backgroundColor='#FA2849' isRound='true' color='white' icon={<BiMessageAdd />} fontSize='25px' onClick={onOpen}></IconButton>
         </Flex>
       </Flex>
+
+      {/* New Group popup box*/}
+      {isOpen && <NewGroupPopup isOpen={isOpen} onClose={onClose} chatrooms={userChatrooms} setRooms={setUserChatrooms} />}
 
       <Flex direction='column' className='user-group-messages' m='70px 0px 20px'>
         {userChatrooms.map((group) => {

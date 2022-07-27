@@ -7,9 +7,8 @@ const NewGroupPopup = (props) => {
   const [groupName, setGroupName] = useState("");
   const { userId } = useContext(MainContext);
 
-  //Post request to make a new room
+  //Handle post request to make a new room
   const handleNewGroup = () => {
-    console.log(userId);
     const config = {
       withCredentials: true,
     };
@@ -24,7 +23,9 @@ const NewGroupPopup = (props) => {
         config
       )
       .then((response) => {
-        console.log(response);
+        const newRoom = { id: response.data.chatRoom.chatRoomId, groupName: groupName, lastMessageReceived: { user: "", contents: "" } };
+        const updatedRooms = [newRoom, ...props.chatrooms];
+        props.setRooms(updatedRooms);
         props.onClose();
       })
       .catch((error) => {
