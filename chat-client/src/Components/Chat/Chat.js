@@ -1,28 +1,30 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FiList } from "react-icons/fi";
-import { BiMessageDetail } from "react-icons/bi";
-import { RiSendPlaneFill } from "react-icons/ri";
-import { Box, Flex, Heading, IconButton, Text, Menu, Button, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
 import ScrollToBottom from "react-scroll-to-bottom";
 import axios from "axios";
+
+import { BiMessageDetail } from "react-icons/bi";
+import { RiSendPlaneFill } from "react-icons/ri";
+import { HiUserAdd } from "react-icons/hi";
+
+import { Box, Flex, Heading, IconButton, Text, Button, useDisclosure } from "@chakra-ui/react";
+import "./Chat.scss";
 
 import { MainContext } from "../../MainContext";
 import { SocketContext } from "../../SocketContext";
 import { UsersContext } from "../../UsersContext";
 
 import Groups from "../Groups/Groups";
-import "./Chat.scss";
+import AddUser from "./AddUser";
 
 const Chat = () => {
   const { name, room, roomId, setName, setRoom, setRoomId } = useContext(MainContext);
   const socket = useContext(SocketContext);
   const { users } = useContext(UsersContext);
-
-  const [groupName, setGroupName] = useState("");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const navigate = useNavigate();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   let messagesInConvo = [];
 
   window.onpopstate = (e) => logout();
@@ -94,22 +96,12 @@ const Chat = () => {
       <Flex className='room' flexDirection='column' width={{ base: "100%", sm: "600px" }} height={{ base: "100%", sm: "auto" }}>
         <Heading className='heading' as='h4' p='1rem 1.5rem' borderRadius='0px 10px 0 0'>
           <Flex alignItems='center' justifyContent='space-between'>
-            {/* Menu Button */}
-            <Menu>
-              <MenuButton as={IconButton} icon={<FiList />} isRound='true' bg='#FA2849' color='white' />
-              {
-                <MenuList>
-                  {users &&
-                    users.map((user) => {
-                      return (
-                        <MenuItem minH='40px' key={user.id}>
-                          <Text fontSize='sm'>{user.name}</Text>
-                        </MenuItem>
-                      );
-                    })}
-                </MenuList>
-              }
-            </Menu>
+            {/* Add user to chat*/}
+            <Flex>
+              <IconButton backgroundColor='#FA2849' isRound='true' color='white' icon={<HiUserAdd />} fontSize='25px' onClick={onOpen}></IconButton>
+            </Flex>
+            {isOpen && <AddUser isOpen={isOpen} onClose={onClose} />}
+
             {/* Logout Button */}
             <Flex alignItems='center' flexDirection='column' flex={{ base: "1", sm: "auto" }}>
               <Heading fontSize='lg'> {room.slice(0, 1).toUpperCase() + room.slice(1)}</Heading>
