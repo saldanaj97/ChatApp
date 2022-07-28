@@ -37,9 +37,12 @@ const NewGroupPopup = (props) => {
     <Modal isCentered onClose={props.onClose} isOpen={props.isOpen} motionPreset='scale'>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>New Group</ModalHeader>
+        <ModalHeader textAlign='center'>New Group</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
+          <Text mb='10px' textAlign='center'>
+            What would you like to name the new group?
+          </Text>
           <Input variant='flushed' width='100%' borderColor='#FA2849' color='#FA2849' focusBorderColor=' #FA2849' type='text' placeholder='Group Name' value={groupName} onChange={(e) => setGroupName(e.target.value)} />
         </ModalBody>
         <ModalFooter>
