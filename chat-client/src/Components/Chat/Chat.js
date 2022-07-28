@@ -5,7 +5,7 @@ import axios from "axios";
 
 import { BiMessageDetail } from "react-icons/bi";
 import { RiSendPlaneFill } from "react-icons/ri";
-import { HiUserAdd } from "react-icons/hi";
+import { FiUserPlus } from "react-icons/fi";
 
 import { Box, Flex, Heading, IconButton, Text, Button, useDisclosure } from "@chakra-ui/react";
 import "./Chat.scss";
@@ -98,7 +98,7 @@ const Chat = () => {
           <Flex alignItems='center' justifyContent='space-between'>
             {/* Add user to chat*/}
             <Flex>
-              <IconButton backgroundColor='#FA2849' isRound='true' color='white' icon={<HiUserAdd />} fontSize='25px' onClick={onOpen}></IconButton>
+              <IconButton backgroundColor='#FA2849' isRound='true' color='white' icon={<FiUserPlus />} fontSize='25px' onClick={onOpen}></IconButton>
             </Flex>
             {isOpen && <AddUser isOpen={isOpen} onClose={onClose} />}
 
