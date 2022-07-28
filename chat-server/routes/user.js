@@ -1,14 +1,10 @@
-import express from 'express'
+import express from "express";
 
 /* Controllers */
-import user from '../controllers/user.js'
+import user from "../controllers/user.js";
 
-const router = express.Router()
+const router = express.Router();
 
-router
-  .get('/', user.onGetAllUsers)
-  .post('/', user.onCreateUser)
-  .get('/:id', user.onGetUserById)
-  .delete('/:id', user.onDeleteUserById)
+router.get("/", user.onGetAllUsers).post("/", user.onCreateUser).get("/:id", user.onGetUserById).delete("/:id", user.onDeleteUserById).post("/add-friend/", user.onAddFriend);
 
-export default router
+export default router;

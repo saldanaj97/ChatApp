@@ -96,10 +96,27 @@ const onDeleteUserById = async (req, res) => {
   }
 };
 
+/* Function to add a user to friends list */
+const onAddFriend = async (req, res) => {
+  try {
+    const friendProfile = await UserModel.getUserByUsername(req.body.friendUsername);
+    if (!friendProfile) return res.status(400).json({ success: false, error: "No user with that username exists. " });
+    const friendAdded = await UserModel.addToFriends(req.userId, friendProfile);
+    if (!friendAdded) return res.status(400).json({ success: false, error: "Could not add user to friends list. " });
+    return res.status(200).json({
+      success: true,
+      friendAdded,
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, error: error });
+  }
+};
+
 export default {
   onGetAllUsers,
   onGetUserById,
   onUserLogin,
   onCreateUser,
   onDeleteUserById,
+  onAddFriend,
 };
