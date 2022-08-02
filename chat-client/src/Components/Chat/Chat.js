@@ -100,7 +100,7 @@ const Chat = () => {
             <Flex>
               <IconButton backgroundColor='#FA2849' isRound='true' color='white' icon={<FiUserPlus />} fontSize='25px' onClick={onOpen}></IconButton>
             </Flex>
-            {isOpen && <AddUser isOpen={isOpen} onClose={onClose} />}
+            {isOpen && <AddUser isOpen={isOpen} onClose={onClose} roomId={roomId} />}
 
             {/* Logout Button */}
             <Flex alignItems='center' flexDirection='column' flex={{ base: "1", sm: "auto" }}>

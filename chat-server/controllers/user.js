@@ -24,6 +24,17 @@ const onGetUserById = async (req, res) => {
   }
 };
 
+/* Function that will be used to grab the userID given a username */
+const onRetrieveUserId = async (req, res) => {
+  try {
+    const { username } = req.body;
+    const { _id } = await UserModel.getUserByUsername(username);
+    return res.status(200).json({ success: true, userId: _id });
+  } catch (error) {
+    return res.status(500).json({ success: false, error: error });
+  }
+};
+
 /* Helper function to verify that a user has entered the correct password for the provided username */
 const isPasswordCorrect = async (providedPass, hashedPass) => {
   const result = await bcrypt.compare(providedPass, hashedPass);
@@ -119,4 +130,5 @@ export default {
   onCreateUser,
   onDeleteUserById,
   onAddFriend,
+  onRetrieveUserId,
 };

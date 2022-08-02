@@ -1,11 +1,22 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Input, Text, Button, Modal, ModalBody, ModalContent, ModalCloseButton, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react";
+import axios from "axios";
 
 const AddUser = (props) => {
+  const { roomId } = props;
   const [userToAdd, setUserToAdd] = useState("");
 
-  const handleAddUser = () => {
-    console.log("Add user clicked");
+  const handleAddUser = async () => {
+    const config = {
+      withCredentials: true,
+    };
+
+    await axios.post("/users/retrieve-id", { username: userToAdd }, config).then((response) => {
+      const { userId } = response.data;
+      axios.post("/room/add-user", { roomId: roomId, userId: userId }, config).then((response) => {
+        props.onClose();
+      });
+    });
   };
 
   return (
