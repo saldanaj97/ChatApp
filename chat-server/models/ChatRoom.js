@@ -50,7 +50,6 @@ chatRoomSchema.statics.initiateChat = async function (_id, groupName, userIds, t
       type: newRoom._doc.type,
     };
   } catch (error) {
-    console.log("error on chat start", error);
     throw error;
   }
 };
@@ -68,6 +67,21 @@ chatRoomSchema.statics.getChatRoomsByUserId = async function (userId) {
   try {
     const rooms = await this.find({ userIds: { $all: [userId] } });
     return rooms;
+  } catch (error) {
+    throw error;
+  }
+};
+
+chatRoomSchema.statics.addUserToChatroom = async function (roomId, userId) {
+  try {
+    const room = await this.findOne({ _id: roomId });
+    const userIds = room.userIds;
+    if (room && userIds.includes(userId)) {
+      return { success: false, message: "User already in room. " };
+    }
+    const newUserIds = [...userIds, userId];
+    const addUserToRoom = await this.updateOne(room, { $set: { userIds: newUserIds } });
+    return { success: true, message: "User has been added to the room. ", userWasAdded: addUserToRoom };
   } catch (error) {
     throw error;
   }

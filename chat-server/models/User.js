@@ -18,8 +18,12 @@ const userSchema = new mongoose.Schema(
     },
     firstName: String,
     lastName: String,
-    username: String,
+    username: {
+      type: String,
+      unique: true,
+    },
     password: String,
+    friends: Array,
     type: String,
   },
   {
@@ -83,6 +87,17 @@ userSchema.statics.getUserByIds = async function (ids) {
   try {
     const users = await this.find({ _id: { $in: ids } });
     return users;
+  } catch (error) {
+    throw error;
+  }
+};
+
+userSchema.statics.addToFriends = async function (id, friendProfile) {
+  try {
+    const user = await this.findOne({ _id: id });
+    const friend = await this.findOne({ username: friendProfile.username });
+    const addFriend = await this.updateOne(user, { $push: { friends: { _id: friend._id, username: friend.username } } });
+    return addFriend;
   } catch (error) {
     throw error;
   }
