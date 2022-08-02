@@ -24,6 +24,7 @@ function App() {
                   <Routes>
                     <Route path='/' exact element={<Home />} />
                     <Route path='/chat/:_id' element={<Chat />} />
+                    <Route path='/chat' element={<Chat />} />
                     <Route element={<DefaultPage />} />
                   </Routes>
                 </Router>

@@ -48,9 +48,13 @@ const Groups = (props) => {
       {isOpen && <NewGroupPopup isOpen={isOpen} onClose={onClose} chatrooms={userChatrooms} setRooms={setUserChatrooms} />}
 
       <Flex direction='column' className='user-group-messages' m='70px 0px 20px'>
-        {userChatrooms.map((group) => {
-          return <GroupMessage key={group.groupName} group={group} />;
-        })}
+        {userChatrooms.length > 0 ? (
+          userChatrooms.map((group) => {
+            return <GroupMessage key={group.groupName} group={group} />;
+          })
+        ) : (
+          <Flex m='15px'>You are not currently part of any groups.</Flex>
+        )}
       </Flex>
     </Flex>
   );
