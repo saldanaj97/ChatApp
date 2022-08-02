@@ -29,6 +29,10 @@ const Chat = () => {
 
   window.onpopstate = (e) => logout();
 
+  const config = {
+    withCredentials: true,
+  };
+
   //Checks to see if there's a user present
   useEffect(() => {
     if (!name) {
@@ -38,6 +42,12 @@ const Chat = () => {
 
   useEffect(() => {
     getMessagesInGroup(roomId);
+
+    /* API call to get the name of the last chatroom we were in */
+    axios.get(`/room/${roomId}/roomname`, config).then((response) => {
+      const { groupName } = response.data.room;
+      setRoom(groupName);
+    });
 
     /* When the socket gets 'message' we add the new message to the current messages */
     socket.on("message", (msg) => {
@@ -57,18 +67,12 @@ const Chat = () => {
   /* Emit the message that was typed into the box when the user hits enter or clicks send*/
   const handleSendMessage = () => {
     socket.emit("sendMessage", roomId, message, name, () => setMessage(""));
-    const config = {
-      withCredentials: true,
-    };
-    axios.post(`http://localhost:3000/room/${roomId}/message`, { messageText: message }, config);
+    axios.post(`room/${roomId}/message`, { messageText: message }, config);
     setMessage("");
   };
 
   /* Function to get all the messages from a particular chatroom/group */
   const getMessagesInGroup = (newRoomId) => {
-    const config = {
-      withCredentials: true,
-    };
     axios.get(`/room/${newRoomId}`, config).then((response) => {
       response.data.conversation.map((convo) => {
         messagesInConvo = [...messagesInConvo, { messageText: convo.message.messageText, authorInfo: convo.postedByUser.username }];
