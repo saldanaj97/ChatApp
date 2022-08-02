@@ -168,7 +168,19 @@ const addUserToConversation = async (req, res) => {
     }
     return res.status(200).json({ success: true, addedToRoom });
   } catch (error) {
-    return res.status(500).json({ suucess: false, error: error });
+    return res.status(500).json({ success: false, error: error });
+  }
+};
+
+/* Function that will take in a room ID and return the name of the group */
+const getRoomNameById = async (req, res) => {
+  try {
+    const { roomId } = req.params;
+    const room = await ChatRoomModel.getChatRoomById(roomId);
+    if (!room) return res.status(400).json({ success: false, message: "No room exists with the provided ID" });
+    return res.status(200).json({ success: true, room });
+  } catch (error) {
+    return res.status(500).json({ success: false, error: error });
   }
 };
 
@@ -180,4 +192,5 @@ export default {
   getUsersConversations,
   markConversationReadByRoomId,
   addUserToConversation,
+  getRoomNameById,
 };
