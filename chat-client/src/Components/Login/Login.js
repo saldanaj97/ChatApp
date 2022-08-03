@@ -34,7 +34,6 @@ const Login = () => {
 
     // Post request to log the user in
     const success = await logUserIn(name, password, setUserId);
-    console.log(success);
 
     // Request to navigate to the users recent conversation thread
     const conversationId = await getRecentConvo(setRoomId);
