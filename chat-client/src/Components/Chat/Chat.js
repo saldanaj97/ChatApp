@@ -25,7 +25,7 @@ const Chat = () => {
 
   window.onpopstate = (e) => logout();
 
-  //Checks to see if there's a user present
+  //Checks to see if there's a user logged in, if not we redirect to login page
   useEffect(() => {
     if (!name) {
       return navigate("/");
