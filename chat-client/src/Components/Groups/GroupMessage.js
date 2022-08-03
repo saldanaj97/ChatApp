@@ -1,13 +1,17 @@
 import React, { useContext, useEffect } from "react";
-import { Box, Flex } from "@chakra-ui/react";
-import { CgProfile } from "react-icons/cg";
+
 import { MainContext } from "../../MainContext";
 import { SocketContext } from "../../SocketContext";
 import { useNavigate } from "react-router-dom";
+
+import { Box, Flex } from "@chakra-ui/react";
+import { HiOutlineUserGroup } from "react-icons/hi";
+import { FaUsers } from "react-icons/fa";
+
 import "./GroupMessage.scss";
 
 const GroupMessage = ({ group }) => {
-  const { room, roomId, setRoom, setRoomId } = useContext(MainContext);
+  const { roomId, setRoom, setRoomId } = useContext(MainContext);
   const socket = useContext(SocketContext);
   const navigate = useNavigate();
 
@@ -15,7 +19,7 @@ const GroupMessage = ({ group }) => {
   const handleGroupClick = () => {
     // Set new room to the id that was passed in props
     const newRoom = group.id;
-    
+
     // Send the change room event
     socket.emit("changeRoom", roomId, newRoom);
 
@@ -37,7 +41,7 @@ const GroupMessage = ({ group }) => {
     <div onClick={() => handleGroupClick()}>
       <Flex className='group-message' direction='row' width={{ base: "100%", sm: "250px" }} height={{ base: "25%", sm: "auto" }}>
         <Flex className='group-avatar' alignItems='center' m='5px 10px'>
-          <CgProfile size='30px' />
+          <HiOutlineUserGroup size='30px' />
         </Flex>
         <Flex className='group-msg-info-box' direction='column' m='10px'>
           <Box className='group-name'>{group.groupName}</Box>
