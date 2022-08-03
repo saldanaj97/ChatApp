@@ -1,36 +1,26 @@
-import React, { useState, useEffect, useContext } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
 import { Flex, Heading, IconButton, useDisclosure } from "@chakra-ui/react";
 import { BiMessageAdd } from "react-icons/bi";
 
 import GroupMessage from "./GroupMessage";
 import NewGroupPopup from "../Groups/NewGroupPopup.js";
+import { fetchUserGroups } from "./GroupServices";
 import "./Groups.scss";
 
 const Groups = (props) => {
   const [userChatrooms, setUserChatrooms] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  let roomsFromResponse = [];
 
   useEffect(() => {
-    const config = {
-      withCredentials: true,
-    };
+    // Fetch the groups the user is a part of
+    getUserChatrooms();
+  }, [userChatrooms]);
 
-    // Request to get the groups the user is part of for the groups panel
-    axios
-      .get("http://localhost:3000/room/user-messages/", config)
-      .then((response) => {
-        response.data.roomIds.map((room) => {
-          const newRoom = { id: room._id, groupName: room.groupName, lastMessageReceived: { user: "", contents: "" } };
-          roomsFromResponse = [newRoom, ...roomsFromResponse];
-          setUserChatrooms(roomsFromResponse);
-        });
-      })
-      .catch((error) => {
-        console.log("Auth error when retreiving users groups", error);
-      });
-  }, [setUserChatrooms]);
+  /* Call the fetch user groups function from the services to retrieve all the groups the user is a part of */
+  const getUserChatrooms = async () => {
+    const rooms = await fetchUserGroups();
+    setUserChatrooms(rooms);
+  };
 
   return (
     <Flex className='group-container' flexDirection='column' height={{ base: "100%", sm: "400" }}>
