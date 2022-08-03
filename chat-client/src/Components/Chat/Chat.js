@@ -11,7 +11,6 @@ import "./Chat.scss";
 
 import { MainContext } from "../../MainContext";
 import { SocketContext } from "../../SocketContext";
-import { UsersContext } from "../../UsersContext";
 
 import { fetchCurrentGroupName, retrieveGroupMessages, sendMessageInGroup } from "./ChatServices";
 import { MessageBubble } from "./MessageBubble";
@@ -21,7 +20,6 @@ import AddUser from "./AddUser";
 const Chat = () => {
   const { name, room, roomId, setName, setRoom, setRoomId } = useContext(MainContext);
   const socket = useContext(SocketContext);
-  const { users } = useContext(UsersContext);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const navigate = useNavigate();
@@ -76,7 +74,7 @@ const Chat = () => {
   const getMessagesInGroup = async (newRoomId) => {
     const conversation = await retrieveGroupMessages(newRoomId);
     conversation.map((convo) => {
-      messagesInConvo = [...messagesInConvo, { messageText: convo.message.messageText, authorInfo: convo.postedByUser.username }];
+      return (messagesInConvo = [...messagesInConvo, { messageText: convo.message.messageText, authorInfo: convo.postedByUser.username }]);
     });
     setMessages(messagesInConvo);
   };
