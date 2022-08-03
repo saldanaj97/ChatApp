@@ -6,6 +6,7 @@ const CONFIG = {
   withCredentials: true,
 };
 
+/* API call to fetch all of the logged in users groups */
 export const fetchUserGroups = async () => {
   let roomsFromResponse = [];
 
@@ -24,6 +25,7 @@ export const fetchUserGroups = async () => {
   return roomsFromResponse;
 };
 
+/* API call to create a new group */
 export const createNewGroup = async (chatrooms, setRooms, onClose, groupName, userId) => {
   await axios
     .post(`${BASE_URL}/room/initiate`, { groupName: groupName, userIds: [userId], type: "consumer_to_consumer" }, CONFIG)
