@@ -1,7 +1,8 @@
 import React, { useContext, useState } from "react";
 import axios from "axios";
-import { Input, Text, Button, Modal, ModalBody, ModalContent, ModalCloseButton, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react";
+import { Input, Text, Button, Modal, ModalBody, ModalContent, ModalCloseButton, ModalFooter, ModalHeader, ModalOverlay } from "@chakra-ui/react";
 import { MainContext } from "../../MainContext";
+import { createNewGroup } from "./GroupServices";
 
 const NewGroupPopup = (props) => {
   const [groupName, setGroupName] = useState("");
@@ -9,28 +10,7 @@ const NewGroupPopup = (props) => {
 
   //Handle post request to make a new room
   const handleNewGroup = () => {
-    const config = {
-      withCredentials: true,
-    };
-    axios
-      .post(
-        `http://localhost:3000/room/initiate`,
-        {
-          groupName: groupName,
-          userIds: [userId],
-          type: "consumer_to_consumer",
-        },
-        config
-      )
-      .then((response) => {
-        const newRoom = { id: response.data.chatRoom.chatRoomId, groupName: groupName, lastMessageReceived: { user: "", contents: "" } };
-        const updatedRooms = [newRoom, ...props.chatrooms];
-        props.setRooms(updatedRooms);
-        props.onClose();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    createNewGroup(props, groupName, userId);
   };
 
   return (
