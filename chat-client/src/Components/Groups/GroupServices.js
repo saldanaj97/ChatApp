@@ -24,14 +24,14 @@ export const fetchUserGroups = async () => {
   return roomsFromResponse;
 };
 
-export const createNewGroup = async (props, groupName, userId) => {
+export const createNewGroup = async (chatrooms, setRooms, onClose, groupName, userId) => {
   await axios
     .post(`${BASE_URL}/room/initiate`, { groupName: groupName, userIds: [userId], type: "consumer_to_consumer" }, CONFIG)
     .then((response) => {
       const newRoom = { id: response.data.chatRoom.chatRoomId, groupName: groupName, lastMessageReceived: { user: "", contents: "" } };
-      const updatedRooms = [newRoom, ...props.chatrooms];
-      props.setRooms(updatedRooms);
-      props.onClose();
+      const updatedRooms = [newRoom, ...chatrooms];
+      setRooms(updatedRooms);
+      onClose();
     })
     .catch((error) => {
       console.log(error);
