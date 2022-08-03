@@ -3,9 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ScrollToBottom from "react-scroll-to-bottom";
 
-import { BiMessageDetail } from "react-icons/bi";
-
-import { Box, Flex, Text, useDisclosure } from "@chakra-ui/react";
+import { Flex, useDisclosure } from "@chakra-ui/react";
 import "./Chat.scss";
 
 import { MainContext } from "../../MainContext";
@@ -13,7 +11,7 @@ import { SocketContext } from "../../SocketContext";
 
 import { fetchCurrentGroupName, retrieveGroupMessages, sendMessageInGroup } from "./ChatServices";
 import { ChatroomHeader } from "./ChatroomHeader";
-import { MessageBubble } from "./MessageBubble";
+import { MessageBubble, NoMessages } from "./MessageBubble";
 import Groups from "../Groups/Groups";
 
 const Chat = () => {
@@ -99,14 +97,7 @@ const Chat = () => {
               return <MessageBubble message={msg} i={i} name={name} />;
             })
           ) : (
-            <Flex alignItems='center' justifyContent='center' mt='.5rem' bg='#EAEAEA' opacity='.2' w='100%'>
-              <Box mr='2'>-----</Box>
-              <BiMessageDetail fontSize='1rem' />
-              <Text ml='1' fontWeight='400'>
-                No messages
-              </Text>
-              <Box ml='2'>-----</Box>
-            </Flex>
+            <NoMessages />
           )}
         </ScrollToBottom>
         <MessageInputBox message={message} setMessage={setMessage} handleSendMessage={handleSendMessage} />
