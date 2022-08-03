@@ -8,7 +8,7 @@ import { UsersContext } from "../../UsersContext";
 import { SignupContext } from "./SignupContext";
 
 import "./Login.scss";
-import { goToRecentConvo, logUserIn } from "./LoginServices";
+import { getRecentConvo, logUserIn } from "./LoginServices";
 
 const Login = () => {
   const socket = useContext(SocketContext);
@@ -37,7 +37,7 @@ const Login = () => {
     console.log(success);
 
     // Request to navigate to the users recent conversation thread
-    const conversationId = await goToRecentConvo(setRoomId);
+    const conversationId = await getRecentConvo(setRoomId);
 
     // Navigate to the users most recent chat if the user logged in successfully
     if (success === true) {
