@@ -1,4 +1,3 @@
-import { MessageBubble } from "./MessageBubble";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ScrollToBottom from "react-scroll-to-bottom";
@@ -15,6 +14,8 @@ import { MainContext } from "../../MainContext";
 import { SocketContext } from "../../SocketContext";
 import { UsersContext } from "../../UsersContext";
 
+import { fetchCurrentGroupName } from "./ChatServices";
+import { MessageBubble } from "./MessageBubble";
 import Groups from "../Groups/Groups";
 import AddUser from "./AddUser";
 
@@ -42,13 +43,11 @@ const Chat = () => {
   }, [navigate, name]);
 
   useEffect(() => {
+    /* Get all the messages in the current group */
     getMessagesInGroup(roomId);
 
-    /* API call to get the name of the last chatroom we were in */
-    axios.get(`/room/${roomId}/roomname`, config).then((response) => {
-      const { groupName } = response.data.room;
-      setRoom(groupName);
-    });
+    /* Get the name of the chatroom we are in and update the state */
+    getGroupName(roomId);
 
     /* When the socket gets 'message' we add the new message to the current messages */
     socket.on("message", (msg) => {
@@ -64,6 +63,12 @@ const Chat = () => {
     });
     setMessages(messagesInConvo);
   }, [setMessages, setRoomId, setRoom]);
+
+  /* Get the groupname using the fetch current group name service defined in the chatservices file */
+  const getGroupName = async (roomId) => {
+    const groupName = await fetchCurrentGroupName(roomId);
+    setRoom(groupName);
+  };
 
   /* Emit the message that was typed into the box when the user hits enter or clicks send*/
   const handleSendMessage = () => {
@@ -126,7 +131,9 @@ const Chat = () => {
         {/* Message rendering */}
         <ScrollToBottom className='messages' debug={false}>
           {messages.length > 0 ? (
-            messages.map((msg, i) => <MessageBubble message={msg} i={i} name={name} />)
+            messages.map((msg, i) => {
+              return <MessageBubble message={msg} i={i} name={name} />;
+            })
           ) : (
             <Flex alignItems='center' justifyContent='center' mt='.5rem' bg='#EAEAEA' opacity='.2' w='100%'>
               <Box mr='2'>-----</Box>
