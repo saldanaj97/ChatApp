@@ -91,7 +91,7 @@ const Chat = () => {
       </Flex>
       <Flex className='room' flexDirection='column' width={{ base: "100%", sm: "600px" }} height={{ base: "100%", sm: "auto" }}>
         <ChatroomHeader onOpen={onOpen} isOpen={isOpen} onClose={onClose} roomId={roomId} room={room} name={name} logout={logout} />
-        <ScrollToBottom className='messages' debug={false}>
+        <ScrollToBottom className='messages'>
           {messages.length > 0 ? (
             messages.map((msg, i) => {
               return <MessageBubble message={msg} i={i} name={name} />;
