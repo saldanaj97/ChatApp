@@ -3,7 +3,6 @@ import axios from "axios";
 import { Flex, Heading, IconButton, useDisclosure } from "@chakra-ui/react";
 import { BiMessageAdd } from "react-icons/bi";
 
-import { MainContext } from "../../MainContext";
 import GroupMessage from "./GroupMessage";
 import NewGroupPopup from "../Groups/NewGroupPopup.js";
 import "./Groups.scss";
