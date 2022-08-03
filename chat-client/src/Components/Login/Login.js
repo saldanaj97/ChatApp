@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, Button, Flex, Heading, Input, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Input, Text } from "@chakra-ui/react";
 import axios from "axios";
 
 import { MainContext } from "../../MainContext";
@@ -17,6 +17,7 @@ const Login = () => {
   const { setShowSignUp } = useContext(SignupContext);
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   //Checks to see if there's a user already present
 
@@ -31,7 +32,9 @@ const Login = () => {
     var success = "";
     var resUserId = "";
     var recentConversationId = "";
-    var recentConversationName = "";
+
+    // Notify the UI that the user has clicked the login and the chat is now loading
+    setLoading(true);
 
     // Post request for logging in
     await axios.post(`/login/${name}/${password}`).then((response) => {
@@ -81,7 +84,7 @@ const Login = () => {
             <Button backgroundColor='#FA2849' width='25%' m='0px 10px' onClick={handleSignUpClick} fontSize='17px'>
               Sign up
             </Button>
-            <Button backgroundColor='#FA2849' width='25%' m='0px 10px' onClick={handleLoginClick} fontSize='17px'>
+            <Button isLoading={loading} backgroundColor='#FA2849' width='25%' m='0px 10px' onClick={handleLoginClick} fontSize='17px'>
               Login
             </Button>
           </Box>
