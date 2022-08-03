@@ -1,3 +1,4 @@
+import { MessageBubble } from "./MessageBubble";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ScrollToBottom from "react-scroll-to-bottom";
@@ -125,17 +126,7 @@ const Chat = () => {
         {/* Message rendering */}
         <ScrollToBottom className='messages' debug={false}>
           {messages.length > 0 ? (
-            messages.map((msg, i) => (
-              <Box display='flex' key={i} className={`message ${msg.authorInfo === name ? "my-message" : ""}`} m='.2rem .2rem'>
-                <Box display='flex' key={i} m='.2rem .2rem'>
-                  <Box display='flex' flexDirection='column' className='name-msg-block' justifyContent='center'>
-                    <Text fontSize='sm' className='msg' p='.4rem .8rem' bg='white' borderRadius='15px' color='black'>
-                      {msg.messageText}
-                    </Text>
-                  </Box>
-                </Box>
-              </Box>
-            ))
+            messages.map((msg, i) => <MessageBubble message={msg} i={i} name={name} />)
           ) : (
             <Flex alignItems='center' justifyContent='center' mt='.5rem' bg='#EAEAEA' opacity='.2' w='100%'>
               <Box mr='2'>-----</Box>
