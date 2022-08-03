@@ -1,8 +1,8 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 
-import { Box, Collapse, Flex, Heading } from "@chakra-ui/react";
+import { Collapse, Flex, Heading } from "@chakra-ui/react";
 
-import { SignupContext, SignupProvider } from "./SignupContext";
+import { SignupContext } from "./SignupContext";
 
 import Login from "./Login";
 import Signup from "./Signup";

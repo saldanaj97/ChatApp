@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, Button, Flex, Heading, Input, Text } from "@chakra-ui/react";
-import axios from "axios";
+import { Box, Button, Flex, Input, Text } from "@chakra-ui/react";
 
 import { MainContext } from "../../MainContext";
 import { SocketContext } from "../../SocketContext";
@@ -9,14 +8,16 @@ import { UsersContext } from "../../UsersContext";
 import { SignupContext } from "./SignupContext";
 
 import "./Login.scss";
+import { getRecentConvo, logUserIn } from "./LoginServices";
 
 const Login = () => {
   const socket = useContext(SocketContext);
-  const { name, userId, setName, setUserId, setRoom, setRoomId } = useContext(MainContext);
-  const { users, setUsers } = useContext(UsersContext);
+  const { name, setName, setUserId, setRoomId } = useContext(MainContext);
+  const { setUsers } = useContext(UsersContext);
   const { setShowSignUp } = useContext(SignupContext);
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   //Checks to see if there's a user already present
 
@@ -28,30 +29,19 @@ const Login = () => {
 
   //Send a login request which returns a jsonwebtoken for authentication
   const handleLoginClick = async () => {
-    var success = "";
-    var resUserId = "";
-    var recentConversationId = "";
-    var recentConversationName = "";
+    // Notify the UI that the user has clicked the login and the chat is now loading
+    setLoading(true);
 
-    // Post request for logging in
-    await axios.post(`/login/${name}/${password}`).then((response) => {
-      success = response.data.success;
-      resUserId = response.data.userId;
-      setUserId(resUserId);
-    });
+    // Post request to log the user in
+    const success = await logUserIn(name, password, setUserId);
 
-    // Request to get the the id of the users most recent message thread and also set the room to the id
-    await axios.get("/room").then((response) => {
-      if (response.data.conversation.length > 0) {
-        recentConversationId = response.data.conversation[0]._id;
-        setRoomId(recentConversationId);
-      }
-    });
+    // Request to navigate to the users recent conversation thread
+    const conversationId = await getRecentConvo(setRoomId);
 
     // Navigate to the users most recent chat if the user logged in successfully
     if (success === true) {
-      socket.emit("subscribe", recentConversationId);
-      navigate(`/chat/${recentConversationId}`);
+      socket.emit("subscribe", conversationId);
+      navigate(`/chat/${conversationId}`);
     }
   };
 
@@ -81,7 +71,7 @@ const Login = () => {
             <Button backgroundColor='#FA2849' width='25%' m='0px 10px' onClick={handleSignUpClick} fontSize='17px'>
               Sign up
             </Button>
-            <Button backgroundColor='#FA2849' width='25%' m='0px 10px' onClick={handleLoginClick} fontSize='17px'>
+            <Button isLoading={loading} backgroundColor='#FA2849' width='25%' m='0px 10px' onClick={handleLoginClick} fontSize='17px'>
               Login
             </Button>
           </Box>
