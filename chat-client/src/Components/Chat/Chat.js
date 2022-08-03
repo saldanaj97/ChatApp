@@ -14,7 +14,7 @@ import { MainContext } from "../../MainContext";
 import { SocketContext } from "../../SocketContext";
 import { UsersContext } from "../../UsersContext";
 
-import { fetchCurrentGroupName } from "./ChatServices";
+import { fetchCurrentGroupName, sendMessageInGroup } from "./ChatServices";
 import { MessageBubble } from "./MessageBubble";
 import Groups from "../Groups/Groups";
 import AddUser from "./AddUser";
@@ -73,13 +73,13 @@ const Chat = () => {
   /* Emit the message that was typed into the box when the user hits enter or clicks send*/
   const handleSendMessage = () => {
     socket.emit("sendMessage", roomId, message, name, () => setMessage(""));
-    axios.post(`room/${roomId}/message`, { messageText: message }, config);
+    sendMessageInGroup(roomId, message);
     setMessage("");
   };
 
   /* Function to get all the messages from a particular chatroom/group */
   const getMessagesInGroup = (newRoomId) => {
-    axios.get(`/room/${newRoomId}`, config).then((response) => {
+    axios.get(`http://localhost:3000/room/${newRoomId}`, config).then((response) => {
       response.data.conversation.map((convo) => {
         messagesInConvo = [...messagesInConvo, { messageText: convo.message.messageText, authorInfo: convo.postedByUser.username }];
       });
