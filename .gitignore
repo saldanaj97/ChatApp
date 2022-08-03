@@ -1,4 +1,5 @@
 chat-client/node_modules
 chat-server/node_modules
 /.vscode
-/.env
+chat-server/.env
+chat-client/.env
