@@ -1,21 +1,20 @@
+import { MessageInputBox } from "./MessageInputBox";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ScrollToBottom from "react-scroll-to-bottom";
 
 import { BiMessageDetail } from "react-icons/bi";
-import { RiSendPlaneFill } from "react-icons/ri";
-import { FiUserPlus } from "react-icons/fi";
 
-import { Box, Flex, Heading, IconButton, Text, Button, useDisclosure } from "@chakra-ui/react";
+import { Box, Flex, Text, useDisclosure } from "@chakra-ui/react";
 import "./Chat.scss";
 
 import { MainContext } from "../../MainContext";
 import { SocketContext } from "../../SocketContext";
 
 import { fetchCurrentGroupName, retrieveGroupMessages, sendMessageInGroup } from "./ChatServices";
+import { ChatroomHeader } from "./ChatroomHeader";
 import { MessageBubble } from "./MessageBubble";
 import Groups from "../Groups/Groups";
-import AddUser from "./AddUser";
 
 const Chat = () => {
   const { name, room, roomId, setName, setRoom, setRoomId } = useContext(MainContext);
@@ -89,38 +88,11 @@ const Chat = () => {
 
   return (
     <Flex className='app-container' flexDirection='row' width={{ base: "100%", sm: "900px" }} height={{ base: "100%", sm: "auto" }}>
-      {/* Groups section */}
       <Flex className='groups-pane' width={{ base: "100%", sm: "250px" }} overflowY='auto' overflowX='hidden' scrollBehavior='smooth'>
         <Groups />
       </Flex>
-
-      {/* Chatroom section*/}
       <Flex className='room' flexDirection='column' width={{ base: "100%", sm: "600px" }} height={{ base: "100%", sm: "auto" }}>
-        <Heading className='heading' as='h4' p='1rem 1.5rem' borderRadius='0px 10px 0 0'>
-          <Flex alignItems='center' justifyContent='space-between'>
-            {/* Add user to chat*/}
-            <Flex>
-              <IconButton backgroundColor='#FA2849' isRound='true' color='white' icon={<FiUserPlus />} fontSize='25px' onClick={onOpen}></IconButton>
-            </Flex>
-            {isOpen && <AddUser isOpen={isOpen} onClose={onClose} roomId={roomId} />}
-
-            {/* Logout Button */}
-            <Flex alignItems='center' flexDirection='column' flex={{ base: "1", sm: "auto" }}>
-              <Heading fontSize='lg'> {room.slice(0, 1).toUpperCase() + room.slice(1)}</Heading>
-              <Flex alignItems='center'>
-                <Text mr='1' fontWeight='400' fontSize='md' opacity='.7' letterSpacing='0'>
-                  {name}
-                </Text>
-                <Box h={2} w={2} borderRadius='100px' bg='green.300'></Box>
-              </Flex>
-            </Flex>
-            <Button color='gray.500' fontSize='sm' onClick={logout}>
-              Logout
-            </Button>
-          </Flex>
-        </Heading>
-
-        {/* Message rendering */}
+        <ChatroomHeader onOpen={onOpen} isOpen={isOpen} onClose={onClose} roomId={roomId} room={room} name={name} logout={logout} />
         <ScrollToBottom className='messages' debug={false}>
           {messages.length > 0 ? (
             messages.map((msg, i) => {
@@ -137,14 +109,7 @@ const Chat = () => {
             </Flex>
           )}
         </ScrollToBottom>
-
-        {/* Message input box */}
-        <div className='form'>
-          <input type='text' placeholder='Enter Message' value={message} onChange={(e) => setMessage(e.target.value)} />
-          <IconButton background='#FA2849' isRound='true' icon={<RiSendPlaneFill />} onClick={handleSendMessage} disabled={message === "" ? true : false}>
-            Send
-          </IconButton>
-        </div>
+        <MessageInputBox message={message} setMessage={setMessage} handleSendMessage={handleSendMessage} />
       </Flex>
     </Flex>
   );
