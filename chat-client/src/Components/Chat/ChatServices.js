@@ -15,5 +15,11 @@ export const fetchCurrentGroupName = async (roomId) => {
 /* API call to send the message the user has entered */
 export const sendMessageInGroup = async (roomId, message) => {
   const response = await axios.post(`${BASE_URL}/room/${roomId}/message`, { messageText: message }, CONFIG);
-  console.log(response);
+  return response;
+};
+
+/* API call to get all the messages in a group the user is a part of */
+export const retrieveGroupMessages = async (roomId) => {
+  const { conversation } = await axios.get(`${BASE_URL}/room/${roomId}`, CONFIG).then((response) => response.data);
+  return conversation;
 };

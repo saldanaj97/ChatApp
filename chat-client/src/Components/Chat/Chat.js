@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ScrollToBottom from "react-scroll-to-bottom";
-import axios from "axios";
 
 import { BiMessageDetail } from "react-icons/bi";
 import { RiSendPlaneFill } from "react-icons/ri";
@@ -14,7 +13,7 @@ import { MainContext } from "../../MainContext";
 import { SocketContext } from "../../SocketContext";
 import { UsersContext } from "../../UsersContext";
 
-import { fetchCurrentGroupName, sendMessageInGroup } from "./ChatServices";
+import { fetchCurrentGroupName, retrieveGroupMessages, sendMessageInGroup } from "./ChatServices";
 import { MessageBubble } from "./MessageBubble";
 import Groups from "../Groups/Groups";
 import AddUser from "./AddUser";
@@ -30,10 +29,6 @@ const Chat = () => {
   let messagesInConvo = [];
 
   window.onpopstate = (e) => logout();
-
-  const config = {
-    withCredentials: true,
-  };
 
   //Checks to see if there's a user present
   useEffect(() => {
@@ -78,13 +73,12 @@ const Chat = () => {
   };
 
   /* Function to get all the messages from a particular chatroom/group */
-  const getMessagesInGroup = (newRoomId) => {
-    axios.get(`http://localhost:3000/room/${newRoomId}`, config).then((response) => {
-      response.data.conversation.map((convo) => {
-        messagesInConvo = [...messagesInConvo, { messageText: convo.message.messageText, authorInfo: convo.postedByUser.username }];
-      });
-      setMessages(messagesInConvo);
+  const getMessagesInGroup = async (newRoomId) => {
+    const conversation = await retrieveGroupMessages(newRoomId);
+    conversation.map((convo) => {
+      messagesInConvo = [...messagesInConvo, { messageText: convo.message.messageText, authorInfo: convo.postedByUser.username }];
     });
+    setMessages(messagesInConvo);
   };
 
   /* Handle navigation for when a user logs out */
