@@ -13,12 +13,16 @@ const Signup = () => {
   const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleLoginClick = () => {
     setShowSignUp(false);
   };
 
   const handleSignUpClick = () => {
+    // Notify the user that the signup has been clicked and the next page is loading
+    setLoading(true);
+
     // This will turn all the user entered data into a json to make the post request
     const newUserInfo = JSON.stringify({
       firstName: firstName,
@@ -62,7 +66,7 @@ const Signup = () => {
           </FormControl>
         </Box>
         <Flex width='100%' justifyContent='center' m='10px auto'>
-          <Button bg='#FA2849' onClick={handleSignUpClick}>
+          <Button bg='#FA2849' isLoading={loading} onClick={handleSignUpClick}>
             Sign up
           </Button>
         </Flex>
