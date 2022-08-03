@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 
 import { MainContext } from "../../MainContext";
 import { SocketContext } from "../../SocketContext";
@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 
 import { Box, Flex } from "@chakra-ui/react";
 import { HiOutlineUserGroup } from "react-icons/hi";
-import { FaUsers } from "react-icons/fa";
 
 import "./GroupMessage.scss";
 
@@ -45,9 +44,6 @@ const GroupMessage = ({ group }) => {
         </Flex>
         <Flex className='group-msg-info-box' direction='column' m='10px'>
           <Box className='group-name'>{group.groupName}</Box>
-          <Box className='last-sent-message'>
-            {group.lastMessageReceived.user} {group.lastMessageReceived.contents}
-          </Box>
         </Flex>
       </Flex>
     </div>
