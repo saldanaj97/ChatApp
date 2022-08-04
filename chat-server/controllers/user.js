@@ -58,7 +58,7 @@ const onUserLogin = async (username, password) => {
     const user = await UserModel.getUserByUsername(username);
     const loginAccepted = await isPasswordCorrect(password, user.password);
     if (!loginAccepted) {
-      return { success: false, error: "Invalid login credentials" };
+      throw error;
     }
     global.io.sockets.emit("identity", { user }, () => {});
     return { success: true, user };

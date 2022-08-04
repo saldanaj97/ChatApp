@@ -8,8 +8,8 @@ export const encode = async (req, res, next) => {
   try {
     const { username, password } = req.params;
     const verifiedLogin = await User.onUserLogin(username, password);
-    if (verifiedLogin.statusCode === 400) {
-      return;
+    if (verifiedLogin.success === false) {
+      return res.status(401).json({ success: false, error: "Invalid login credentials" });
     }
     const payload = {
       userid: verifiedLogin.user._id,
