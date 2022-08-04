@@ -1,10 +1,14 @@
-import React from "react";
-import { Box, Flex, Heading, IconButton, Text, Button, Spacer } from "@chakra-ui/react";
+import { UsersMenu } from "./UsersMenu";
+import React, { useContext, useEffect } from "react";
+import { UsersContext } from "../../UsersContext";
+import { Box, Button, Flex, Heading, IconButton, Text, Menu, MenuList, MenuItem, MenuButton } from "@chakra-ui/react";
 import { FiUserPlus } from "react-icons/fi";
 import AddUser from "./AddUser";
 
 /* This function is responsible for rendering the header of the chatroom containing username, roomname, add user button, and logout button  */
 export function ChatroomHeader({ onOpen, isOpen, onClose, roomId, room, name, logout }) {
+  const { users } = useContext(UsersContext);
+
   return (
     <Heading className='heading' as='h4' p='1rem 1.5rem' borderRadius='0px 10px 0 0'>
       <Flex alignItems='center'>
@@ -22,9 +26,7 @@ export function ChatroomHeader({ onOpen, isOpen, onClose, roomId, room, name, lo
         </Flex>
 
         <Flex flexDirection='row'>
-          <Button color='gray.500' fontSize='sm' mr='10px' onClick={console.log("here")}>
-            Users
-          </Button>
+          <UsersMenu users={users} />
           <Button color='gray.500' fontSize='sm' onClick={logout}>
             Logout
           </Button>
