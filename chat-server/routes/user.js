@@ -9,6 +9,7 @@ const router = express.Router();
 router
 .get("/", user.onGetAllUsers)
 .get("/:id", user.onGetUserById)
+.post('/usernames', user.onGetAllUsersByIds)
 .post("/retrieve-id", user.onRetrieveUserId)
 .post("/", user.onCreateUser)
 .post("/add-friend", user.onAddFriend)

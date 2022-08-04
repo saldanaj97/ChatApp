@@ -1,10 +1,9 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, Button, Flex, Input, Text } from "@chakra-ui/react";
 
 import { MainContext } from "../../MainContext";
 import { SocketContext } from "../../SocketContext";
-import { UsersContext } from "../../UsersContext";
 import { SignupContext } from "./SignupContext";
 
 import "./Login.scss";
@@ -13,19 +12,11 @@ import { getRecentConvo, logUserIn } from "./LoginServices";
 const Login = () => {
   const socket = useContext(SocketContext);
   const { name, setName, setUserId, setRoomId } = useContext(MainContext);
-  const { setUsers } = useContext(UsersContext);
   const { setShowSignUp } = useContext(SignupContext);
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-
-  //Checks to see if there's a user already present
-
-  useEffect(() => {
-    socket.on("users", (users) => {
-      setUsers(users);
-    });
-  });
+  const [validLoginInfo, setValidLoginInfo] = useState(true);
+  const navigate = useNavigate();
 
   //Send a login request which returns a jsonwebtoken for authentication
   const handleLoginClick = async () => {
@@ -33,18 +24,34 @@ const Login = () => {
     setLoading(true);
 
     // Post request to log the user in
-    const success = await logUserIn(name, password, setUserId);
+    const { success, userId } = await logUserIn(name, password);
 
-    // Request to navigate to the users recent conversation thread
-    const conversationId = await getRecentConvo(setRoomId);
+    // Request to get the ID of the last conversation the user was active in
+    const conversationId = await getRecentConvo();
 
-    // Navigate to the users most recent chat if the user logged in successfully
+    // User has logged in successfully
     if (success === true) {
+      // Set the global user ID and the roomId
+      setUserId(userId);
+      setRoomId(conversationId);
+      setValidLoginInfo(true);
+
+      // Subscribe and navigate to the last group chat he was part of
       socket.emit("subscribe", conversationId);
       navigate(`/chat/${conversationId}`);
     }
+
+    // If sucess was false, then inform the user the login did go through
+    if (success === false) {
+      // Set the loading indicator to false since we are not waiting on the login req anymore
+      setLoading(false);
+
+      // Set the valid login info var to false so the error message is shown
+      setValidLoginInfo(false);
+    }
   };
 
+  /* Function to handle when a user clicks on the sign up button */
   const handleSignUpClick = () => {
     setShowSignUp(true);
   };
@@ -65,13 +72,36 @@ const Login = () => {
 
         {/* Forms and sign up/login buttons */}
         <Flex className='form' gap='1rem' flexDirection='column' align='center'>
-          <Input variant='flushed' width='85%' borderColor='#FA2849' color='#FA2849' focusBorderColor=' #FA2849' type='text' placeholder='Username' value={name} onChange={(e) => setName(e.target.value)} />
-          <Input variant='flushed' width='85%' borderColor='#FA2849' color='#FA2849' focusBorderColor=' #FA2849' type='password' placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} />
-          <Box className='buttons' width='100%' m='30px 0px 0px 0px' align='center'>
-            <Button backgroundColor='#FA2849' width='25%' m='0px 10px' onClick={handleSignUpClick} fontSize='17px'>
-              Sign up
-            </Button>
-            <Button isLoading={loading} backgroundColor='#FA2849' width='25%' m='0px 10px' onClick={handleLoginClick} fontSize='17px'>
+          <Input
+            variant='flushed'
+            focusBorderColor='#FA2849'
+            type='text'
+            placeholder='Username'
+            value={name}
+            onChange={(e) => {
+              setName(e.target.value);
+              setValidLoginInfo(true);
+            }}
+          />
+          <Input
+            variant='flushed'
+            focusBorderColor='#FA2849'
+            type='password'
+            placeholder='Password'
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setValidLoginInfo(true);
+            }}
+          />
+          {!validLoginInfo ? (
+            <Box className='invalid-login-msg' color='#FA2849'>
+              <Text fontWeight='light'>You've entered the wrong username or password. </Text>
+            </Box>
+          ) : null}
+          <Box className='buttons' width='100%' m='15px 0px 15px 0px' align='center'>
+            <Button onClick={handleSignUpClick}>Sign up</Button>
+            <Button isLoading={loading} onClick={handleLoginClick}>
               Login
             </Button>
           </Box>

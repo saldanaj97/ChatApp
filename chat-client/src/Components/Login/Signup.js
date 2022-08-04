@@ -1,42 +1,62 @@
 import React, { useContext, useState } from "react";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 import { Box, Button, Center, Divider, Flex, FormControl, Input, Text } from "@chakra-ui/react";
 
+import { MainContext } from "../../MainContext";
 import { SignupContext } from "./SignupContext";
 
+import { logUserIn, signUserUp } from "./LoginServices";
 import "./Signup.scss";
 
 const Signup = () => {
   const { setShowSignUp } = useContext(SignupContext);
+  const { setUserId } = useContext(MainContext);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleLoginClick = () => {
     setShowSignUp(false);
   };
 
-  const handleSignUpClick = () => {
+  const handleSignUpClick = async () => {
     // Notify the user that the signup has been clicked and the next page is loading
     setLoading(true);
 
     // This will turn all the user entered data into a json to make the post request
-    const newUserInfo = JSON.stringify({
+    const newUserInfo = {
       firstName: firstName,
       lastName: lastName,
       username: username,
       password: password,
       type: "consumer",
-    });
+    };
 
-    axios.post(`http://localhost:3000/users/`, newUserInfo, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    // Make the API call with the new user info
+    const { success, user } = await signUserUp(newUserInfo).then((response) => response);
+
+    // If teh sign user up call returns success then we navigate to the login page
+    if (success === true) {
+      // Make the loading circle go away
+      setLoading(false);
+
+      // Make a call to the login API
+      const { userId } = await logUserIn(username, password);
+
+      // Set the global user variable
+      setUserId(userId);
+      setShowSignUp(false);
+      navigate("/");
+    }
+
+    if (success === false) {
+      // Otherwise notify the user that they could not be signed up
+      setLoading(false);
+    }
   };
 
   return (

@@ -4,12 +4,12 @@ import { SECRET_KEY } from "../app.js";
 
 /* Function that will check to see if a user is in the DB and if they are, will then assign them a 
   an authentication token */
-export const encode = async (req, res, next) => {
+export const encode = async (req, res) => {
   try {
     const { username, password } = req.params;
     const verifiedLogin = await User.onUserLogin(username, password);
-    if (verifiedLogin.statusCode === 400) {
-      return;
+    if (verifiedLogin.success === false) {
+      return res.status(401).json({ success: false, message: "Invalid login credentials" });
     }
     const payload = {
       userid: verifiedLogin.user._id,
