@@ -17,6 +17,7 @@ const Login = () => {
   const { setShowSignUp } = useContext(SignupContext);
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [validLoginInfo, setValidLoginInfo] = useState(true);
   const navigate = useNavigate();
 
   //Checks to see if there's a user already present
@@ -43,6 +44,7 @@ const Login = () => {
       // Set the global user ID and the roomId
       setUserId(userId);
       setRoomId(conversationId);
+      setValidLoginInfo(true);
 
       // Subscribe and navigate to the last group chat he was part of
       socket.emit("subscribe", conversationId);
@@ -53,6 +55,9 @@ const Login = () => {
     if (success === false) {
       // Set the loading indicator to false since we are not waiting on the login req anymore
       setLoading(false);
+
+      // Set the valid login info var to false so the error message is shown
+      setValidLoginInfo(false);
     }
   };
 
@@ -77,9 +82,34 @@ const Login = () => {
 
         {/* Forms and sign up/login buttons */}
         <Flex className='form' gap='1rem' flexDirection='column' align='center'>
-          <Input variant='flushed' focusBorderColor='#FA2849' type='text' placeholder='Username' value={name} onChange={(e) => setName(e.target.value)} />
-          <Input variant='flushed' focusBorderColor='#FA2849' type='password' placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} />
-          <Box className='buttons' width='100%' m='30px 0px 0px 0px' align='center'>
+          <Input
+            variant='flushed'
+            focusBorderColor='#FA2849'
+            type='text'
+            placeholder='Username'
+            value={name}
+            onChange={(e) => {
+              setName(e.target.value);
+              setValidLoginInfo(true);
+            }}
+          />
+          <Input
+            variant='flushed'
+            focusBorderColor='#FA2849'
+            type='password'
+            placeholder='Password'
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setValidLoginInfo(true);
+            }}
+          />
+          {!validLoginInfo ? (
+            <Box className='invalid-login-msg' color='#FA2849'>
+              <Text fontWeight='light'>You've entered the wrong username or password. </Text>
+            </Box>
+          ) : null}
+          <Box className='buttons' width='100%' m='15px 0px 15px 0px' align='center'>
             <Button onClick={handleSignUpClick}>Sign up</Button>
             <Button isLoading={loading} onClick={handleLoginClick}>
               Login
