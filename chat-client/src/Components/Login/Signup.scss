@@ -1,39 +1,39 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap");
 
-.signup-container{
-    font-family: 'DM Sans';
-    background-color: #282331;
-    border-radius: 10px;
-    .reg-info-title {
-        font-weight: Bold;
-        font-size: 24px;
-        color: #FA2849;
+.signup-container {
+  font-family: "DM Sans";
+  background-color: #373747;
+  border-radius: 10px;
+  .reg-info-title {
+    font-weight: Bold;
+    font-size: 24px;
+    color: #fa2849;
+  }
+  .reg-info-description {
+    font-weight: 100;
+    font-size: 15px;
+    text-align: center;
+    color: white;
+  }
+  .existing-user-title {
+    font-size: 15px;
+    color: #fa2849;
+  }
+  .signup-forms {
+    flex-direction: column;
+    width: 70%;
+    height: 100%;
+    .signup-title {
+      font-weight: Bold;
+      font-size: 24px;
+      margin-bottom: 0;
+      color: #fa2849;
     }
-    .reg-info-description {
-        font-weight: 100;
-        font-size: 15px;
-        text-align: center;
-        color: white;
-    }
-    .existing-user-title {
-        font-size: 15px;
-        color: #FA2849;
-    }
-    .signup-forms {
-        flex-direction: column;
-        width: 70%;
-        height: 100%;
-        .signup-title {
-            font-weight: Bold;
-            font-size: 24px;
-            margin-bottom: 0;
-            color: #FA2849;
-        }
-    }
+  }
 
-    Input {
-        margin-bottom: 15px;
-        border-color: #FA2849;
-        color: white;
-    }
+  Input {
+    margin-bottom: 15px;
+    border-color: #fa2849;
+    color: white;
+  }
 }
