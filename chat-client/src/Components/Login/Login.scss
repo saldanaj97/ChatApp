@@ -8,10 +8,15 @@
     font-weight: 600;
     text-align: center;
   }
-
   input {
     width: 85%;
     border-color: #fa2849;
     color: #fa2849;
+  }
+  button {
+    background-color: #fa2849;
+    width: 25%;
+    margin: 0px 10px;
+    font-size: 17px;
   }
 }
