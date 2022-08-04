@@ -15,7 +15,7 @@ export const logUserIn = async (name, password, setUserId) => {
 
 /* Function to retrieve the most recent conversation */
 export const getRecentConvo = async (setRoomId) => {
-  const { _id } = await axios.get(`${BASE_URL}/room`, CONFIG).then((response) => {
+  const { _id } = await axios.get(`${BASE_URL}/room/`, CONFIG).then((response) => {
     if (response.data.conversation.length > 0) {
       return response.data.conversation[0];
     }
