@@ -28,3 +28,14 @@ export const getRecentConvo = async () => {
   });
   return _id;
 };
+
+/* API call to sign a user up  */
+export const signUserUp = async (newUserInfo) => {
+  const { user } = await axios
+    .post(`http://localhost:3000/users/`, newUserInfo)
+    .then((response) => response.data)
+    .catch((error) => {
+      return { success: false, user: "" };
+    });
+  return { success: true, user };
+};

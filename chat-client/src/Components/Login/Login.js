@@ -1,10 +1,9 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, Button, Flex, Input, Text } from "@chakra-ui/react";
 
 import { MainContext } from "../../MainContext";
 import { SocketContext } from "../../SocketContext";
-import { UsersContext } from "../../UsersContext";
 import { SignupContext } from "./SignupContext";
 
 import "./Login.scss";
@@ -13,20 +12,11 @@ import { getRecentConvo, logUserIn } from "./LoginServices";
 const Login = () => {
   const socket = useContext(SocketContext);
   const { name, setName, setUserId, setRoomId } = useContext(MainContext);
-  const { setUsers } = useContext(UsersContext);
   const { setShowSignUp } = useContext(SignupContext);
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [validLoginInfo, setValidLoginInfo] = useState(true);
   const navigate = useNavigate();
-
-  //Checks to see if there's a user already present
-
-  useEffect(() => {
-    socket.on("users", (users) => {
-      setUsers(users);
-    });
-  });
 
   //Send a login request which returns a jsonwebtoken for authentication
   const handleLoginClick = async () => {
