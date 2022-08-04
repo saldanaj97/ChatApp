@@ -1,7 +1,7 @@
 import { UsersMenu } from "./UsersMenu";
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { UsersContext } from "../../UsersContext";
-import { Box, Button, Flex, Heading, IconButton, Text, Menu, MenuList, MenuItem, MenuButton } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, IconButton, Text } from "@chakra-ui/react";
 import { FiUserPlus } from "react-icons/fi";
 import AddUser from "./AddUser";
 
