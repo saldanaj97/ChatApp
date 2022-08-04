@@ -8,14 +8,16 @@ import "./Chat.scss";
 
 import { MainContext } from "../../MainContext";
 import { SocketContext } from "../../SocketContext";
+import { UsersContext } from "../../UsersContext";
 
-import { fetchCurrentGroupName, retrieveGroupMessages, sendMessageInGroup } from "./ChatServices";
+import { fetchGroupInfo, fetchUsersInGroup, retrieveGroupMessages, sendMessageInGroup } from "./ChatServices";
 import { ChatroomHeader } from "./ChatroomHeader";
 import { MessageBubble, NoMessages } from "./MessageBubble";
 import Groups from "../Groups/Groups";
 
 const Chat = () => {
   const { name, room, roomId, setName, setRoom, setRoomId } = useContext(MainContext);
+  const { setUsers } = useContext(UsersContext);
   const socket = useContext(SocketContext);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
@@ -37,7 +39,7 @@ const Chat = () => {
     getMessagesInGroup(roomId);
 
     /* Get the name of the chatroom we are in and update the state */
-    getGroupName(roomId);
+    getGroupInfo(roomId);
 
     /* When the socket gets 'message' we add the new message to the current messages */
     socket.on("message", (msg) => {
@@ -50,13 +52,21 @@ const Chat = () => {
       setRoomId(newRoomId);
       messagesInConvo = [];
       getMessagesInGroup(newRoomId);
+      getGroupInfo(newRoomId);
     });
     setMessages(messagesInConvo);
   }, [setMessages, setRoomId, setRoom]);
 
   /* Get the groupname using the fetch current group name service defined in the chatservices file */
-  const getGroupName = async (roomId) => {
-    const groupName = await fetchCurrentGroupName(roomId);
+  const getGroupInfo = async (roomId) => {
+    // Get the group name and the user ids within the group
+    const { groupName, userIds } = await fetchGroupInfo(roomId);
+
+    // Get the usernames, firstnames, lastnames from the group
+    const users = await fetchUsersInGroup(userIds);
+
+    // Map each user ID to a firstname and last name that will be filled in
+    setUsers(users);
     setRoom(groupName);
   };
 
