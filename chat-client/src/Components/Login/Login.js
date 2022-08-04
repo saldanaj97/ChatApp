@@ -77,8 +77,8 @@ const Login = () => {
 
         {/* Forms and sign up/login buttons */}
         <Flex className='form' gap='1rem' flexDirection='column' align='center'>
-          <Input variant='flushed' width='85%' borderColor='#FA2849' color='#FA2849' focusBorderColor=' #FA2849' type='text' placeholder='Username' value={name} onChange={(e) => setName(e.target.value)} />
-          <Input variant='flushed' width='85%' borderColor='#FA2849' color='#FA2849' focusBorderColor=' #FA2849' type='password' placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} />
+          <Input variant='flushed' focusBorderColor='#FA2849' type='text' placeholder='Username' value={name} onChange={(e) => setName(e.target.value)} />
+          <Input variant='flushed' focusBorderColor='#FA2849' type='password' placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} />
           <Box className='buttons' width='100%' m='30px 0px 0px 0px' align='center'>
             <Button backgroundColor='#FA2849' width='25%' m='0px 10px' onClick={handleSignUpClick} fontSize='17px'>
               Sign up
