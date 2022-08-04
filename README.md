@@ -10,11 +10,11 @@ Screenshots below are from v1.0.0. Expect to see changes as more features are ad
 ![alt text](https://github.com/saldanaj97/ChatApp/blob/master/chat-client/public/Chatroom-messages.png)
 
 ## Upcoming Additions
-- User account creation with authentication
-- User account info (small bio)
-- Group support
-- New UI to support the above features
+- ~~User account creation with authentication~~ (completed)
+- User account info (small bio) (Possibly may not be added)
+- ~~Group support~~ (completed)
+- ~~New UI to support the above features~~ (completed)
 
-Thank you to Akilesh Rao at medium.com for providing design inspiration and help with the socket.io library for version 1. The particular piece that provided aid is linked below. 
+Thank you to Akilesh Rao at medium.com for providing design inspiration on version 1. The particular piece that provided designs is linked below. 
 
 https://medium.com/swlh/chat-rooms-with-socket-io-25e9d1a05947
