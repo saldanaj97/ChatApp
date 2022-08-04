@@ -6,10 +6,16 @@ const CONFIG = {
   withCredentials: true,
 };
 
-/* API call to get the name of the chatroom we are in when logging in */
-export const fetchCurrentGroupName = async (roomId) => {
-  const { groupName } = await axios.get(`${BASE_URL}/room/${roomId}/roomname`, CONFIG).then((response) => response.data.room);
-  return groupName;
+/* API call to get the name and users that of the chatroom we are in */
+export const fetchGroupInfo = async (roomId) => {
+  const { groupName, userIds } = await axios.get(`${BASE_URL}/room/${roomId}/roomname`, CONFIG).then((response) => response.data.room);
+  return { groupName: groupName, userIds: new Set(userIds) };
+};
+
+/* API call to get the usernames, firstnames/lastnames from each user in a group */
+export const fetchUsersInGroup = async (userIds) => {
+  const { users } = await axios.post(`${BASE_URL}/users/usernames`, { userIds: [...userIds] }, CONFIG).then((response) => response.data);
+  return users;
 };
 
 /* API call to send the message the user has entered */
