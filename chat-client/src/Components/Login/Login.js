@@ -16,8 +16,8 @@ const Login = () => {
   const { setUsers } = useContext(UsersContext);
   const { setShowSignUp } = useContext(SignupContext);
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   //Checks to see if there's a user already present
 
@@ -33,18 +33,30 @@ const Login = () => {
     setLoading(true);
 
     // Post request to log the user in
-    const success = await logUserIn(name, password, setUserId);
+    const { success, userId } = await logUserIn(name, password);
 
-    // Request to navigate to the users recent conversation thread
-    const conversationId = await getRecentConvo(setRoomId);
+    // Request to get the ID of the last conversation the user was active in
+    const conversationId = await getRecentConvo();
 
-    // Navigate to the users most recent chat if the user logged in successfully
+    // User has logged in successfully
     if (success === true) {
+      // Set the global user ID and the roomId
+      setUserId(userId);
+      setRoomId(conversationId);
+
+      // Subscribe and navigate to the last group chat he was part of
       socket.emit("subscribe", conversationId);
       navigate(`/chat/${conversationId}`);
     }
+
+    // If sucess was false, then inform the user the login did go through
+    if (success === false) {
+      // Set the loading indicator to false since we are not waiting on the login req anymore
+      setLoading(false);
+    }
   };
 
+  /* Function to handle when a user clicks on the sign up button */
   const handleSignUpClick = () => {
     setShowSignUp(true);
   };
