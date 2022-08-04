@@ -24,6 +24,17 @@ const onGetUserById = async (req, res) => {
   }
 };
 
+/* Function that will return all the users in a room */
+const onGetAllUsersByIds = async (req, res) => {
+  try {
+    const { userIds } = req.body;
+    const users = await UserModel.getUserByIds(userIds);
+    return res.status(200).json({ success: true, users });
+  } catch (error) {
+    return res.status(500).json({ success: false, error: error });
+  }
+};
+
 /* Function that will be used to grab the userID given a username */
 const onRetrieveUserId = async (req, res) => {
   try {
@@ -126,6 +137,7 @@ const onAddFriend = async (req, res) => {
 export default {
   onGetAllUsers,
   onGetUserById,
+  onGetAllUsersByIds,
   onUserLogin,
   onCreateUser,
   onDeleteUserById,
