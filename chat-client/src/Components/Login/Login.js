@@ -27,7 +27,7 @@ const Login = () => {
     const { success, userId } = await logUserIn(name, password);
 
     // Request to get the ID of the last conversation the user was active in
-    const conversationId = await getRecentConvo();
+    const conversationId = getRecentConvo();
 
     // User has logged in successfully
     if (success === true) {
