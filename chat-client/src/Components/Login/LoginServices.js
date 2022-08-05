@@ -9,7 +9,7 @@ const CONFIG = {
 /* Function to log a user in */
 export const logUserIn = async (name, password) => {
   const response = await axios
-    .post(`${BASE_URL}/login/${name}/${password}`, CONFIG)
+    .post(`/login/${name}/${password}`, CONFIG)
     .then((response) => {
       return { success: true, userId: response.data };
     })
@@ -21,18 +21,19 @@ export const logUserIn = async (name, password) => {
 
 /* Function to retrieve the most recent conversation */
 export const getRecentConvo = async () => {
-  const { _id } = await axios.get(`${BASE_URL}/room/`, CONFIG).then((response) => {
+  const response = await axios.get(`/room`, CONFIG).then((response) => {
     if (response.data.conversation.length > 0) {
       return response.data.conversation[0];
     }
+    return { _id: "" };
   });
-  return _id;
+  return response;
 };
 
 /* API call to sign a user up  */
 export const signUserUp = async (newUserInfo) => {
   const { user } = await axios
-    .post(`http://localhost:3000/users/`, newUserInfo)
+    .post(`/users`, newUserInfo)
     .then((response) => response.data)
     .catch((error) => {
       return { success: false, user: "" };

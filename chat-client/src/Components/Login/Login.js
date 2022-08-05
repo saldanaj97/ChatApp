@@ -21,24 +21,26 @@ const Login = () => {
   //Send a login request which returns a jsonwebtoken for authentication
   const handleLoginClick = async () => {
     // Notify the UI that the user has clicked the login and the chat is now loading
-    setLoading(true);
+    //setLoading(true);
 
     // Post request to log the user in
     const { success, userId } = await logUserIn(name, password);
 
-    // Request to get the ID of the last conversation the user was active in
-    const conversationId = getRecentConvo();
-
     // User has logged in successfully
     if (success === true) {
+      // Request to get the ID of the last conversation the user was active in
+      const response = await getRecentConvo();
+      console.log({ response });
+      const { _id } = response;
+
       // Set the global user ID and the roomId
       setUserId(userId);
-      setRoomId(conversationId);
+      setRoomId(_id);
       setValidLoginInfo(true);
 
       // Subscribe and navigate to the last group chat he was part of
-      socket.emit("subscribe", conversationId);
-      navigate(`/chat/${conversationId}`);
+      socket.emit("subscribe", _id);
+      navigate(`/chat/${_id}`);
     }
 
     // If sucess was false, then inform the user the login did go through
