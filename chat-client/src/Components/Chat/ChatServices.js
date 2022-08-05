@@ -26,6 +26,6 @@ export const sendMessageInGroup = async (roomId, message) => {
 
 /* API call to get all the messages in a group the user is a part of */
 export const retrieveGroupMessages = async (roomId) => {
-  const { conversation } = await axios.get(`${BASE_URL}/room/${roomId}`, CONFIG).then((response) => response.data);
-  return conversation;
+  const response = await axios.get(`${BASE_URL}/room/${roomId}`, CONFIG).then((response) => response.data);
+  return response;
 };

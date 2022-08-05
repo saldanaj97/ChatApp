@@ -35,11 +35,14 @@ const Chat = () => {
   }, [navigate, name]);
 
   useEffect(() => {
-    /* Get all the messages in the current group */
-    getMessagesInGroup(roomId);
+    // If we have a room ID already, update the messages in the room and get the name of the group
+    if (roomId) {
+      /* Get all the messages in the current group */
+      getMessagesInGroup(roomId);
 
-    /* Get the name of the chatroom we are in and update the state */
-    getGroupInfo(roomId);
+      /* Get the name of the chatroom we are in and update the state */
+      getGroupInfo(roomId);
+    }
 
     /* When the socket gets 'message' we add the new message to the current messages */
     socket.on("message", (msg) => {
@@ -79,7 +82,7 @@ const Chat = () => {
 
   /* Function to get all the messages from a particular chatroom/group */
   const getMessagesInGroup = async (newRoomId) => {
-    const conversation = await retrieveGroupMessages(newRoomId);
+    const { conversation } = await retrieveGroupMessages(newRoomId);
     conversation.map((convo) => {
       return (messagesInConvo = [...messagesInConvo, { messageText: convo.message.messageText, authorInfo: convo.postedByUser.username }]);
     });
@@ -104,7 +107,7 @@ const Chat = () => {
         <ScrollToBottom className='messages'>
           {messages.length > 0 ? (
             messages.map((msg, i) => {
-              return <MessageBubble message={msg} i={i} name={name} />;
+              return <MessageBubble key={i} message={msg} i={i} name={name} />;
             })
           ) : (
             <NoMessages />
