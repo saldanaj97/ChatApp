@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "nodemon app.js",
-    "start:serverr": "node app.js"
+    "start": "node app.js",
+    "start:server": "node app.js"
   },
   "dependencies": {
     "@withvoid/make-validation": "^1.0.5",
