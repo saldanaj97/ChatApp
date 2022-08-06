@@ -8,7 +8,7 @@ import dotenv from "dotenv";
 import "./config/mongo.js";
 
 // Export the vars we need from the .env file
-dotenv.config({ path: ".env" });
+//dotenv.config({ path: ".env" });
 export const SECRET_KEY = process.env.SECRET_KEY;
 
 /* Routes */

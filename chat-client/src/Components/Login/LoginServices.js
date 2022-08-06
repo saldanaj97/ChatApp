@@ -1,7 +1,7 @@
 import axios from "axios";
 
 /* Constants that will be used when making API calls */
-const BASE_URL = "https://saldanaj97-chattyio.herokuapp.com";
+const BASE_URL = "http://saldanaj97-chattyio.herokuapp.com";
 const CONFIG = {
   withCredentials: true,
 };
