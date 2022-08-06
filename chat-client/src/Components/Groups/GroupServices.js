@@ -1,7 +1,7 @@
 import axios from "axios";
 
 /* Constants that will be used when making API calls */
-const BASE_URL = "http://saldanaj97-chattyio.herokuapp.com";
+const BASE_URL = "https://saldanaj97-chattyio.herokuapp.com";
 const CONFIG = {
   withCredentials: true,
 };
@@ -12,7 +12,7 @@ export const fetchUserGroups = async () => {
 
   // Request to get the groups the user is part of for the groups panel
   await axios
-    .get(`http://saldanaj97-chattyio.herokuapp.com/room/user-messages/`, CONFIG)
+    .get(`https://saldanaj97-chattyio.herokuapp.com/room/user-messages/`, CONFIG)
     .then((response) => {
       response.data.roomIds.map((room) => {
         const newRoom = { id: room._id, groupName: room.groupName, lastMessageReceived: { user: "", contents: "" } };
