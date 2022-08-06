@@ -33,9 +33,13 @@ const Login = () => {
       console.log({ response });
       const { _id } = response;
 
-      // Set the global user ID and the roomId
+      // Set the global user ID
       setUserId(userId);
-      setRoomId(_id);
+
+      // Set room id if a room id was provided
+      if (_id) {
+        setRoomId(_id);
+      }
       setValidLoginInfo(true);
 
       // Subscribe and navigate to the last group chat he was part of

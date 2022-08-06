@@ -9,7 +9,7 @@ const CONFIG = {
 /* Function to log a user in */
 export const logUserIn = async (name, password) => {
   const response = await axios
-    .post(`${BASE_URL}/login/${name}/${password}`, CONFIG)
+    .post(`http://saldanaj97-chattyio.herokuapp.com/login/${name}/${password}`, CONFIG)
     .then((response) => {
       return { success: true, userId: response.data };
     })
@@ -21,13 +21,16 @@ export const logUserIn = async (name, password) => {
 
 /* Function to retrieve the most recent conversation */
 export const getRecentConvo = async () => {
-  const response = await axios.get(`${BASE_URL}/room`, CONFIG).then((response) => {
-    if (response.data.conversation.length > 0) {
-      return response.data.conversation[0];
-    }
-    return { _id: "" };
-  });
-  return response;
+  const response = await axios
+    .get(`http://saldanaj97-chattyio.herokuapp.com/room`, CONFIG)
+    .then((response) => {
+      if (response.data.conversation.length > 0) {
+        return response.data.conversation[0];
+      }
+      return { _id: "" };
+    })
+    .catch((error) => console.log(error));
+  return { _id: "" };
 };
 
 /* API call to sign a user up  */
