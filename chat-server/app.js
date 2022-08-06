@@ -29,12 +29,12 @@ app.set("port", PORT);
 
 // Cors
 const corsOptions = {
-  origin: [""],
+  origin: ["*"],
   credentials: true,
   exposedHeaders: ["Authorization"],
 };
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
