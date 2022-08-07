@@ -11,8 +11,11 @@ export const encode = async (req, res) => {
     if (verifiedLogin.success === false) {
       return res.status(401).json({ success: false, message: "Invalid login credentials" });
     }
-    const token = jwt.sign({ userid: verifiedLogin.user._id }, SECRET_KEY);
-    return res.status(200).json({ success: true, message: "Login successful", token });
+    const payload = {
+      userId: verifiedLogin.user._id,
+    };
+    const token = jwt.sign(payload, SECRET_KEY);
+    return res.status(200).json({ success: true, userId: verifiedLogin.user_id, token });
   } catch (error) {
     return res.status(400).json({
       success: false,
