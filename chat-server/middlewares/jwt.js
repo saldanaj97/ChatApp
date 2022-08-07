@@ -16,7 +16,7 @@ export const encode = async (req, res, next) => {
       userType: verifiedLogin.user.type,
     };
     const token = jwt.sign(payload, SECRET_KEY);
-    res.cookie("Authorization", token, { httpOnly: true, sameSite: "strict", secure: true });
+    res.cookie("Authorization", token, { sameSite: "None", secure: true });
     console.log("cookie", res.cookie);
     return res.status(200).json({ success: true, userId: verifiedLogin.user._id });
   } catch (error) {
