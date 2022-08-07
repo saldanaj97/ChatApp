@@ -11,14 +11,8 @@ export const encode = async (req, res, next) => {
     if (verifiedLogin.success === false) {
       return res.status(401).json({ success: false, message: "Invalid login credentials" });
     }
-    const payload = {
-      userid: verifiedLogin.user._id,
-      userType: verifiedLogin.user.type,
-    };
-    const token = jwt.sign(payload, SECRET_KEY);
-    res.cookie("Authorization", token, { httpOnly: true });
-    console.log("cookie", res.cookie);
-    return res.status(200).json({ success: true, userId: verifiedLogin.user._id });
+    const token = jwt.sign({ userid: verifiedLogin.user._id, userType: verifiedLogin.user.type }, SECRET_KEY);
+    return res.status(200).json({ success: true, token });
   } catch (error) {
     return res.status(400).json({
       success: false,
@@ -30,16 +24,14 @@ export const encode = async (req, res, next) => {
 
 /* Function that will decode the userId and type from the auth token IF PROVIDED, 
  otherwise an error will be returned */
-export const decode = (req, res, next) => {
-  if (req.cookies === "") {
-    return res.status(400).json({ success: false, error: "No access token provided " });
-  }
-  const accessToken = req.cookies["Authorization"];
+export const decode = async (req, res, next) => {
   try {
-    const decoded = jwt.verify(accessToken, SECRET_KEY);
-    req.userId = decoded.userid;
-    req.userType = decoded.userType;
-    return next();
+    const token = await request.headers.authorization.split(" ")[1];
+    const decodedToken = jwt.verify(token, SECRET_KEY);
+    const user = decodedToken;
+    req.userId = user.userid;
+    req.userType = user.userType;
+    next();
   } catch (error) {
     return res.status(401).json({
       success: false,
