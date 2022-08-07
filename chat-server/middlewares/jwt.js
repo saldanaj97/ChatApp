@@ -4,7 +4,7 @@ import { SECRET_KEY } from "../app.js";
 
 /* Function that will check to see if a user is in the DB and if they are, will then assign them a 
   an authentication token */
-export const encode = async (req, res) => {
+export const encode = async (req, res, next) => {
   try {
     const { username, password } = req.params;
     const verifiedLogin = await User.onUserLogin(username, password);
