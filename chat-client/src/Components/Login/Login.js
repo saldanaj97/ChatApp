@@ -27,7 +27,6 @@ const Login = () => {
 
     // Post request to log the user in
     const { success, userId, token } = await logUserIn(name, password);
-    console.log("token", token);
 
     // User has logged in successfully
     if (success === true) {

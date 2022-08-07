@@ -30,6 +30,7 @@ app.set("port", PORT);
 // Cors
 const corsOptions = {
   origin: ["http://localhost:3000"],
+  credentials: true,
   exposedHeaders: ["Authorization"],
 };
 

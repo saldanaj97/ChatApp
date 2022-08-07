@@ -1,9 +1,15 @@
 import axios from "axios";
+import Cookies from "universal-cookie";
 
 /* Constants that will be used when making API calls */
+const cookies = new Cookies();
+const token = cookies.get("TOKEN");
 const BASE_URL = "https://saldanaj97-chattyio.herokuapp.com";
 const CONFIG = {
   withCredentials: true,
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
 };
 
 /* API call to fetch all of the logged in users groups */

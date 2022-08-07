@@ -1,10 +1,15 @@
 import axios from "axios";
-import { token } from "morgan";
+import Cookies from "universal-cookie";
 
 /* Constants that will be used when making API calls */
+const cookies = new Cookies();
+const token = cookies.get("TOKEN");
 const BASE_URL = "https://saldanaj97-chattyio.herokuapp.com";
 const CONFIG = {
   withCredentials: true,
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
 };
 
 /* Function to log a user in */
@@ -12,8 +17,7 @@ export const logUserIn = async (name, password) => {
   const response = await axios
     .post(`https://saldanaj97-chattyio.herokuapp.com/login/${name}/${password}`, CONFIG)
     .then((response) => {
-      console.log("tok", response.data);
-      return { success: true, userId: response.data, token: response.token };
+      return { success: true, userId: response.data.userId, token: response.data.token };
     })
     .catch((error) => {
       return { success: false, userId: "" };
