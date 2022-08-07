@@ -1,4 +1,5 @@
 import axios from "axios";
+import { token } from "morgan";
 
 /* Constants that will be used when making API calls */
 const BASE_URL = "https://saldanaj97-chattyio.herokuapp.com";
@@ -11,7 +12,8 @@ export const logUserIn = async (name, password) => {
   const response = await axios
     .post(`https://saldanaj97-chattyio.herokuapp.com/login/${name}/${password}`, CONFIG)
     .then((response) => {
-      return { success: true, userId: response.data };
+      console.log("tok", response.data);
+      return { success: true, userId: response.data, token: response.token };
     })
     .catch((error) => {
       return { success: false, userId: "" };

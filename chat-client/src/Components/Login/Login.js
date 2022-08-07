@@ -8,6 +8,7 @@ import { SignupContext } from "./SignupContext";
 
 import "./Login.scss";
 import { getRecentConvo, logUserIn } from "./LoginServices";
+import Cookies from "universal-cookie";
 
 const Login = () => {
   const socket = useContext(SocketContext);
@@ -20,17 +21,23 @@ const Login = () => {
 
   //Send a login request which returns a jsonwebtoken for authentication
   const handleLoginClick = async () => {
+    const cookies = new Cookies();
     // Notify the UI that the user has clicked the login and the chat is now loading
     //setLoading(true);
 
     // Post request to log the user in
-    const { success, userId } = await logUserIn(name, password);
+    const { success, userId, token } = await logUserIn(name, password);
+    console.log("token", token);
 
     // User has logged in successfully
     if (success === true) {
+      // Set the token if the users login info was correct
+      cookies.set("TOKEN", token, {
+        path: "/",
+      });
+
       // Request to get the ID of the last conversation the user was active in
       const response = await getRecentConvo();
-      console.log({ response });
       const { _id } = response;
 
       // Set the global user ID
