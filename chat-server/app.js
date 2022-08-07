@@ -29,7 +29,7 @@ app.set("port", PORT);
 
 // Cors
 const corsOptions = {
-  origin: ["https://saldanaj97-chattyio.herokuapp.com", "http://localhost:3000"],
+  origin: ["https://saldanaj97-chattyio.herokuapp.com", "http://localhost:3000/a"],
   credentials: true,
   exposedHeaders: ["Authorization"],
 };
