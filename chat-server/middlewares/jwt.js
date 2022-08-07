@@ -31,6 +31,7 @@ export const decode = (req, res, next) => {
     return res.status(400).json({ success: false, error: "No access token provided " });
   }
   const accessToken = req.cookies["Authorization"];
+  console.log("token", accessToken);
   try {
     const decoded = jwt.verify(accessToken, SECRET_KEY);
     req.userId = decoded.userid;
