@@ -12,7 +12,7 @@ export const encode = async (req, res, next) => {
       return res.status(401).json({ success: false, message: "Invalid login credentials" });
     }
     const token = jwt.sign({ userid: verifiedLogin.user._id, userType: verifiedLogin.user.type }, SECRET_KEY);
-    res.cookie("Authorization", token, { httpOnly: false });
+    res.cookie("Authorization", token, { httpOnly: false, secure: false });
     console.log("cookie", res.cookie);
     return res.status(200).json({ success: true, userId: verifiedLogin.user._id });
   } catch (error) {
