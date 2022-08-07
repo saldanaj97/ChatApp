@@ -22,6 +22,7 @@ export const encode = async (req, res, next) => {
     return res.status(400).json({
       success: false,
       message: "Problem while trying to authenticate ",
+      error: error,
     });
   }
 };
