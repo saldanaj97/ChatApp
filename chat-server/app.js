@@ -26,7 +26,6 @@ const PORT = process.env.PORT || 3000;
 // Initialize express app
 const app = express();
 app.set("port", PORT);
-app.set("trust proxy", 1);
 
 // Cors
 const corsOptions = {
