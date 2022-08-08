@@ -1,14 +1,21 @@
 import React, { useState } from "react";
 import { Input, Text, Button, Modal, ModalBody, ModalContent, ModalCloseButton, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react";
 import axios from "axios";
+import Cookies from "universal-cookie";
 
 const AddUser = (props) => {
   const { roomId } = props;
   const [userToAdd, setUserToAdd] = useState("");
 
+  const cookies = new Cookies();
+  const token = cookies.get("TOKEN");
+
   const handleAddUser = async () => {
     const config = {
       withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     };
 
     await axios.post("https://saldanaj97-chattyio.herokuapp.com/users/retrieve-id", { username: userToAdd }, config).then((response) => {
