@@ -34,8 +34,9 @@ const Login = () => {
       cookies.set("TOKEN", token, {
         sameSite: "none",
         secure: true,
-        Path: "/",
+        path: "/",
       });
+
       // Request to get the ID of the last conversation the user was active in
       const response = await getRecentConvo();
       const { _id } = response;
