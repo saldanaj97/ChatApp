@@ -22,7 +22,7 @@ const Login = () => {
   //Send a login request which returns a jsonwebtoken for authentication
   const handleLoginClick = async () => {
     // Notify the UI that the user has clicked the login and the chat is now loading
-    //setLoading(true);
+    setLoading(true);
 
     // Post request to log the user in
     const { success, userId } = await logUserIn(name, password);
