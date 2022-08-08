@@ -24,18 +24,14 @@ const initiate = async (req, res) => {
 
     // If the req has been validated, get the list of users in a room and assign the current authenticated user as the chat initiator
     const { userIds, type } = req.body;
-    const { userId: chatInitiator } = req;
-    console.log({ chatInitiator });
-
-    // Add the initiator to the group of all users in a room
-    const allUserIds = [...userIds, chatInitiator];
+    const chatInitiator = userIds[0];
 
     // Get the ID for the new room (if provided ) other wise a default value will be provided
     const { _id } = req.body;
     const { groupName } = req.body;
 
     // Initiate the chatroom
-    const chatRoom = await ChatRoomModel.initiateChat(_id, groupName, allUserIds, type, chatInitiator);
+    const chatRoom = await ChatRoomModel.initiateChat(_id, groupName, userIds, type, chatInitiator);
     return res.status(200).json({ success: true, chatRoom });
   } catch (error) {
     return res.status(500).json({ success: false, error: error });
