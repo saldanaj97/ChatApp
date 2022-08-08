@@ -124,6 +124,7 @@ const getConversationByRoomId = async (req, res) => {
 
 /* Function that will get all of a users messages */
 const getUsersConversations = async (req, res) => {
+  console.log({ req });
   try {
     const currentLoggedUser = req.userId;
     const rooms = await ChatRoomModel.getChatRoomsByUserId(currentLoggedUser);
