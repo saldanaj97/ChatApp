@@ -1,7 +1,6 @@
 import jwt from "jsonwebtoken";
 import User from "../controllers/user.js";
 import { SECRET_KEY } from "../app.js";
-import { token } from "morgan";
 
 /* Function that will check to see if a user is in the DB and if they are, will then assign them a 
   an authentication token */
@@ -31,7 +30,9 @@ export const encode = async (req, res) => {
 export const decode = async (req, res, next) => {
   try {
     const token = await req.headers.authorization.split(" ")[1];
+    console.log("token", token);
     const decodedToken = jwt.verify(token, SECRET_KEY);
+    console.log("decodedtoken", decodedToken);
     const user = decodedToken;
     req.userId = user;
     next();
@@ -39,8 +40,6 @@ export const decode = async (req, res, next) => {
     return res.status(401).json({
       success: false,
       message: "Could not decode authorization token",
-      token: token,
-      decodedToken: decodedToken,
       error: error,
     });
   }
