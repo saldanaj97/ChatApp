@@ -29,7 +29,6 @@ app.set("port", PORT);
 
 // Cors
 const corsOptions = {
-  origin: ["http://localhost:3000", "https://saldanaj97-chattyio.herokuapp.com"],
   credentials: true,
 };
 
@@ -43,14 +42,6 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(
-  session({
-    cookie: {
-      sameSite: "none", // must be 'none' to enable cross-site delivery
-      secure: true, // must be true if sameSite='none'
-    },
-  })
-);
 
 // Routes
 app.use("/", indexRouter);
