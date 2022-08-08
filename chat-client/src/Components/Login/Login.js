@@ -30,14 +30,6 @@ const Login = () => {
 
     // User has logged in successfully
     if (success === true) {
-      // Set the token if the users login info was correct
-      cookies.set("TOKEN", token, {
-        sameSite: "none",
-        secure: true,
-        domain: window.location.hostname,
-        path: "/",
-      });
-
       // Request to get the ID of the last conversation the user was active in
       const response = getRecentConvo();
       const { _id } = response;

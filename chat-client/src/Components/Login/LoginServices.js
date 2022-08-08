@@ -18,6 +18,12 @@ export const logUserIn = async (name, password) => {
   const response = await axios
     .post(`https://saldanaj97-chattyio.herokuapp.com/login/${name}/${password}`, CONFIG)
     .then((response) => {
+      cookies.set("TOKEN", response.data.token, {
+        sameSite: "none",
+        secure: true,
+        domain: window.location.hostname,
+        path: "/",
+      });
       return { success: true, userId: response.data.userId, token: response.data.token };
     })
     .catch((error) => {

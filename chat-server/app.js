@@ -44,7 +44,7 @@ app.use(cookieParser());
 // Routes
 app.use("/", indexRouter);
 app.use("/users", userRouter);
-app.use("/room", decode, chatRoomRouter);
+app.use("/room", chatRoomRouter);
 app.use("/delete", deleteRouter);
 
 // Catch a 404 and forward to error handler
