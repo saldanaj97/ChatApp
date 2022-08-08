@@ -25,7 +25,6 @@ const initiate = async (req, res) => {
     // If the req has been validated, get the list of users in a room and assign the current authenticated user as the chat initiator
     const { userIds, type } = req.body;
     const chatInitiator = userIds[0];
-    console.log({ chatInitiator });
 
     // Get the ID for the new room (if provided ) other wise a default value will be provided
     const { _id } = req.body;
