@@ -30,7 +30,6 @@ export const encode = async (req, res) => {
 export const decode = async (req, res, next) => {
   try {
     const token = await req.headers["authorization"].split(" ")[1];
-    console.log("headers", req.headers);
     const decodedToken = jwt.verify(token, SECRET_KEY);
     const user = decodedToken;
     req.userId = user;
