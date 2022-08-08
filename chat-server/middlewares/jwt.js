@@ -31,10 +31,9 @@ export const encode = async (req, res) => {
 export const decode = async (req, res, next) => {
   try {
     const token = await req.headers.authorization.split(" ")[1];
-    console.log("cookie", req.headers.cookie);
-    console.log("token", token);
+    console.log("cookie", req.cookies);
+    console.log("headers", req.headers);
     const decodedToken = jwt.verify(token, SECRET_KEY);
-    console.log("decodedtoken", decodedToken);
     const user = decodedToken;
     req.userId = user;
     next();
