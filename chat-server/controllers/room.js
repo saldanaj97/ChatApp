@@ -24,9 +24,8 @@ const initiate = async (req, res) => {
 
     // If the req has been validated, get the list of users in a room and assign the current authenticated user as the chat initiator
     const { userIds, type } = req.body;
-    console.log({ req });
-    console.log({ userIds });
     const { userId: chatInitiator } = req;
+    console.log({ chatInitiator });
 
     // Add the initiator to the group of all users in a room
     const allUserIds = [...userIds, chatInitiator];
