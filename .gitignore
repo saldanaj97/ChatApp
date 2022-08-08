@@ -3,3 +3,6 @@ chat-server/node_modules
 /.vscode
 chat-server/.env
 chat-client/.env
+
+# Local Netlify folder
+.netlify
