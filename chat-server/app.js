@@ -26,6 +26,7 @@ const PORT = process.env.PORT || 3000;
 // Initialize express app
 const app = express();
 app.set("port", PORT);
+app.set("trust proxy", 1);
 
 // Cors
 const corsOptions = {
@@ -43,6 +44,14 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(
+  session({
+    cookie: {
+      sameSite: "none", // must be 'none' to enable cross-site delivery
+      secure: true, // must be true if sameSite='none'
+    },
+  })
+);
 
 // Routes
 app.use("/", indexRouter);
