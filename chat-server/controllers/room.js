@@ -59,7 +59,7 @@ const postMessage = async (req, res) => {
     };
 
     // Get the id of the user logged in
-    const currentLoggedUser = req.userId;
+    const currentLoggedUser = req.userId.userId;
 
     // Broadcast the message to the room ID
     const post = await ChatMessageModel.createPostInChatRoom(roomId, messagePayload, currentLoggedUser);
