@@ -34,7 +34,7 @@ export const fetchUserGroups = async () => {
 /* API call to create a new group */
 export const createNewGroup = async (chatrooms, setRooms, onClose, groupName, userId) => {
   await axios
-    .post(`http://saldanaj97-chattyio.herokuapp.com/room/initiate`, { groupName: groupName, userIds: [userId], type: "consumer_to_consumer" }, CONFIG)
+    .post(`https://saldanaj97-chattyio.herokuapp.com/room/initiate`, { groupName: groupName, userIds: [userId], type: "consumer_to_consumer" }, CONFIG)
     .then((response) => {
       const newRoom = { id: response.data.chatRoom.chatRoomId, groupName: groupName, lastMessageReceived: { user: "", contents: "" } };
       const updatedRooms = [newRoom, ...chatrooms];
