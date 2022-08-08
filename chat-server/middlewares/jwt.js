@@ -16,7 +16,6 @@ export const encode = async (req, res) => {
     };
     const token = jwt.sign(payload, SECRET_KEY);
     localStorage.setItem("TOKEN", `Bearer ${token}`);
-
     return res.status(200).json({ success: true, userId: verifiedLogin.user._id, token });
   } catch (error) {
     return res.status(400).json({
@@ -32,9 +31,7 @@ export const encode = async (req, res) => {
 export const decode = async (req, res, next) => {
   try {
     const token = await req.headers.authorization.split(" ")[1];
-    console.log("otken from local", localStorage.getItem("TOKEN"));
     console.log("headers", req.headers);
-    localStorage.getItem("TOKEN");
     const decodedToken = jwt.verify(token, SECRET_KEY);
     const user = decodedToken;
     req.userId = user;
