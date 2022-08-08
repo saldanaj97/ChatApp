@@ -18,7 +18,7 @@ export const fetchUserGroups = async () => {
 
   // Request to get the groups the user is part of for the groups panel
   await axios
-    .get(`https://saldanaj97-chattyio.herokuapp.com/room/user-messages/`, CONFIG)
+    .get(`${BASE_URL}/room/user-messages/`, CONFIG)
     .then((response) => {
       response.data.roomIds.map((room) => {
         const newRoom = { id: room._id, groupName: room.groupName, lastMessageReceived: { user: "", contents: "" } };

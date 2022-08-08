@@ -2,6 +2,7 @@ import { MessageInputBox } from "./MessageInputBox";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ScrollToBottom from "react-scroll-to-bottom";
+import Cookies from "universal-cookie";
 
 import { Flex, useDisclosure } from "@chakra-ui/react";
 import "./Chat.scss";
@@ -91,10 +92,12 @@ const Chat = () => {
 
   /* Handle navigation for when a user logs out */
   const logout = () => {
+    const cookies = new Cookies();
     setName("");
     setRoom("");
     setRoomId("");
-    navigate(0);
+    cookies.remove("TOKEN", { path: "/" });
+    window.location.href = "/";
   };
 
   return (
