@@ -34,6 +34,7 @@ const Login = () => {
       cookies.set("TOKEN", token, {
         sameSite: "none",
         secure: true,
+        domain: window.location.hostname,
         path: "/",
       });
 
