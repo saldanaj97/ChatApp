@@ -73,7 +73,7 @@ const postMessage = async (req, res) => {
 /* Function that retrieves a users most recent conversaion */
 const getRecentConversation = async (req, res) => {
   try {
-    const currentLoggedUser = req.userId;
+    const currentLoggedUser = req.userId.userId;
     const options = {
       page: parseInt(req.query.page) || 0,
       limit: parseInt(req.query.limit) || 10,
