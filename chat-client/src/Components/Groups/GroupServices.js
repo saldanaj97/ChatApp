@@ -20,6 +20,7 @@ export const fetchUserGroups = async () => {
   await axios
     .get(`https://saldanaj97-chattyio.herokuapp.com/room/user-messages/`, CONFIG)
     .then((response) => {
+      console.log({ response });
       response.data.roomIds.map((room) => {
         const newRoom = { id: room._id, groupName: room.groupName, lastMessageReceived: { user: "", contents: "" } };
         return (roomsFromResponse = [newRoom, ...roomsFromResponse]);
