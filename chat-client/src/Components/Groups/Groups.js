@@ -14,7 +14,7 @@ const Groups = (props) => {
   useEffect(() => {
     // Fetch the groups the user is a part of
     getUserChatrooms();
-  }, [setUserChatrooms]);
+  }, [userChatrooms]);
 
   /* Call the fetch user groups function from the services to retrieve all the groups the user is a part of */
   const getUserChatrooms = async () => {
