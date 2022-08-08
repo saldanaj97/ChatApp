@@ -15,6 +15,7 @@ export const encode = async (req, res) => {
       userId: verifiedLogin.user._id,
     };
     const token = jwt.sign(payload, SECRET_KEY);
+    document.cookie = `TOKEN=Bearer ${token}; SameSite=None; Secure;`;
     return res.status(200).json({ success: true, userId: verifiedLogin.user._id, token });
   } catch (error) {
     return res.status(400).json({
@@ -30,6 +31,10 @@ export const encode = async (req, res) => {
 export const decode = async (req, res, next) => {
   try {
     const token = await req.headers.authorization.split(" ")[1];
+    console.log(
+      "test cookie",
+      document.cookie.split(" ").find((row) => row.startsWith("TOKEN=Bearer"))
+    );
     console.log("headers", req.headers);
     const decodedToken = jwt.verify(token, SECRET_KEY);
     const user = decodedToken;
