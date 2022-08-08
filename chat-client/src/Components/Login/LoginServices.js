@@ -9,6 +9,7 @@ const CONFIG = {
   withCredentials: true,
   headers: {
     Authorization: `Bearer ${token}`,
+    "Content-type": "application/json",
   },
 };
 
