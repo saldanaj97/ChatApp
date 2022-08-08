@@ -21,12 +21,11 @@ const Login = () => {
 
   //Send a login request which returns a jsonwebtoken for authentication
   const handleLoginClick = async () => {
-    const cookies = new Cookies();
     // Notify the UI that the user has clicked the login and the chat is now loading
     //setLoading(true);
 
     // Post request to log the user in
-    const { success, userId, token } = await logUserIn(name, password);
+    const { success, userId } = await logUserIn(name, password);
 
     // User has logged in successfully
     if (success === true) {
