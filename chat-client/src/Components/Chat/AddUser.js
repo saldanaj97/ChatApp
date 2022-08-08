@@ -11,7 +11,7 @@ const AddUser = (props) => {
       withCredentials: true,
     };
 
-    await axios.post("/users/retrieve-id", { username: userToAdd }, config).then((response) => {
+    await axios.post("https://saldanaj97-chattyio.herokuapp.com/users/retrieve-id", { username: userToAdd }, config).then((response) => {
       const { userId } = response.data;
       axios.post("/room/add-user", { roomId: roomId, userId: userId }, config).then((response) => {
         props.onClose();
