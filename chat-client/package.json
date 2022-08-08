@@ -2,7 +2,6 @@
   "name": "chat-client",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://saldanaj97-chattyio.herokuapp.com/",
   "dependencies": {
     "@chakra-ui/react": "^2.1.2",
     "@testing-library/jest-dom": "^5.16.4",
