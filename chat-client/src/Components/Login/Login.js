@@ -38,7 +38,7 @@ const Login = () => {
       });
 
       // Request to get the ID of the last conversation the user was active in
-      const response = await getRecentConvo();
+      const response = getRecentConvo();
       const { _id } = response;
 
       // Set the global user ID

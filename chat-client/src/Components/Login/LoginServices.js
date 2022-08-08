@@ -26,8 +26,8 @@ export const logUserIn = async (name, password) => {
 };
 
 /* Function to retrieve the most recent conversation */
-export const getRecentConvo = async () => {
-  const response = await axios
+export const getRecentConvo = () => {
+  const response = axios
     .get(`https://saldanaj97-chattyio.herokuapp.com/room`, CONFIG)
     .then((response) => {
       if (response.data.conversation.length > 0) {

@@ -29,13 +29,13 @@ app.set("port", PORT);
 
 // Cors
 const corsOptions = {
-  origin: ["http://localhost:3000", "https://saldanaj97-chattyio.herokuapp.com"],
+  origin: ["https://localhost:3000", "https://saldanaj97-chattyio.herokuapp.com"],
   credentials: true,
 };
 
 app.use(cors(corsOptions));
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.setHeader("Access-Control-Allow-Origin", "https://localhost:3000");
   res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
   next();
