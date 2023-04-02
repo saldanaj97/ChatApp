@@ -4,7 +4,7 @@ import io from "socket.io-client";
 const SocketContext = React.createContext();
 
 const SocketProvider = ({ children }) => {
-  const ENDPOINT = "https://saldanaj97-chattyio.herokuapp.com";
+  const ENDPOINT = "https://chatapp-production-7d82.up.railway.app/";
   const socket = io(ENDPOINT, { transports: ["websocket", "polling"] });
 
   return <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>;
