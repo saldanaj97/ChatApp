@@ -29,7 +29,7 @@ app.set("port", PORT);
 
 // Cors
 const corsOptions = {
-  origin: ["https://localhost:3000", "https://saldanaj97-chattyio.herokuapp.com", "https://chattyio.netlify.app"],
+  origin: ["https://localhost:3000", "https://chatapp-production-7d82.up.railway.app", "https://chattyio.netlify.app"],
   allowedHeaders: ["Origin", "X-Requested-With", "Content", "Accept", "Content-Type", "Authorization"],
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
   maxAge: 600,
