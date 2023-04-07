@@ -1,5 +1,17 @@
 import React, { useState } from "react";
-import { Input, Text, Button, Modal, ModalBody, ModalContent, ModalCloseButton, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react";
+import {
+  Input,
+  Text,
+  Button,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalCloseButton,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  useDisclosure,
+} from "@chakra-ui/react";
 import axios from "axios";
 import Cookies from "universal-cookie";
 
@@ -18,9 +30,9 @@ const AddUser = (props) => {
       },
     };
 
-    await axios.post("https://saldanaj97-chattyio.herokuapp.com/users/retrieve-id", { username: userToAdd }, config).then((response) => {
+    await axios.post("https://chatapp-production-7d82.up.railway.app/users/retrieve-id", { username: userToAdd }, config).then((response) => {
       const { userId } = response.data;
-      axios.post("https://saldanaj97-chattyio.herokuapp.com/room/add-user", { roomId: roomId, userId: userId }, config).then((response) => {
+      axios.post("https://chatapp-production-7d82.up.railway.app/room/add-user", { roomId: roomId, userId: userId }, config).then((response) => {
         props.onClose();
       });
     });
@@ -36,7 +48,17 @@ const AddUser = (props) => {
           <Text mb='10px' textAlign='center'>
             What's the username of the person you want to add to the chat?
           </Text>
-          <Input variant='flushed' width='100%' borderColor='#FA2849' color='#FA2849' focusBorderColor=' #FA2849' type='text' placeholder='Username' value={userToAdd} onChange={(e) => setUserToAdd(e.target.value)} />
+          <Input
+            variant='flushed'
+            width='100%'
+            borderColor='#FA2849'
+            color='#FA2849'
+            focusBorderColor=' #FA2849'
+            type='text'
+            placeholder='Username'
+            value={userToAdd}
+            onChange={(e) => setUserToAdd(e.target.value)}
+          />
         </ModalBody>
         <ModalFooter>
           <Button bg='#FA2849' mr={3} color='white' onClick={handleAddUser}>

@@ -4,7 +4,7 @@ import Cookies from "universal-cookie";
 /* Constants that will be used when making API calls */
 const cookies = new Cookies();
 const token = cookies.get("TOKEN");
-const BASE_URL = "https://saldanaj97-chattyio.herokuapp.com";
+const BASE_URL = "https://chatapp-production-7d82.up.railway.app";
 const CONFIG = {
   withCredentials: true,
   headers: {
@@ -16,7 +16,7 @@ const CONFIG = {
 /* Function to log a user in */
 export const logUserIn = async (name, password) => {
   const response = await axios
-    .post(`https://saldanaj97-chattyio.herokuapp.com/login/${name}/${password}`, CONFIG)
+    .post(`https://chatapp-production-7d82.up.railway.app/login/${name}/${password}`, CONFIG)
     .then((response) => {
       cookies.set("TOKEN", response.data.token, {
         sameSite: "none",
@@ -35,7 +35,7 @@ export const logUserIn = async (name, password) => {
 /* Function to retrieve the most recent conversation */
 export const getRecentConvo = () => {
   const response = axios
-    .get(`https://saldanaj97-chattyio.herokuapp.com/room`, CONFIG)
+    .get(`https://chatapp-production-7d82.up.railway.app/room`, CONFIG)
     .then((response) => {
       if (response.data.conversation.length > 0) {
         return response.data.conversation[0];

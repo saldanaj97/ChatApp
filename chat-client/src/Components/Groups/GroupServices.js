@@ -4,7 +4,7 @@ import Cookies from "universal-cookie";
 /* Constants that will be used when making API calls */
 const cookies = new Cookies();
 const token = cookies.get("TOKEN");
-const BASE_URL = "https://saldanaj97-chattyio.herokuapp.com";
+const BASE_URL = "chatapp-production-7d82.up.railway.app";
 const CONFIG = {
   withCredentials: true,
   headers: {
@@ -18,7 +18,7 @@ export const fetchUserGroups = async () => {
 
   // Request to get the groups the user is part of for the groups panel
   await axios
-    .get(`https://saldanaj97-chattyio.herokuapp.com/room/user-messages/`, CONFIG)
+    .get(`https://chatapp-production-7d82.up.railway.app/room/user-messages/`, CONFIG)
     .then((response) => {
       response.data.roomIds.map((room) => {
         const newRoom = { id: room._id, groupName: room.groupName, lastMessageReceived: { user: "", contents: "" } };
@@ -34,7 +34,7 @@ export const fetchUserGroups = async () => {
 /* API call to create a new group */
 export const createNewGroup = async (chatrooms, setRooms, onClose, groupName, userId) => {
   await axios
-    .post(`https://saldanaj97-chattyio.herokuapp.com/room/initiate`, { groupName: groupName, userIds: [userId], type: "consumer_to_consumer" }, CONFIG)
+    .post(`chatapp-production-7d82.up.railway.app/room/initiate`, { groupName: groupName, userIds: [userId], type: "consumer_to_consumer" }, CONFIG)
     .then((response) => {
       const newRoom = { id: response.data.chatRoom.chatRoomId, groupName: groupName, lastMessageReceived: { user: "", contents: "" } };
       const updatedRooms = [newRoom, ...chatrooms];
